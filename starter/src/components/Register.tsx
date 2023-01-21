@@ -5,15 +5,21 @@ const Register:React.FC = () => {
             <form className="form">
                 <article className="form-center">
                     <div className="form-group">
-                        <label htmlFor='username'>Username:</label>
+                        <div className="validity-container">
+                            <label htmlFor='username'>Username:</label>
+                        </div>
                         <input type="text" id="username" />
                     </div>
                     <div className="form-group">
-                        <label htmlFor='pswd'>Password:</label>
+                        <div className="validity-container">
+                            <label htmlFor='pswd'>Password:</label>
+                        </div>
                         <input type="password" id="pswd" />
                     </div>
                     <div className="form-group">
-                        <label htmlFor='confirm-pswd'>Confirm Password:</label>
+                        <div className="validity-container">
+                            <label htmlFor='confirm-pswd'>Confirm Password:</label>
+                        </div>
                         <input type="password" id="confirm-pswd" />
                     </div>
                 </article>
