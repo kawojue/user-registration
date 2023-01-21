@@ -5,5 +5,63 @@
 @tailwind components;
 
 body {
-    @apply font-roboto;
+    @apply font-poppins bg-blue-600 text-white;
+}
+
+.trans {
+    @apply transition-all ease-linear duration-300;
+}
+
+.container {
+    @apply w-full mt-24;
+}
+
+.container-center {
+    @apply bg-blue-900 w-[90vw] max-w-[350px] mx-auto rounded-md px-5 pt-5 pb-9;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+}
+
+.section-h3 {
+    @apply text-3xl font-medium;
+}
+
+.form {
+    @apply mt-5;
+}
+
+.form-center {
+    @apply flex flex-col gap-4;
+}
+
+.form-group {
+    @apply flex flex-col gap-0.5;
+}
+
+label {
+    @apply text-[18px] tracking-wide;
+}
+
+input {
+    @apply rounded-md p-0.5 text-black text-[18px];
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+}
+
+.btn-container {
+    @apply w-full mt-6;
+}
+
+.btn {
+    @apply py-2 w-full rounded-lg text-white bg-blue-700 text-xl tracking-wider;
+}
+
+.btn:focus {
+    @apply outline-none;
+}
+
+.btn:hover:not([disabled]) {
+    @apply bg-[navy] text-black trans;
+}
+
+.btn:disabled {
+    @apply opacity-[50%] cursor-not-allowed;
 }
