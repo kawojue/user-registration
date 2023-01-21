@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom"
+
 const Login:React.FC = () => {
     return (
         <section className="container-center">
@@ -18,11 +20,15 @@ const Login:React.FC = () => {
                     </div>
                 </article>
                 <div className="btn-container">
-                    <button type="submit" className='btn' disabled={true}>
+                    <button type="submit" className='btn'>
                         Login
                     </button>
                 </div>
             </form>
+            <article className="user-route">
+                <p>Don't have an account?</p>
+                <Link to="/">Sign up</Link>
+            </article>
         </section>
     )
 }

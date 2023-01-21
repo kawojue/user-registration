@@ -1,3 +1,4 @@
+import {Link} from 'react-router-dom'
 const Register:React.FC = () => {
     return (
         <section className="container-center">
@@ -29,6 +30,10 @@ const Register:React.FC = () => {
                     </button>
                 </div>
             </form>
+            <article className="user-route">
+                <p>Already have an account?</p>
+                <Link to="/login">Sign in</Link>
+            </article>
         </section>
     )
 }
