@@ -1,10 +1,12 @@
-import React from 'react'
+import Login from "./components/Login"
+import Register from "./components/Register"
 
 const App: React.FC = () => {
   return (
-    <>
-      <p>Hello, World!</p>
-    </>
+    <main className="container">
+      <Register/>
+      {/* <Login/> */}
+    </main>
   )
 }
 
