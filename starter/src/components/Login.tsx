@@ -11,12 +11,14 @@ const Login:React.FC = () => {
                             <label htmlFor='username'>Username:</label>
                         </div>
                         <input type="text" id="username" />
+                        <div className='constraint'></div>
                     </div>
                     <div className="form-group">
                         <div className="validity-container">
                             <label htmlFor='pswd'>Password:</label>
                         </div>
                         <input type="password" id="pswd" />
+                        <div className='constraint'></div>
                     </div>
                 </article>
                 <div className="btn-container">
