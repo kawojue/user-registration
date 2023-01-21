@@ -7,6 +7,10 @@ module.exports = {
         "poppins": ['Poppins', 'sans-serif'],
         "cabin": ['Cabin', 'sans-serif'],
         "roboto": ['Roboto', 'sans-serif'],
+      },
+      colors: {
+        'pry-clr-0': "rgb(240, 245, 248)",
+        'pry-clr-1': "rgb(16, 16, 16)"
       }
     },
   },
