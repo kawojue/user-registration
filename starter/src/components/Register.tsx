@@ -1,5 +1,6 @@
-import {Link} from 'react-router-dom'
-const Register:React.FC = () => {
+import { Link } from 'react-router-dom'
+
+const Register: React.FC = () => {
     return (
         <section className="container-center">
             <h3 className="section-h3">Register</h3>
