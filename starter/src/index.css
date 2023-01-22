@@ -22,7 +22,7 @@ body {
 }
 
 .section-h3 {
-    @apply text-3xl font-medium;
+    @apply text-3xl font-medium font-roboto tracking-wider;
 }
 
 .form {
@@ -46,16 +46,20 @@ label {
 }
 
 input {
-    @apply rounded-md p-0.5 text-pry-clr-1 text-[18px];
+    @apply rounded-md p-0.5 text-pry-clr-1 text-[18px] font-cabin bg-white outline-none;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
 }
 
+input:focus {
+    @apply bg-pry-clr-0;
+}
+
 .btn-container {
-    @apply w-full mt-6;
+    @apply w-full mt-6 font-cabin;
 }
 
 .btn {
-    @apply py-2 w-full rounded-lg text-pry-clr-0 bg-blue-700 text-xl tracking-wider;
+    @apply py-2 w-full rounded-lg text-pry-clr-0 bg-blue-700 text-xl tracking-widest;
 }
 
 .btn:focus {
