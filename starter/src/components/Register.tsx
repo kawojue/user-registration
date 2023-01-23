@@ -10,21 +10,21 @@ const Register: React.FC = () => {
                         <div className="validity-container">
                             <label htmlFor='username'>Username:</label>
                         </div>
-                        <input type="text" id="username" />
+                        <input type="text" id="username" name="username" />
                         <div className='constraint'></div>
                     </div>
                     <div className="form-group">
                         <div className="validity-container">
                             <label htmlFor='pswd'>Password:</label>
                         </div>
-                        <input type="password" id="pswd" />
+                        <input type="password" id="pswd" name="pswd" />
                         <div className='constraint'></div>
                     </div>
                     <div className="form-group">
                         <div className="validity-container">
                             <label htmlFor='confirm-pswd'>Confirm Password:</label>
                         </div>
-                        <input type="password" id="confirm-pswd" />
+                        <input type="password" id="confirm-pswd" name="confirm_pswd" />
                         <div className='constraint'></div>
                     </div>
                 </article>
