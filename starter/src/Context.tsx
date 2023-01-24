@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { FaInfoCircle, FaTimes, FaCheck } from 'react-icons/fa'
 import { createContext, useContext, useRef, useState, useEffect } from 'react'
-import {faCheck, faTimes, faInfoCircle} from '@fortawesome/free-solid-svg-icons'
 
 const Context:any | null = createContext({})
 
@@ -20,17 +19,42 @@ export const DataProvider: React.FC<{children: React.ReactElement}> = ({ childre
     const [validPswd, setValidPswd] = useState<boolean>(false)
     const [pswdFocus, setPswdFocus] = useState<boolean>(false)
 
-    const [matchPswd, setMatchPswd] = useState<string>('')
-    const [validMatch, setValidMatch] = useState<boolean>(false)
-    const [macthFocus, setMatchFocus] = useState<boolean>(false)
+    const [confirmPswd, setConfirmPswd] = useState<string>('')
+    const [validConfirm, setValidConfirm] = useState<boolean>(false)
+    const [confirmFocus, setConfirmFocus] = useState<boolean>(false)
 
-    const [errMsg, setErrMsg] = useState<string>('')
     const [success, setSuccess] = useState<boolean>(false)
+    const [errMsg, setErrMsg] = useState<string | null>(null)
+
+
+    useEffect(() => {
+        userRef.current?.focus()
+    }, [])
+
+
+    useEffect(() => {
+        // validate user
+        const resUser:boolean = USER_REGEX.test(user)
+        setValidName(resUser)
+
+        // validate password
+        const resPswd:boolean = PSWD_REGEX.test(pswd)
+        setValidPswd(resPswd)
+        const confirm = pswd === confirmPswd
+        setValidConfirm(confirm)
+    }, [user, pswd, confirmPswd])
+
+    useEffect(() => {
+        setErrMsg('')
+    }, [user, pswd, confirmPswd])
 
     return (
         <Context.Provider value={{
-            faCheck, faTimes, faInfoCircle,
-            Link, FontAwesomeIcon,
+            FaCheck, FaTimes, FaInfoCircle,
+            Link, errMsg, errRef, user, pswd,
+            confirmPswd, userRef, setUser, setPswd,
+            setConfirmPswd, setUserFocus, validName,
+            userFocus,
         }}>
             {children}
         </Context.Provider>
@@ -39,7 +63,7 @@ export const DataProvider: React.FC<{children: React.ReactElement}> = ({ childre
 
 const userContext: any = () => {
     const context = useContext(Context)
-    if (context === 'undefined') {
+    if (context === undefined) {
         throw new Error('Use Provider')
     }
     return context
