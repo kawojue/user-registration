@@ -20,6 +20,7 @@
     "@types/react-dom": "^18.0.9",
     "@vitejs/plugin-react": "^3.0.0",
     "autoprefixer": "^10.4.13",
+    "axios": "^1.2.3",
     "postcss": "^8.4.21",
     "react-icons": "^4.7.1",
     "react-router-dom": "^6.7.0",
