@@ -38,7 +38,7 @@ body {
 }
 
 .validity-container {
-    @apply flex gap-3;
+    @apply flex gap-3 items-center;
 }
 
 label {
@@ -80,4 +80,21 @@ input:focus {
 
 .user-route a {
     @apply underline;
+}
+
+.constraint {
+    @apply w-full px-3 py-2 bg-pry-clr-1 text-pry-clr-0 rounded-lg mt-1.5 flex gap-3 text-[14px];
+}
+
+.valid,
+.invalid {
+    @apply text-xl;
+}
+
+.valid {
+    @apply text-green-400;
+}
+
+.invalid {
+    @apply text-red-500;
 }
