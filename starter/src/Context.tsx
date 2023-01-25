@@ -54,7 +54,7 @@ export const DataProvider: React.FC<{children: React.ReactElement}> = ({ childre
             Link, errMsg, errRef, user, pswd,
             confirmPswd, userRef, setUser, setPswd,
             setConfirmPswd, setUserFocus, validName,
-            userFocus,
+            userFocus, pswdFocus, setPswdFocus, validPswd
         }}>
             {children}
         </Context.Provider>
