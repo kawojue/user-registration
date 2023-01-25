@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import { FaInfoCircle, FaTimes, FaCheck } from 'react-icons/fa'
-import { createContext, useContext, useRef, useState, useEffect } from 'react'
+import React, { createContext, useContext, useRef, useState, useEffect } from 'react'
 
 const Context:any | null = createContext({})
 
@@ -26,6 +26,13 @@ export const DataProvider: React.FC<{children: React.ReactElement}> = ({ childre
     const [success, setSuccess] = useState<boolean>(false)
     const [errMsg, setErrMsg] = useState<string | null>(null)
 
+    const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>):void => {
+        const value = e.target.value
+        setUser(value)
+        setPswd(value)
+        setConfirmPswd(value)
+    }
+
 
     useEffect(() => {
         userRef.current?.focus()
@@ -48,13 +55,15 @@ export const DataProvider: React.FC<{children: React.ReactElement}> = ({ childre
         setErrMsg('')
     }, [user, pswd, confirmPswd])
 
+    
+
     return (
         <Context.Provider value={{
             FaCheck, FaTimes, FaInfoCircle,
             Link, errMsg, errRef, user, pswd,
-            confirmPswd, userRef, setUser, setPswd,
-            setConfirmPswd, setUserFocus, validName,
-            userFocus, pswdFocus, setPswdFocus, validPswd
+            confirmPswd, userRef, setUserFocus,
+            validName, userFocus, pswdFocus,
+            setPswdFocus, validPswd, onChangeHandler
         }}>
             {children}
         </Context.Provider>
