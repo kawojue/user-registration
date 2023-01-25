@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom"
 
 const Login:React.FC = () => {
+    document.title = "Login"
+    
     return (
         <section className="container-center">
             <h3 className="section-h3">Login</h3>
