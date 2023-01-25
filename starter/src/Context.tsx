@@ -6,7 +6,7 @@ const Context:any | null = createContext({})
 
 export const DataProvider: React.FC<{children: React.ReactElement}> = ({ children }) => {
     const USER_REGEX:RegExp = /^[a-zA-Z][a-zA-Z0-9-_]{3,23}$/
-    const PSWD_REGEX:RegExp = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,32}$/
+    const PSWD_REGEX:RegExp = /^(?=(.*[a-z]){3,})(?=(.*[A-Z]){2,})(?=(.*[0-9]){2,})(?=(.*[!@#$%^&*()\-__+.]){1,}).{8,}$/
 
     const errRef = useRef<any>()
     const userRef = useRef<any>()
@@ -25,13 +25,6 @@ export const DataProvider: React.FC<{children: React.ReactElement}> = ({ childre
 
     const [success, setSuccess] = useState<boolean>(false)
     const [errMsg, setErrMsg] = useState<string | null>(null)
-
-    const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>):void => {
-        const value = e.target.value
-        setUser(value)
-        setPswd(value)
-        setConfirmPswd(value)
-    }
 
 
     useEffect(() => {
@@ -63,7 +56,9 @@ export const DataProvider: React.FC<{children: React.ReactElement}> = ({ childre
             Link, errMsg, errRef, user, pswd,
             confirmPswd, userRef, setUserFocus,
             validName, userFocus, pswdFocus,
-            setPswdFocus, validPswd, onChangeHandler
+            setPswdFocus, validPswd, setUser,
+            setPswd, setConfirmPswd, validConfirm,
+            setConfirmFocus
         }}>
             {children}
         </Context.Provider>
