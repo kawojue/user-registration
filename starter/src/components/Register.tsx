@@ -1,6 +1,8 @@
 import userContext from "../Context"
 
 const Register: React.FC = () => {
+    document.title = "Register"
+
     const {
         Link, errMsg, errRef,
         user, pswd, confirmPswd, userRef,
