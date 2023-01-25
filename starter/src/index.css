@@ -46,7 +46,7 @@ label {
 }
 
 input {
-    @apply rounded-md p-0.5 text-pry-clr-1 text-[18px] font-cabin bg-white outline-none;
+    @apply rounded-md p-0.5 text-pry-clr-1 text-[18px] font-cabin bg-white outline-none w-full;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
 }
 
@@ -98,4 +98,12 @@ input:focus {
 
 .invalid {
     @apply text-red-500;
+}
+
+.pswd-container {
+    @apply relative;
+}
+
+.eye {
+    @apply absolute top-2 right-3 text-pry-clr-1 text-xl;
 }
