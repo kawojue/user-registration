@@ -83,7 +83,8 @@ input:focus {
 }
 
 .constraint {
-    @apply w-full px-3 py-2 bg-pry-clr-1 text-pry-clr-0 rounded-lg mt-1.5 flex gap-3 text-[14px];
+    @apply w-full px-2 py-1.5 bg-pry-clr-1 text-pry-clr-0 rounded-lg mt-1.5 flex gap-3 text-[14px];
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
 .valid,
