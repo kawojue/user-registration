@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { AiFillEyeInvisible, AiFillEye } from 'react-icons/ai'
 import { FaInfoCircle, FaTimes, FaCheck } from 'react-icons/fa'
 import React, { createContext, useContext, useRef, useState, useEffect } from 'react'
 
@@ -23,9 +24,9 @@ export const DataProvider: React.FC<{children: React.ReactElement}> = ({ childre
     const [validConfirm, setValidConfirm] = useState<boolean>(false)
     const [confirmFocus, setConfirmFocus] = useState<boolean>(false)
 
-    const [success, setSuccess] = useState<boolean>(false)
     const [errMsg, setErrMsg] = useState<string | null>(null)
-
+    const [showPswd, setShowPswd] = useState<boolean>(false)
+    const [success, setSuccess] = useState<boolean>(false)
 
     useEffect(() => {
         userRef.current?.focus()
@@ -58,7 +59,8 @@ export const DataProvider: React.FC<{children: React.ReactElement}> = ({ childre
             validName, userFocus, pswdFocus,
             setPswdFocus, validPswd, setUser,
             setPswd, setConfirmPswd, validConfirm,
-            setConfirmFocus
+            setConfirmFocus, showPswd, setShowPswd,
+            AiFillEyeInvisible, AiFillEye
         }}>
             {children}
         </Context.Provider>
