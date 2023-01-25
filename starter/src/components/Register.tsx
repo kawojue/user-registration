@@ -8,8 +8,12 @@ const Register: React.FC = () => {
         user, pswd, confirmPswd, userRef,
         setUserFocus, validName, userFocus,
         FaInfoCircle, FaTimes, FaCheck, validPswd,
-        pswdFocus, setPswdFocus, onChangeHandler
+        pswdFocus, setPswdFocus, setUser, setPswd,
+        setConfirmPswd, setConfirmFocus, validConfirm,
+        AiFillEyeInvisible, AiFillEye, showPswd, setShowPswd
     } = userContext()
+
+    const isValid:boolean = validName && validPswd && validConfirm
 
     return (
         <section className="container-center">
@@ -30,7 +34,7 @@ const Register: React.FC = () => {
                             </div>
                         </article>
                         <input type="text" id="username" name="username" autoComplete="off"
-                            ref={userRef} value={user} onChange={e => onChangeHandler(e)}
+                            ref={userRef} value={user} onChange={e => setUser(e.target.value)}
                             onBlur={() => setUserFocus(false)} onFocus={() => setUserFocus(true)}
                             aria-invalid={validName ? "false" : "true"} aria-describedby="uidnote" />
                         <article
@@ -39,31 +43,57 @@ const Register: React.FC = () => {
                             <p id="uidnote">
                                 4 to 23 characters. <br />
                                 Must begin with a letter. <br />
-                                Symbols are allowed.
+                                Only hyphens, underscores are allowed.
                             </p>
                         </article>
                     </div>
                     <div className="form-group">
-                        <div className="validity-container">
-                            <label htmlFor='pswd'>Password:</label>
-                        </div>
-                        <input type="password" id="pswd" name="pswd"
-                        value={pswd} onChange={e => onChangeHandler(e)}
-                        onFocus={() => setPswdFocus(true)}
-                        onBlur={() => setPswdFocus(false)}
-                        aria-invalid={validPswd ? "false": "true"} />
-                        <div className='constraint'></div>
+                        <article className="validity-container">
+                            <label htmlFor='pswd'>
+                                Password:
+                            </label>
+                            <div>
+                                <FaCheck className={validPswd ? 'valid': 'hidden'} />
+                                <FaTimes className={validPswd || !pswd ? 'hidden': 'invalid'} />
+                            </div>
+                        </article>
+                        <article className="pswd-container">
+                            <input type={showPswd ? 'text': 'password'} id="pswd" name="pswd"
+                            value={pswd} onChange={e => setPswd(e.target.value)}
+                            onFocus={() => setPswdFocus(true)}
+                            onBlur={() => setPswdFocus(false)}
+                            aria-invalid={validPswd ? "false": "true"} />
+                            <button className="eye" onClick={() => setShowPswd(!showPswd)}
+                            type="button">
+                                {showPswd ? <AiFillEye/> : <AiFillEyeInvisible/>}
+                            </button>
+                        </article>
+                        <article
+                        className={pswdFocus && pswd && !validPswd ? 'constraint' : 'hidden'}>
+                            <FaInfoCircle />
+                            <p>
+                                8 characters length <br />
+                                2 letters in Upper Case <br />
+                                1 Special Character (!@#$&*) <br />
+                                2 numerals (0-9) <br />
+                                3 letters in Lower Case <br />
+                            </p>
+                        </article>
                     </div>
                     <div className="form-group">
-                        <div className="validity-container">
-                            <label htmlFor='confirm-pswd'>Confirm Password:</label>
-                        </div>
+                        <article className="validity-container">
+                            <label htmlFor='confirm-pswd'>
+                                Confirm Password:
+                            </label>
+                        </article>
                         <input type="password" id="confirm-pswd" name="confirm_pswd" />
-                        <div className='constraint'></div>
+                        <article className='constraint'>
+                            
+                        </article>
                     </div>
                 </article>
                 <div className="btn-container">
-                    <button type="submit" className='btn'>
+                    <button type="submit" className='btn' disabled={!isValid}>
                         Sign Up
                     </button>
                 </div>
