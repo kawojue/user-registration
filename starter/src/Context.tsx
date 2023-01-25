@@ -25,8 +25,10 @@ export const DataProvider: React.FC<{children: React.ReactElement}> = ({ childre
     const [confirmFocus, setConfirmFocus] = useState<boolean>(false)
 
     const [errMsg, setErrMsg] = useState<string | null>(null)
-    const [showPswd, setShowPswd] = useState<boolean>(false)
     const [success, setSuccess] = useState<boolean>(false)
+    
+    const [showPswd, setShowPswd] = useState<boolean>(false)
+    const [showConfirmPswd, setShowConfirmPswd] = useState<boolean>(false)
 
     useEffect(() => {
         userRef.current?.focus()
@@ -41,8 +43,10 @@ export const DataProvider: React.FC<{children: React.ReactElement}> = ({ childre
         // validate password
         const resPswd:boolean = PSWD_REGEX.test(pswd)
         setValidPswd(resPswd)
-        const confirm = pswd === confirmPswd
-        setValidConfirm(confirm)
+        if (pswd) {
+            const confirm = pswd === confirmPswd
+            setValidConfirm(confirm)
+        }
     }, [user, pswd, confirmPswd])
 
     useEffect(() => {
@@ -60,7 +64,8 @@ export const DataProvider: React.FC<{children: React.ReactElement}> = ({ childre
             setPswdFocus, validPswd, setUser,
             setPswd, setConfirmPswd, validConfirm,
             setConfirmFocus, showPswd, setShowPswd,
-            AiFillEyeInvisible, AiFillEye
+            AiFillEyeInvisible, AiFillEye, confirmFocus,
+            showConfirmPswd, setShowConfirmPswd
         }}>
             {children}
         </Context.Provider>
