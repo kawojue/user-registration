@@ -6,10 +6,9 @@ const Register: React.FC = () => {
     const {
         Link, errMsg, errRef,
         user, pswd, confirmPswd, userRef,
-        setUser, setPswd, setConfirmPswd,
         setUserFocus, validName, userFocus,
         FaInfoCircle, FaTimes, FaCheck, validPswd,
-        pswdFocus, setPswdFocus
+        pswdFocus, setPswdFocus, onChangeHandler
     } = userContext()
 
     return (
@@ -31,7 +30,7 @@ const Register: React.FC = () => {
                             </div>
                         </article>
                         <input type="text" id="username" name="username" autoComplete="off"
-                            ref={userRef} value={user} onChange={e => setUser(e.target.value)}
+                            ref={userRef} value={user} onChange={e => onChangeHandler(e)}
                             onBlur={() => setUserFocus(false)} onFocus={() => setUserFocus(true)}
                             aria-invalid={validName ? "false" : "true"} aria-describedby="uidnote" />
                         <article
@@ -49,7 +48,7 @@ const Register: React.FC = () => {
                             <label htmlFor='pswd'>Password:</label>
                         </div>
                         <input type="password" id="pswd" name="pswd"
-                        value={pswd} onChange={e => setPswd(e.target.value)}
+                        value={pswd} onChange={e => onChangeHandler(e)}
                         onFocus={() => setPswdFocus(true)}
                         onBlur={() => setPswdFocus(false)}
                         aria-invalid={validPswd ? "false": "true"} />
