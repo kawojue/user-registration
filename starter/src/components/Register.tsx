@@ -8,7 +8,8 @@ const Register: React.FC = () => {
         user, pswd, confirmPswd, userRef,
         setUser, setPswd, setConfirmPswd,
         setUserFocus, validName, userFocus,
-        FaInfoCircle, FaTimes, FaCheck
+        FaInfoCircle, FaTimes, FaCheck, validPswd,
+        pswdFocus, setPswdFocus
     } = userContext()
 
     return (
@@ -47,7 +48,11 @@ const Register: React.FC = () => {
                         <div className="validity-container">
                             <label htmlFor='pswd'>Password:</label>
                         </div>
-                        <input type="password" id="pswd" name="pswd" />
+                        <input type="password" id="pswd" name="pswd"
+                        value={pswd} onChange={e => setPswd(e.target.value)}
+                        onFocus={() => setPswdFocus(true)}
+                        onBlur={() => setPswdFocus(false)}
+                        aria-invalid={validPswd ? "false": "true"} />
                         <div className='constraint'></div>
                     </div>
                     <div className="form-group">
