@@ -42,7 +42,7 @@ body {
 }
 
 label {
-    @apply text-[18px] tracking-wide;
+    @apply text-[18px] tracking-wide capitalize;
 }
 
 input {
