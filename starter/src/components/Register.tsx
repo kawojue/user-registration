@@ -10,7 +10,8 @@ const Register: React.FC = () => {
         FaInfoCircle, FaTimes, FaCheck, validPswd,
         pswdFocus, setPswdFocus, setUser, setPswd,
         setConfirmPswd, setConfirmFocus, validConfirm,
-        AiFillEyeInvisible, AiFillEye, showPswd, setShowPswd
+        AiFillEyeInvisible, AiFillEye, showPswd, setShowPswd,
+        confirmFocus, showConfirmPswd, setShowConfirmPswd
     } = userContext()
 
     const isValid:boolean = validName && validPswd && validConfirm
@@ -26,7 +27,7 @@ const Register: React.FC = () => {
                     <div className="form-group">
                         <article className="validity-container">
                             <label htmlFor='username'>
-                                Username:
+                                username:
                             </label>
                             <div>
                                 <FaCheck className={validName ? 'valid': 'hidden'} />
@@ -50,7 +51,7 @@ const Register: React.FC = () => {
                     <div className="form-group">
                         <article className="validity-container">
                             <label htmlFor='pswd'>
-                                Password:
+                                password:
                             </label>
                             <div>
                                 <FaCheck className={validPswd ? 'valid': 'hidden'} />
@@ -83,12 +84,31 @@ const Register: React.FC = () => {
                     <div className="form-group">
                         <article className="validity-container">
                             <label htmlFor='confirm-pswd'>
-                                Confirm Password:
+                                confirm password:
                             </label>
+                            <div>
+                                <FaCheck className={validConfirm ? 'valid': 'hidden'} />
+                                <FaTimes
+                                className={validConfirm || !confirmPswd ? 'hidden': 'invalid'} />
+                            </div>
                         </article>
-                        <input type="password" id="confirm-pswd" name="confirm_pswd" />
-                        <article className='constraint'>
-                            
+                        <article className="pswd-container">
+                            <input type={showConfirmPswd ? 'text': 'password'} id="confirm-pswd" name="confirm_pswd"
+                            value={confirmPswd} onChange={e => setConfirmPswd(e.target.value)}
+                            onFocus={() => setConfirmFocus(true)}
+                            onBlur={() => setConfirmFocus(false)}
+                            aria-invalid={validConfirm ? "false": "true"} />
+                            <button className="eye" onClick={() => setShowConfirmPswd(!showConfirmPswd)}
+                            type="button">
+                                {showConfirmPswd ? <AiFillEye/> : <AiFillEyeInvisible/>}
+                            </button>
+                        </article>
+                        <article
+                        className={confirmFocus && confirmPswd && !validConfirm ? 'constraint' : 'hidden'}>
+                            <FaInfoCircle />
+                            <p>
+                                Password does not match.
+                            </p>
                         </article>
                     </div>
                 </article>
