@@ -1,5 +1,5 @@
-import userContext from "../Context"
-import registerContext from "../RegisterContext"
+import userContext from "../hooks/Context"
+import registerContext from "../hooks/RegisterContext"
 
 const Register: React.FC = () => {
     document.title = "Register"
