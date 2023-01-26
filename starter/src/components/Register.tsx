@@ -78,11 +78,11 @@ const Register: React.FC = () => {
                         className={pswdFocus && pswd && !validPswd ? 'constraint' : 'hidden'}>
                             <FaInfoCircle />
                             <p>
-                                8 characters length <br />
-                                2 letters in Upper Case <br />
-                                1 Special Character (!@#$&*) <br />
-                                2 numerals (0-9) <br />
-                                3 letters in Lower Case <br />
+                                Password must contain: <br />
+                                A letter in Uppercase <br />
+                                A Special Character (!@#$&*) <br />
+                                A number (0-9) <br />
+                                Two letters in Lowercase <br />
                             </p>
                         </article>
                     </div>
