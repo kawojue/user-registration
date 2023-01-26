@@ -79,10 +79,9 @@ const Register: React.FC = () => {
                             <FaInfoCircle />
                             <p>
                                 Password must contain: <br />
-                                A letter in Uppercase <br />
                                 A Special Character (!@#$&*) <br />
                                 A number (0-9) <br />
-                                Two letters in Lowercase <br />
+                                Letters in Lowercase and Uppercase<br />
                             </p>
                         </article>
                     </div>
