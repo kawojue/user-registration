@@ -1,7 +1,7 @@
 import Login from "./components/Login"
 import Register from "./components/Register"
 import { Routes, Route } from "react-router-dom"
-import { RegisterProvider } from "./RegisterContext"
+import { RegisterProvider } from "./hooks/RegisterContext"
 
 const App: React.FC = () => {
   return (
