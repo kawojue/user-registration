@@ -4,7 +4,7 @@ const Context:any | null = createContext({})
 
 export const RegisterProvider: React.FC<{children: React.ReactElement}> = ({ children }) => {
     const USER_REGEX:RegExp = /^[a-zA-Z][a-zA-Z0-9-_]{3,23}$/
-    const PSWD_REGEX:RegExp = /^(?=(.*[a-z]){3,})(?=(.*[A-Z]){2,})(?=(.*[0-9]){2,})(?=(.*[!@#$%^&*()\-__+.]){1,}).{8,}$/
+    const PSWD_REGEX:RegExp = /^(?=(.*[a-z]){2,})(?=(.*[A-Z]){1,})(?=(.*[0-9]){1,})(?=(.*[!@#$%^&*()\-__+.]){1,}).{5,}$/
 
     const errRef = useRef<any>()
     const userRef = useRef<any>()
