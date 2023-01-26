@@ -1,18 +1,23 @@
 import userContext from "../Context"
+import registerContext from "../RegisterContext"
 
 const Register: React.FC = () => {
     document.title = "Register"
 
     const {
-        Link, errMsg, errRef,
-        user, pswd, confirmPswd, userRef,
-        setUserFocus, validName, userFocus,
-        FaInfoCircle, FaTimes, FaCheck, validPswd,
-        pswdFocus, setPswdFocus, setUser, setPswd,
-        setConfirmPswd, setConfirmFocus, validConfirm,
-        AiFillEyeInvisible, AiFillEye, showPswd, setShowPswd,
-        confirmFocus, showConfirmPswd, setShowConfirmPswd
+        AiFillEyeInvisible, AiFillEye,
+        FaInfoCircle, FaTimes, FaCheck,
+        Link
     } = userContext()
+
+    const {
+        errMsg, errRef, user, pswd,
+        confirmPswd, userRef, setUserFocus,
+        validName, userFocus, validPswd, pswdFocus,
+        setPswdFocus, setUser, setPswd, setConfirmPswd,
+        setConfirmFocus, validConfirm, showPswd, setShowPswd,
+        confirmFocus, showConfirmPswd, setShowConfirmPswd
+    } = registerContext()
 
     const isValid:boolean = validName && validPswd && validConfirm
 
