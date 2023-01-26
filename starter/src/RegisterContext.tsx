@@ -1,11 +1,8 @@
-import { Link } from 'react-router-dom'
-import { AiFillEyeInvisible, AiFillEye } from 'react-icons/ai'
-import { FaInfoCircle, FaTimes, FaCheck } from 'react-icons/fa'
 import React, { createContext, useContext, useRef, useState, useEffect } from 'react'
 
 const Context:any | null = createContext({})
 
-export const UserProvider: React.FC<{children: React.ReactElement}> = ({ children }) => {
+export const RegisterProvider: React.FC<{children: React.ReactElement}> = ({ children }) => {
     const USER_REGEX:RegExp = /^[a-zA-Z][a-zA-Z0-9-_]{3,23}$/
     const PSWD_REGEX:RegExp = /^(?=(.*[a-z]){3,})(?=(.*[A-Z]){2,})(?=(.*[0-9]){2,})(?=(.*[!@#$%^&*()\-__+.]){1,}).{8,}$/
 
@@ -57,27 +54,25 @@ export const UserProvider: React.FC<{children: React.ReactElement}> = ({ childre
 
     return (
         <Context.Provider value={{
-            FaCheck, FaTimes, FaInfoCircle,
-            Link, errMsg, errRef, user, pswd,
+            errMsg, errRef, user, pswd,
             confirmPswd, userRef, setUserFocus,
             validName, userFocus, pswdFocus,
             setPswdFocus, validPswd, setUser,
             setPswd, setConfirmPswd, validConfirm,
             setConfirmFocus, showPswd, setShowPswd,
-            AiFillEyeInvisible, AiFillEye, confirmFocus,
-            showConfirmPswd, setShowConfirmPswd
+            confirmFocus, showConfirmPswd, setShowConfirmPswd
         }}>
             {children}
         </Context.Provider>
     )
 }
 
-const userContext: any = () => {
-    const context = useContext(Context)
+const registerContext: any = () => {
+    const context:any = useContext(Context)
     if (context === undefined) {
         throw new Error('Use Provider')
     }
     return context
 }
 
-export default userContext
+export default registerContext
