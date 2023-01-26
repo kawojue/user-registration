@@ -1,7 +1,11 @@
-import { Link } from "react-router-dom"
+import userContext from '../hooks/Context'
 
 const Login:React.FC = () => {
     document.title = "Login"
+
+    const  {
+        Link
+    } = userContext()
     
     return (
         <section className="container-center">
