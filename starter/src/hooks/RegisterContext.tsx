@@ -7,7 +7,7 @@ export const RegisterProvider: React.FC<{children: React.ReactElement}> = ({ chi
     const PSWD_REGEX:RegExp = /^(?=(.*[a-z]){2,})(?=(.*[A-Z]){1,})(?=(.*[0-9]){1,})(?=(.*[!@#$%^&*()\-__+.]){1,}).{5,}$/
 
     const errRef = useRef<any>()
-    const userRef = useRef<any>()
+    const userRef = useRef<HTMLInputElement>()
 
     const [user, setUser] = useState<string>('')
     const [validName, setValidName] = useState<boolean>(false)
@@ -50,7 +50,16 @@ export const RegisterProvider: React.FC<{children: React.ReactElement}> = ({ chi
         setErrMsg('')
     }, [user, pswd, confirmPswd])
 
-    
+    const isValid:boolean = validName && validPswd && validConfirm
+
+    const handleSubmit = async (e: Event):Promise<void> => {
+        e.preventDefault()
+        if (!isValid) {
+            setErrMsg('Warning! Invalid Entry.')
+            return
+        }
+        setSuccess(true)
+    }
 
     return (
         <Context.Provider value={{
@@ -60,7 +69,8 @@ export const RegisterProvider: React.FC<{children: React.ReactElement}> = ({ chi
             setPswdFocus, validPswd, setUser,
             setPswd, setConfirmPswd, validConfirm,
             setConfirmFocus, showPswd, setShowPswd,
-            confirmFocus, showConfirmPswd, setShowConfirmPswd
+            confirmFocus, showConfirmPswd, handleSubmit,
+            setShowConfirmPswd, isValid, success
         }}>
             {children}
         </Context.Provider>
