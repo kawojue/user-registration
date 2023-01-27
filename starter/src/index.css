@@ -121,3 +121,19 @@ input:focus {
 .success {
     @apply text-xl font-medium mb-2 tracking-wider;
 }
+
+.navbar {
+    @apply py-3 px-14 bg-blue-600 tracking-widest text-xl;
+}
+
+.nav-center {
+    @apply flex justify-between;
+}
+
+.nav-center ul {
+    @apply flex gap-9;
+}
+
+.nav-center ul a {
+    @apply text-pry-clr-0;
+}
