@@ -28,10 +28,12 @@ const Register: React.FC = () => {
                 <Link to="/login">Sign in</Link>
             </article> :
             <>
-                <p ref={errRef} className={errMsg ? 'errMsg' : 'hidden'} aria-live="assertive">
-                    {errMsg}
-                </p>
-                <h3 className="section-h3">Register</h3>
+                <div className={`err-container ${errMsg ? 'errMsg' : 'hidden'}`}>
+                    <p ref={errRef} aria-live="assertive">
+                        {errMsg}
+                    </p>
+                </div>
+                <h3 className="section-h3">Sign Up</h3>
                 <form className="form" action="" method="POST"
                 onSubmit={e => handleSubmit(e)}>
                     <article className="form-center">
