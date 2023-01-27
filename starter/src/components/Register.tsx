@@ -33,7 +33,7 @@ const Register: React.FC = () => {
                         {errMsg}
                     </p>
                 </div>
-                <h3 className="section-h3">Sign Up</h3>
+                <h3 className="section-h3">Signup</h3>
                 <form className="form" action="" method="POST"
                 onSubmit={e => handleSubmit(e)}>
                     <article className="form-center">
