@@ -1,10 +1,13 @@
+import axios from '../api/create'
 import React, { createContext, useContext, useRef, useState, useEffect } from 'react'
 
 const Context:any | null = createContext({})
 
 export const RegisterProvider: React.FC<{children: React.ReactElement}> = ({ children }) => {
+    const REGISTER_URL:string = "/signup"
     const USER_REGEX:RegExp = /^[a-zA-Z][a-zA-Z0-9-_]{3,23}$/
     const PSWD_REGEX:RegExp = /^(?=(.*[a-z]){2,})(?=(.*[A-Z]){1,})(?=(.*[0-9]){1,})(?=(.*[!@#$%^&*()\-__+.]){1,}).{5,}$/
+
 
     const errRef = useRef<any>()
     const userRef = useRef<HTMLInputElement>()
@@ -58,7 +61,35 @@ export const RegisterProvider: React.FC<{children: React.ReactElement}> = ({ chi
             setErrMsg('Warning! Invalid Entry.')
             return
         }
-        setSuccess(true)
+        try {
+            const res = await axios.post(`${REGISTER_URL}`,
+            JSON.stringify({ username: user, password: pswd }), {
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                withCredentials: true
+            })
+            setSuccess(true)
+            setUser("")
+            setPswd("")
+            setConfirmPswd("")
+            console.log(res.data)
+        } catch (err: any) {
+            switch (err) {
+                case !err?.response:
+                    setErrMsg('No Server Response!')
+                    break;
+                case err.response?.status === 409:
+                    setErrMsg('Username already taken!')
+                default:
+                    setErrMsg('Registration failed!')
+                    break;
+            }
+
+            setTimeout(() => {
+                setErrMsg("")
+            }, 3000)
+        }
     }
 
     return (
