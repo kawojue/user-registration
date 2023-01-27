@@ -73,7 +73,6 @@ export const RegisterProvider: React.FC<{children: React.ReactElement}> = ({ chi
             setUser("")
             setPswd("")
             setConfirmPswd("")
-            console.log(res.data)
         } catch (err: any) {
             switch (err) {
                 case !err?.response:
@@ -88,7 +87,7 @@ export const RegisterProvider: React.FC<{children: React.ReactElement}> = ({ chi
 
             setTimeout(() => {
                 setErrMsg("")
-            }, 3000)
+            }, 5000)
         }
     }
 
