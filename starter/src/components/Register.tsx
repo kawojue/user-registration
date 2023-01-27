@@ -2,7 +2,7 @@ import userContext from "../hooks/Context"
 import registerContext from "../hooks/RegisterContext"
 
 const Register: React.FC = () => {
-    document.title = "Register"
+    document.title = "Sign Up"
 
     const {
         AiFillEyeInvisible, AiFillEye,
