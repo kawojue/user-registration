@@ -15,3 +15,5 @@ const corsOptions: ICors = {
     optionsSuccessStatus: 200,
     credentials: true
 }
+
+export default corsOptions
