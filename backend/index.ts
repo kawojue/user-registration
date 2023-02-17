@@ -4,8 +4,8 @@ import dotenv from 'dotenv'
 import mongoose from 'mongoose'
 import connectDB from './config/dbConn'
 import corsOptions from './config/corsOptions'
-import errorHandler from './middlewares/errorHandler'
 import express, { Application } from 'express'
+import errorHandler from './middlewares/errorHandler'
 
 connectDB()
 dotenv.config()
