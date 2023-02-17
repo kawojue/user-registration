@@ -9,7 +9,7 @@ interface ICors {
 const corsOptions: ICors = {
     origin: (origin: string, callback:any) => {
         if (origins.indexOf(origin) !== -1 || origin) {
-            callback(true, null)
+            callback(null, true)
         }
     },
     optionsSuccessStatus: 200,
