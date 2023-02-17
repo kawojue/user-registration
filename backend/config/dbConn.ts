@@ -1,8 +1,11 @@
-import mongoose from 'mongoose'
+import dotenv from 'dotenv'
+import * as mongoose from 'mongoose'
 
-const connectDB = async () => {
+dotenv.config()
+
+const connectDB = () => {
     try {
-        await mongoose.connect(`${process.env.DATABASE_URI}`)
+        mongoose.connect(`${process.env.DATABASE_URI}`)
     } catch (err: any) {
         console.error(err)
     }
