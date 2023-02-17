@@ -1,19 +1,11 @@
-import { origins } from "./origins"
+import { CorsOptions } from 'cors'
+import { allowedLists } from './allowedLists'
 
-interface ICors {
-    origin(origin:string, callback:any): void
-    optionsSuccessStatus: number,
-    credentials: boolean
-}
-
-const corsOptions: ICors = {
-    origin: (origin: string, callback:any) => {
-        if (origins.indexOf(origin) !== -1 || origin) {
-            callback(null, true)
-        }
-    },
+const corsOptions: CorsOptions = {
+    origin: allowedLists,
     optionsSuccessStatus: 200,
-    credentials: true
+    credentials: true,
+    methods: ['GET', 'POST']
 }
 
 export default corsOptions
