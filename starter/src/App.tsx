@@ -3,7 +3,6 @@ import Login from "./components/Login"
 import Layout from "./components/Layout"
 import Register from "./components/Register"
 import { Routes, Route } from "react-router-dom"
-import { RegisterProvider } from "./hooks/RegisterContext"
 
 const App: React.FC = () => {
   return (
@@ -11,11 +10,7 @@ const App: React.FC = () => {
     <Routes>
       <Route index element={<Home />}/>
       <Route element={<Layout />}>
-        <Route path="/signup" element={
-              <RegisterProvider>
-                <Register/>
-              </RegisterProvider>
-            } />
+        <Route path="/signup" element={<Register />} />
         <Route path="/login" element={<Login />} />
       </Route>
     </Routes>
