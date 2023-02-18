@@ -64,8 +64,8 @@ export const UserProvider: React.FC<{ children: React.ReactElement }> = ({ child
             return
         }
         try {
-            const res = await axios.post(`${REGISTER_URL}`,
-            JSON.stringify({ username: user, password: pswd }), {
+            await axios.post(`${REGISTER_URL}`,
+            JSON.stringify({ user, pswd }), {
                 headers: {
                     'Content-Type': 'application/json'
                 },
@@ -77,11 +77,15 @@ export const UserProvider: React.FC<{ children: React.ReactElement }> = ({ child
             setConfirmPswd("")
         } catch (err: any) {
             switch (err) {
-                case !err?.response:
+                case !err.response:
                     setErrMsg('No Server Response!')
                     break;
-                case err.response?.status === 409:
+                case err.response.status === 409:
                     setErrMsg('Username already taken!')
+                    break;
+                case err.response.status === 400:
+                    setErrMsg('Username and Password are required!')
+                    break;
                 default:
                     setErrMsg('Registration failed!')
                     break;
