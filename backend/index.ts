@@ -1,9 +1,10 @@
 import cors from 'cors'
 import morgan from 'morgan'
 import dotenv from 'dotenv'
-import cookie from 'cookie-parser'
 import mongoose from 'mongoose'
+import cookie from 'cookie-parser'
 import connectDB from './config/dbConn'
+import loginRoute from './routes/login'
 import signupRoute from './routes/signup'
 import corsOptions from './config/corsOptions'
 import express, { Application } from 'express'
@@ -23,6 +24,7 @@ app.use(cors(corsOptions))
 app.use(express.urlencoded({ extended: false }))
 
 // set routes
+app.use('/', loginRoute)
 app.use('/', signupRoute)
 
 mongoose.connection.once('open', () => {
