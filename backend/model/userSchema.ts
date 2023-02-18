@@ -9,7 +9,9 @@ const userShema = new Schema({
     password: {
         type: String,
         required: true
-    }
+    },
+    refreshToken: String,
+    accessToken: String
 })
 
 export default mongoose.model('userModel', userShema)
