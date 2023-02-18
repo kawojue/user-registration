@@ -10,7 +10,7 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
     <UserProvider>
       <Router>
         <Routes>
-          <Route path="/*" element={<App />}/>
+          <Route path="/auth/*" element={<App />}/>
         </Routes>
       </Router>
     </UserProvider>
