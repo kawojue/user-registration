@@ -1,5 +1,4 @@
 import userContext from "../hooks/Context"
-import registerContext from "../hooks/RegisterContext"
 
 const Register: React.FC = () => {
     document.title = "Sign Up"
@@ -7,18 +6,14 @@ const Register: React.FC = () => {
     const {
         AiFillEyeInvisible, AiFillEye,
         FaInfoCircle, FaTimes, FaCheck,
-        Link
-    } = userContext()
-
-    const {
-        errMsg, errRef, user, pswd,
+        Link, errMsg, errRef, user, pswd,
         confirmPswd, userRef, setUserFocus,
         validName, userFocus, validPswd, pswdFocus,
         setPswdFocus, setUser, setPswd, setConfirmPswd,
         setConfirmFocus, validConfirm, showPswd, setShowPswd,
         confirmFocus, showConfirmPswd, setShowConfirmPswd,
         handleSubmit, isValid, success
-    } = registerContext()
+    } = userContext()
 
     return (
         <section className="container-center">
@@ -55,7 +50,7 @@ const Register: React.FC = () => {
                             className={userFocus && user && !validName ? 'constraint': 'hidden'}>
                                 <FaInfoCircle />
                                 <p id="uidnote">
-                                    4 to 23 characters. <br />
+                                    3 to 23 characters. <br />
                                     Must begin with a letter. <br />
                                     Only hyphens, underscores are allowed.
                                 </p>
@@ -87,8 +82,8 @@ const Register: React.FC = () => {
                                 <FaInfoCircle />
                                 <p>
                                     Password must contain: <br />
-                                    A Special Character (!@#$&*) <br />
-                                    A number (0-9) <br />
+                                    At least a Special Character (!@#$&*) <br />
+                                    At least a number (0-9) <br />
                                     Letters in Lowercase and Uppercase<br />
                                 </p>
                             </article>
