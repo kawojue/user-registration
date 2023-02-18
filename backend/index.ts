@@ -1,6 +1,7 @@
 import cors from 'cors'
 import morgan from 'morgan'
 import dotenv from 'dotenv'
+import cookie from 'cookie-parser'
 import mongoose from 'mongoose'
 import connectDB from './config/dbConn'
 import corsOptions from './config/corsOptions'
@@ -13,12 +14,12 @@ const PORT = process.env.PORT
 const app: Application = express()
 
 // set middlewares
+app.use(cookie())
 app.use(errorHandler)
 app.use(express.json())
 app.use(morgan('tiny'))
 app.use(cors(corsOptions))
 app.use(express.urlencoded({ extended: false }))
-
 
 mongoose.connection.once('open', () => {
     console.log('Connected to MongoDB!')
