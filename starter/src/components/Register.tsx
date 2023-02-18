@@ -20,7 +20,7 @@ const Register: React.FC = () => {
             {success ? 
             <article className="user-route">
                 <p className="success">Success!</p>
-                <Link to="/login">Sign in</Link>
+                <Link to="/auth/login">Sign in</Link>
             </article> :
             <>
                 <div className={`err-container ${errMsg ? 'errMsg' : 'hidden'}`}>
@@ -128,7 +128,7 @@ const Register: React.FC = () => {
                 </form>
                 <article className="user-route">
                     <p>Already have an account?</p>
-                    <Link to="/login">Sign in</Link>
+                    <Link to="/auth/login">Sign in</Link>
                 </article>
             </>
             }
