@@ -23,12 +23,12 @@ export const handleLogin = async (req: Request, res: Response) => {
         const accessToken: Secret = jwt.sign(
             { "username": user },
             `${process.env.SECRET_ACCESS_TOKEN}`,
-            { expiresIn: '1min' }
+            { expiresIn: '5min' }
         )
         const refreshToken: Secret = jwt.sign(
             { "username": user },
             `${process.env.SECRET_REFRESH_TOKEN}`,
-            { expiresIn: '1d' }
+            { expiresIn: '7d' }
         )
 
         existingUser.refreshToken = refreshToken
