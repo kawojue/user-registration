@@ -2,9 +2,14 @@ import dotenv from 'dotenv'
 import * as bcrypt from 'bcrypt'
 import User from '../model/userSchema'
 import jwt, { Secret } from 'jsonwebtoken'
-import { Request, Response } from 'express'
+import { CookieOptions, Request, Response } from 'express'
 
 dotenv.config()
+
+const clearCookies: CookieOptions = {
+    httpOnly: true,
+    maxAge: 7 * 24 * 60 * 60 * 1000
+}
 
 export const handleLogin = async (req: Request, res: Response) => {
     const { user, pswd } = req.body
@@ -28,7 +33,7 @@ export const handleLogin = async (req: Request, res: Response) => {
 
         existingUser.refreshToken = refreshToken
         await existingUser.save()
-        res.cookie('loginCookie', refreshToken, { httpOnly: true, maxAge: 7 * 24 * 60 * 60 * 1000 })
+        res.cookie('loginCookie', refreshToken, clearCookies)
         return res.status(200).json({
             success: true,
             message: accessToken
