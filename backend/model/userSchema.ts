@@ -1,7 +1,6 @@
 import * as mongoose from 'mongoose'
-const Schema = mongoose.Schema
 
-const userShema = new Schema({
+const userShema = new mongoose.Schema({
     username: {
         type: String,
         required: true
@@ -10,8 +9,7 @@ const userShema = new Schema({
         type: String,
         required: true
     },
-    refreshToken: String,
-    accessToken: String
+    refreshToken: String
 })
 
 export default mongoose.model('userModel', userShema)
