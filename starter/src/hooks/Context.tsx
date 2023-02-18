@@ -7,7 +7,7 @@ import React, { createContext, useContext, useRef, useState, useEffect } from 'r
 const Context: any | null = createContext({})
 
 export const UserProvider: React.FC<{ children: React.ReactElement }> = ({ children }) => {
-    const REGISTER_URL:string = "/signup"
+    const REGISTER_URL:string = "/auth/signup"
     const USER_REGEX:RegExp = /^[a-zA-Z][a-zA-Z0-9-_]{2,23}$/
     const PSWD_REGEX:RegExp = /^(?=(.*[a-z]){2,})(?=(.*[A-Z]){1,})(?=(.*[0-9]){1,})(?=(.*[!@#$%^&*()\-__+.]){1,}).{5,}$/
 
