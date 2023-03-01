@@ -60,40 +60,30 @@ export const UserProvider: React.FC<{ children: React.ReactElement }> = ({ child
     const handleSubmit = async (e: Event):Promise<void> => {
         e.preventDefault()
         if (!isValid) {
-            setErrMsg('Warning! Invalid Entry.')
-            return
+            return setErrMsg('Warning! Invalid Entry.')
         }
-        try {
-            await axios.post(`${REGISTER_URL}`,
-            JSON.stringify({ user, pswd }), {
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                withCredentials: true
-            })
-            setSuccess(true)
-            setUser("")
-            setPswd("")
-            setConfirmPswd("")
-        } catch (err: any) {
-            switch (err) {
-                case !err.response:
-                    setErrMsg('No Server Response!')
-                    break;
-                case err.response.status === 409:
-                    setErrMsg('Username already taken!')
-                    break;
-                case err.response.status === 400:
-                    setErrMsg('Username and Password are required!')
-                    break;
-                default:
-                    setErrMsg('Registration failed!')
-                    break;
-            }
 
+        const res = await axios.post(`${REGISTER_URL}`,
+        JSON.stringify({ user, pswd }), {
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            withCredentials: true
+        }).catch(err => {
+            const statusCode = err.response.status
+            if (statusCode === 409) {
+                setErrMsg("User already exists.")
+            } else if (statusCode === 400) {
+                setErrMsg("Invalid credentials.")
+            }
+        })
+
+        if (res) {
+            setSuccess(true)
+        } else {
             setTimeout(() => {
                 setErrMsg("")
-            }, 5000)
+            }, 3500);
         }
     }
 
