@@ -10,8 +10,8 @@ const App: React.FC = () => {
     <Routes>
       <Route index element={<Home />}/>
       <Route element={<Layout />}>
-        <Route path="/signup" element={<Register />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/auth/signup" element={<Register />} />
+        <Route path="/auth/login" element={<Login />} />
       </Route>
     </Routes>
   </>
