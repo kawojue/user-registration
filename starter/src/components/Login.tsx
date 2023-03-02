@@ -1,11 +1,26 @@
+import Button from './Button'
 import userContext from '../hooks/Context'
+import { useRef, useState, useEffect } from 'react'
 
 const Login:React.FC = () => {
     document.title = "Login"
 
     const  {
-        Link
+        Link, LOGIN_URL,
+        showPswd, setShowPswd,
     } = userContext()
+
+    const errRef = useRef<any>()
+    const userRef = useRef<HTMLInputElement>()
+
+    const [user, setUser] = useState<string>("")
+    const [pswd, setPswd] = useState<string>("")
+    const [errMsg, setErrMsg] = useState<string>("")
+    const [success, setSuccess] = useState<boolean>(false)
+
+    useEffect(() => {
+        userRef.current?.focus()
+    }, [])
     
     return (
         <section className="container-center">
@@ -17,14 +32,14 @@ const Login:React.FC = () => {
                             <label htmlFor='username'>Username:</label>
                         </div>
                         <input type="text" id="username" name="username" />
-                        <div className='constraint'></div>
                     </div>
                     <div className="form-group">
-                        <div className="validity-container">
-                            <label htmlFor='pswd'>Password:</label>
-                        </div>
-                        <input type="password" id="pswd" name="pswd" />
-                        <div className='constraint'></div>
+                        <label htmlFor='pswd'>Password:</label>
+                        <article className="pswd-container">
+                            <input type={showPswd ? 'text': 'password'}
+                            id="pswd" name="password" />
+                            <Button get={showPswd} set={setShowPswd} />
+                        </article>
                     </div>
                 </article>
                 <div className="btn-container">
