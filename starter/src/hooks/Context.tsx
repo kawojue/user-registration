@@ -62,31 +62,30 @@ export const UserProvider: React.FC<{ children: React.ReactElement }> = ({ child
             return setErrMsg('Warning! Invalid Entry.')
         }
 
-        const res = await axios.post(`${REGISTER_URL}`,
+        await axios.post(`${REGISTER_URL}`,
         JSON.stringify({ user, pswd }), {
             headers: {
                 'Content-Type': 'application/json'
             },
             withCredentials: true
-        }).catch(err => {
+        })
+        .then(_ => {
+            setUser("")
+            setPswd("")
+            setConfirmPswd("")
+            setSuccess(true)
+        })
+        .catch(err => {
             const statusCode = err.response.status
             if (statusCode === 409) {
                 setErrMsg("User already exists.")
             } else if (statusCode === 400) {
                 setErrMsg("Invalid credentials.")
             }
-        })
-
-        if (res) {
-            setUser("")
-            setPswd("")
-            setConfirmPswd("")
-            setSuccess(true)
-        } else {
             setTimeout(() => {
                 setErrMsg("")
             }, 3500);
-        }
+        })
     }
 
     return (
