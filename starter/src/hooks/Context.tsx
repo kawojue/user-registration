@@ -78,6 +78,9 @@ export const UserProvider: React.FC<{ children: React.ReactElement }> = ({ child
         })
 
         if (res) {
+            setUser("")
+            setPswd("")
+            setConfirmPswd("")
             setSuccess(true)
         } else {
             setTimeout(() => {
