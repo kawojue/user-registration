@@ -2,10 +2,11 @@ import dotenv from 'dotenv'
 import User from '../model/userSchema'
 import jwt, { Secret } from 'jsonwebtoken'
 import { Request, Response } from 'express'
+const asyncHandler = require('express-async-handler')
 
 dotenv.config()
 
-export const handleRefreshToken = async (req: Request, res: Response) => {
+export const handleRefreshToken = asyncHandler(async (req: Request, res: Response) => {
     const cookies = req.cookies
     if (!cookies?.loginCookie) return res.sendStatus(401) // unauthorized
 
@@ -27,5 +28,4 @@ export const handleRefreshToken = async (req: Request, res: Response) => {
             res.status(200).json({ success: true, message: accessToken })
         }
     )
-
-}
+})
