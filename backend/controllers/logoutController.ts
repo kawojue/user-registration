@@ -1,11 +1,12 @@
 import User from '../model/userSchema'
+const asyncHandler = require('express-async-handler')
 import { CookieOptions, Request, Response } from 'express'
 
 const clearCookies: CookieOptions = {
     httpOnly: true
 }
 
-export const handleLogout = async (req: Request, res: Response) => {
+export const handleLogout = asyncHandler (async (req: Request, res: Response) => {
     const cookies:any = req.cookies
     if (!cookies?.loginCookie) return res.sendStatus(204)
 
@@ -23,4 +24,4 @@ export const handleLogout = async (req: Request, res: Response) => {
 
     res.clearCookie('loginCookie', clearCookies)
     res.sendStatus(204)
-}
+})
