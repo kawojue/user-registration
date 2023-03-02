@@ -7,7 +7,7 @@ interface IButton {
 
 const Button: React.FC<IButton> = ({get, set}) => {
     return (
-        <button className="eye" type="button"onClick={() => set(!get)}>
+        <button className="eye" type="button" onClick={() => set(!get)}>
             {get ? <AiFillEye /> : <AiFillEyeInvisible />}
         </button>
     )
