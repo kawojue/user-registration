@@ -1,18 +1,17 @@
+import Button from "./Button"
 import userContext from "../hooks/Context"
+import { FaInfoCircle, FaTimes, FaCheck } from 'react-icons/fa'
 
 const Register: React.FC = () => {
     document.title = "Sign Up"
 
     const {
-        AiFillEyeInvisible, AiFillEye,
-        FaInfoCircle, FaTimes, FaCheck,
         Link, errMsg, errRef, user, pswd,
         confirmPswd, userRef, setUserFocus,
         validName, userFocus, validPswd, pswdFocus,
         setPswdFocus, setUser, setPswd, setConfirmPswd,
         setConfirmFocus, validConfirm, showPswd, setShowPswd,
-        confirmFocus, showConfirmPswd, setShowConfirmPswd,
-        handleSubmit, isValid, success
+        confirmFocus, handleSubmit, isValid, success
     } = userContext()
 
     return (
@@ -45,7 +44,7 @@ const Register: React.FC = () => {
                             <input type="text" id="username" name="username" autoComplete="off"
                                 ref={userRef} value={user} onChange={e => setUser(e.target.value)}
                                 onBlur={() => setUserFocus(false)} onFocus={() => setUserFocus(true)}
-                                aria-invalid={validName ? "false" : "true"} aria-describedby="uidnote" />
+                                aria-invalid={validName ? "false" : "true"} aria-describedby="uidnote" max={23}/>
                             <article
                             className={userFocus && user && !validName ? 'constraint': 'hidden'}>
                                 <FaInfoCircle />
@@ -71,11 +70,8 @@ const Register: React.FC = () => {
                                 value={pswd} onChange={e => setPswd(e.target.value)}
                                 onFocus={() => setPswdFocus(true)}
                                 onBlur={() => setPswdFocus(false)}
-                                aria-invalid={validPswd ? "false": "true"} />
-                                <button className="eye" onClick={() => setShowPswd(!showPswd)}
-                                type="button">
-                                    {showPswd ? <AiFillEye/> : <AiFillEyeInvisible/>}
-                                </button>
+                                aria-invalid={validPswd ? "false": "true"} max={89} />
+                                <Button get={showPswd} set={setShowPswd}/>
                             </article>
                             <article
                             className={pswdFocus && pswd && !validPswd ? 'constraint' : 'hidden'}>
@@ -99,18 +95,12 @@ const Register: React.FC = () => {
                                     className={validConfirm || !confirmPswd ? 'hidden': 'invalid'} />
                                 </div>
                             </article>
-                            <article className="pswd-container">
-                                <input id="confirm-pswd" name="confirm_pswd"
-                                type={showConfirmPswd ? 'text': 'password'}
-                                value={confirmPswd} onChange={e => setConfirmPswd(e.target.value)}
-                                onFocus={() => setConfirmFocus(true)}
-                                onBlur={() => setConfirmFocus(false)}
-                                aria-invalid={validConfirm ? "false": "true"} />
-                                <button className="eye" type="button"
-                                onClick={() => setShowConfirmPswd(!showConfirmPswd)}>
-                                    {showConfirmPswd ? <AiFillEye/> : <AiFillEyeInvisible/>}
-                                </button>
-                            </article>
+                            <input id="confirm-pswd" name="confirm_pswd"
+                            type={showPswd ? 'text': 'password'}
+                            value={confirmPswd} onChange={e => setConfirmPswd(e.target.value)}
+                            onFocus={() => setConfirmFocus(true)}
+                            onBlur={() => setConfirmFocus(false)}
+                            aria-invalid={validConfirm ? "false": "true"} />
                             <article className={confirmFocus && confirmPswd &&
                             !validConfirm ? 'constraint' : 'hidden'}>
                                 <FaInfoCircle />
