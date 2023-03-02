@@ -33,9 +33,8 @@ export const UserProvider: React.FC<{ children: React.ReactElement }> = ({ child
     const [showConfirmPswd, setShowConfirmPswd] = useState<boolean>(false)
 
     useEffect(() => {
-        userRef.current?.focus()
-    }, [])
-
+        setErrMsg('')
+    }, [user, pswd, confirmPswd])
 
     useEffect(() => {
         // validate user
@@ -52,8 +51,8 @@ export const UserProvider: React.FC<{ children: React.ReactElement }> = ({ child
     }, [user, pswd, confirmPswd])
 
     useEffect(() => {
-        setErrMsg('')
-    }, [user, pswd, confirmPswd])
+        userRef.current?.focus()
+    }, [])
 
     const isValid:boolean = validName && validPswd && validConfirm
 
