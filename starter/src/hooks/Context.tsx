@@ -1,15 +1,14 @@
 import axios from '../api/create'
 import { Link } from 'react-router-dom'
-import { AiFillEyeInvisible, AiFillEye } from 'react-icons/ai'
-import { FaInfoCircle, FaTimes, FaCheck } from 'react-icons/fa'
 import React, { createContext, useContext, useRef, useState, useEffect } from 'react'
 
 const Context: any | null = createContext({})
 
 export const UserProvider: React.FC<{ children: React.ReactElement }> = ({ children }) => {
+    const LOGIN_URL:string = "auth/login"
     const REGISTER_URL:string = "/auth/signup"
     const USER_REGEX:RegExp = /^[a-zA-Z][a-zA-Z0-9-_]{2,23}$/
-    const PSWD_REGEX:RegExp = /^(?=(.*[a-z]){2,})(?=(.*[A-Z]){1,})(?=(.*[0-9]){1,})(?=(.*[!@#$%^&*()\-__+.]){1,}).{5,}$/
+    const PSWD_REGEX:RegExp = /^(?=(.*[a-z]){2,})(?=(.*[A-Z]){1,})(?=(.*[0-9]){1,})(?=(.*[!@#$%^&*()\-__+.]){1,}).{5,89}$/
 
     const errRef = useRef<any>()
     const userRef = useRef<HTMLInputElement>()
@@ -54,6 +53,10 @@ export const UserProvider: React.FC<{ children: React.ReactElement }> = ({ child
         userRef.current?.focus()
     }, [])
 
+    useEffect(() => {
+        setErrMsg("")
+    }, [user, pswd])
+
     const isValid:boolean = validName && validPswd && validConfirm
 
     const handleSubmit = async (e: Event):Promise<void> => {
@@ -81,6 +84,8 @@ export const UserProvider: React.FC<{ children: React.ReactElement }> = ({ child
                 setErrMsg("User already exists.")
             } else if (statusCode === 400) {
                 setErrMsg("Invalid credentials.")
+            } else {
+                setErrMsg("Server Error!")
             }
             setTimeout(() => {
                 setErrMsg("")
@@ -90,8 +95,6 @@ export const UserProvider: React.FC<{ children: React.ReactElement }> = ({ child
 
     return (
         <Context.Provider value={{
-            AiFillEyeInvisible, AiFillEye,
-            FaInfoCircle, FaTimes, FaCheck,
             Link, errMsg, errRef, user, pswd,
             confirmPswd, userRef, setUserFocus,
             validName, userFocus, pswdFocus,
@@ -99,7 +102,8 @@ export const UserProvider: React.FC<{ children: React.ReactElement }> = ({ child
             setPswd, setConfirmPswd, validConfirm,
             setConfirmFocus, showPswd, setShowPswd,
             confirmFocus, showConfirmPswd, handleSubmit,
-            setShowConfirmPswd, isValid, success
+            setShowConfirmPswd, isValid, success,
+            LOGIN_URL
         }}>
             {children}
         </Context.Provider>
@@ -110,7 +114,6 @@ const userContext: any = () => {
     const context:any = useContext(Context)
     if (context ===  undefined) {
         throw new Error("___");
-        
     }
     return context
 }
