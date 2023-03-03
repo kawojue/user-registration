@@ -81,7 +81,7 @@ export const UserProvider: React.FC<{ children: React.ReactElement }> = ({ child
         .catch(err => {
             const statusCode = err.response?.status
             if (statusCode === 409) {
-                setErrMsg("User already exists.")
+                setErrMsg("Username taken.")
             } else if (statusCode === 400) {
                 setErrMsg("Invalid credentials.")
             } else {
