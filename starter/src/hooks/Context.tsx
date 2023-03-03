@@ -103,7 +103,7 @@ export const UserProvider: React.FC<{ children: React.ReactElement }> = ({ child
             setConfirmFocus, showPswd, setShowPswd,
             confirmFocus, showConfirmPswd, handleSubmit,
             setShowConfirmPswd, isValid, success,
-            LOGIN_URL
+            LOGIN_URL, setErrMsg, setSuccess
         }}>
             {children}
         </Context.Provider>
