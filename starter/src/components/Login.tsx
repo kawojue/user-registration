@@ -1,22 +1,20 @@
 import Button from './Button'
+import axios from '../api/create'
 import userContext from '../hooks/Context'
-import { useRef, useState, useEffect } from 'react'
+import { useRef, useState, useEffect, FormEvent } from 'react'
 
 const Login:React.FC = () => {
     document.title = "Login"
 
     const  {
-        Link, LOGIN_URL,
+        Link, LOGIN_URL, errRef,
         showPswd, setShowPswd,
+        errMsg, setErrMsg, success,
+        setSuccess, userRef
     } = userContext()
-
-    const errRef = useRef<any>()
-    const userRef = useRef<HTMLInputElement>(null)
 
     const [user, setUser] = useState<string>("")
     const [pswd, setPswd] = useState<string>("")
-    const [errMsg, setErrMsg] = useState<string>("")
-    const [success, setSuccess] = useState<boolean>(false)
 
     const isValid = Boolean(user) && Boolean(pswd)
 
@@ -27,6 +25,38 @@ const Login:React.FC = () => {
     useEffect(() => {
         setErrMsg("")
     }, [user, pswd])
+
+    const handleSubmit = async (e: FormEvent<HTMLFormElement>):Promise<void> => {
+        e.preventDefault()
+        if (!isValid) {
+            setErrMsg("Invalid Entry!")
+        }
+
+        await axios.post(`${LOGIN_URL}`,
+        JSON.stringify({ user, pswd }),
+        {
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            withCredentials: true
+        }).then(_ => {
+            console.log(_)
+            setSuccess(true)
+        }).catch(err => {
+            const statusCode = err.response.status
+            if (statusCode === 400) {
+                setErrMsg("invalid Credentials.")
+            } else if (statusCode ===  409) {
+                setErrMsg("User does not exists.")
+            } else if (statusCode === 401) {
+                setErrMsg("Password is incorrect")
+            }else if (statusCode === 403) {
+                setErrMsg("Try again later.")
+            } else {
+                setErrMsg("Server Error.")
+            }
+        })
+    }
     
     return (
         <section className="container-center">
@@ -36,7 +66,8 @@ const Login:React.FC = () => {
                     </p>
             </div>
             <h3 className="section-h3">Login</h3>
-            <form className="form">
+            <form className="form" method='POST'
+            onSubmit={e => handleSubmit(e)}>
                 <article className="form-center">
                     <div className="form-group">
                         <label htmlFor='username'>Username:</label>
