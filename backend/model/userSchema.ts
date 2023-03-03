@@ -11,6 +11,14 @@ const userShema = new mongoose.Schema(
             type: String,
             required: true
         },
+        roles: {
+            User: {
+                type: Number,
+                default: 9823
+            },
+            Admin: Number,
+            Employee: Number,
+        },
         refreshToken: String
     },
     {
