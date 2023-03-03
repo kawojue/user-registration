@@ -18,7 +18,7 @@ const Register: React.FC = () => {
         <section className="container-center">
             {success ? 
             <article className="user-route">
-                <p className="success">Success!</p>
+                <p className="success">Account created successfully!</p>
                 <Link to="/auth/login">Sign in</Link>
             </article> :
             <>
