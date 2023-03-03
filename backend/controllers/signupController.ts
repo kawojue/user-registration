@@ -7,7 +7,7 @@ export const handleSignup = asyncHandler(async (req: Request, res: Response) => 
     const { user, pswd } = req.body
     const username = user.toLowerCase()
 
-    const existingUser = await User.findOne({ username }).exec()
+    const existingUser: any = await User.findOne({ username }).exec()
 
     if (!username || !pswd) return res.sendStatus(400)
     if (existingUser) return res.sendStatus(409)
