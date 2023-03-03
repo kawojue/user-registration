@@ -49,7 +49,7 @@ const Login:React.FC = () => {
             } else if (statusCode ===  409) {
                 setErrMsg("User does not exist.")
             } else if (statusCode === 401) {
-                setErrMsg("Password is incorrect.")
+                setErrMsg("Password is Incorrect.")
             } else {
                 setErrMsg("Internal server error.")
             }
@@ -58,7 +58,7 @@ const Login:React.FC = () => {
     
     return (
         <section className="container-center">
-            <div className={`err-container ${errMsg ? 'errMsg' : 'hidden'}`}>
+            <div className={`err-container ${errMsg ? 'errMsg offscreen' : 'hidden'}`}>
                     <p ref={errRef} aria-live="assertive">
                         {errMsg}
                     </p>
