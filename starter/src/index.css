@@ -92,11 +92,6 @@ input:focus {
     @apply text-xl;
 }
 
-.valid,
-.success {
-    @apply text-green-400;
-}
-
 .invalid,
 .errMsg {
     @apply text-red-500;
@@ -120,7 +115,7 @@ input:focus {
 }
 
 .success {
-    @apply text-xl font-medium mb-2 tracking-wider;
+    @apply text-[16px] mb-2 tracking-wide text-green-300;
 }
 
 .navbar {
