@@ -79,7 +79,7 @@ export const UserProvider: React.FC<{ children: React.ReactElement }> = ({ child
             setSuccess(true)
         })
         .catch(err => {
-            const statusCode = err.response.status
+            const statusCode = err.response?.status
             if (statusCode === 409) {
                 setErrMsg("User already exists.")
             } else if (statusCode === 400) {
