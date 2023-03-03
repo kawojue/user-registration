@@ -14,12 +14,24 @@ const clearCookies: CookieOptions = {
 
 export const handleLogin = asyncHandler(async (req: Request, res: Response) => {
     const { user, pswd } = req.body
-    if (!user || !pswd) return res.sendStatus(400) // bad request
-    const existingUser = await User.findOne({ username: user }).exec()
-    if (!existingUser) return res.sendStatus(409) // user does not exist - conflict
+    const username: string = user.toLowerCase()
+
+    const existingUser = await User.findOne({ username }).exec()
+
+    if (!user || !pswd || !existingUser) {
+        return res.status(400).json({
+            success: false,
+            message: "Invalid username or password."
+        })
+    }
 
     const checkPswd = await bcrypt.compare(pswd, existingUser.password)
-    if (!checkPswd) return res.sendStatus(401) // incorrect password - unauthorized
+    if (!checkPswd) {
+        return res.status(401).json({
+            success: false,
+            message: "Incorrect password."
+        })
+    }
     const accessToken: Secret = jwt.sign(
         { "username": user },
         `${process.env.SECRET_ACCESS_TOKEN}`,
