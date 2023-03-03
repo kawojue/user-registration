@@ -23,7 +23,7 @@ export const handleRefreshToken = asyncHandler(async (req: Request, res: Respons
             const accessToken: Secret = jwt.sign(
                 { "username": decoded.username },
                 `${process.env.SECRET_ACCESS_TOKEN}`,
-                { expiresIn: '5m'}
+                { expiresIn: '1h'}
             )
             res.status(200).json({ success: true, message: accessToken })
         }
