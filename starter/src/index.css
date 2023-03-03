@@ -116,6 +116,7 @@ input:focus {
 
 .errMsg {
     @apply text-center mb-2;
+    animation: fadeIn 800ms ease-in-out;
 }
 
 .success {
@@ -136,4 +137,14 @@ input:focus {
 
 .nav-center ul a {
     @apply text-pry-clr-0;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
 }
