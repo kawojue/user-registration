@@ -28,7 +28,7 @@ const Register: React.FC = () => {
                     </p>
                 </div>
                 <h3 className="section-h3">Signup</h3>
-                <form className="form" action="" method="POST"
+                <form className="form" method="POST"
                 onSubmit={e => handleSubmit(e)}>
                     <article className="form-center">
                         <div className="form-group">
