@@ -1,7 +1,7 @@
 import Button from './Button'
 import axios from '../api/create'
 import userContext from '../hooks/Context'
-import { useRef, useState, useEffect, FormEvent } from 'react'
+import { useState, useEffect, FormEvent } from 'react'
 
 const Login:React.FC = () => {
     document.title = "Login"
@@ -9,12 +9,12 @@ const Login:React.FC = () => {
     const  {
         Link, LOGIN_URL, errRef,
         showPswd, setShowPswd,
-        errMsg, setErrMsg, success,
-        setSuccess, userRef
+        errMsg, setErrMsg, userRef
     } = userContext()
 
     const [user, setUser] = useState<string>("")
     const [pswd, setPswd] = useState<string>("")
+    const [success, setSuccess] = useState<boolean>(false)
 
     const isValid = Boolean(user) && Boolean(pswd)
 
@@ -53,45 +53,56 @@ const Login:React.FC = () => {
             } else {
                 setErrMsg("Internal server error.")
             }
+
+            setTimeout(() => {
+                setErrMsg("")
+            }, 3500);
         })
     }
     
     return (
         <section className="container-center">
-            <div className={`err-container ${errMsg ? 'errMsg offscreen' : 'hidden'}`}>
-                    <p ref={errRef} aria-live="assertive">
-                        {errMsg}
-                    </p>
-            </div>
-            <h3 className="section-h3">Login</h3>
-            <form className="form" method='POST'
-            onSubmit={e => handleSubmit(e)}>
-                <article className="form-center">
-                    <div className="form-group">
-                        <label htmlFor='username'>Username:</label>
-                        <input type="text" id="username" name="username" ref={userRef}
-                        value={user} onChange={e => setUser(e.target.value)}/>
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor='pswd'>Password:</label>
-                        <article className="pswd-container">
-                            <input type={showPswd ? 'text': 'password'}
-                            id="pswd" name="password" value={pswd}
-                            onChange={e => setPswd(e.target.value)} />
-                            <Button get={showPswd} set={setShowPswd} />
-                        </article>
-                    </div>
-                </article>
-                <div className="btn-container">
-                    <button type="submit" className='btn' disabled={!isValid}>
-                        Login
-                    </button>
+            { success ?
+                <article className="user-route">
+                    <p className="success">Success!</p>
+                    <Link to="/">Go home.</Link>
+                </article> :
+            <>
+                <div className={`err-container ${errMsg ? 'errMsg offscreen' : 'hidden'}`}>
+                        <p ref={errRef} aria-live="assertive">
+                            {errMsg}
+                        </p>
                 </div>
-            </form>
-            <article className="user-route">
-                <p>Don't have an account?</p>
-                <Link to="/auth/signup">Sign up</Link>
-            </article>
+                <h3 className="section-h3">Login</h3>
+                <form className="form" method='POST'
+                onSubmit={e => handleSubmit(e)}>
+                    <article className="form-center">
+                        <div className="form-group">
+                            <label htmlFor='username'>Username:</label>
+                            <input type="text" id="username" name="username" ref={userRef}
+                            value={user} onChange={e => setUser(e.target.value)}/>
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor='pswd'>Password:</label>
+                            <article className="pswd-container">
+                                <input type={showPswd ? 'text': 'password'}
+                                id="pswd" name="password" value={pswd}
+                                onChange={e => setPswd(e.target.value)} />
+                                <Button get={showPswd} set={setShowPswd} />
+                            </article>
+                        </div>
+                    </article>
+                    <div className="btn-container">
+                        <button type="submit" className='btn' disabled={!isValid}>
+                            Login
+                        </button>
+                    </div>
+                </form>
+                <article className="user-route">
+                    <p>Don't have an account?</p>
+                    <Link to="/auth/signup">Sign up</Link>
+                </article>
+            </> }
         </section>
     )
 }
