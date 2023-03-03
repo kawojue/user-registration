@@ -43,17 +43,15 @@ const Login:React.FC = () => {
             console.log(_)
             setSuccess(true)
         }).catch(err => {
-            const statusCode = err.response.status
+            const statusCode = err.response?.status
             if (statusCode === 400) {
-                setErrMsg("invalid Credentials.")
+                setErrMsg("Invalid Credentials.")
             } else if (statusCode ===  409) {
-                setErrMsg("User does not exists.")
+                setErrMsg("User does not exist.")
             } else if (statusCode === 401) {
-                setErrMsg("Password is incorrect")
-            }else if (statusCode === 403) {
-                setErrMsg("Try again later.")
+                setErrMsg("Password is incorrect.")
             } else {
-                setErrMsg("Server Error.")
+                setErrMsg("Internal server error.")
             }
         })
     }
