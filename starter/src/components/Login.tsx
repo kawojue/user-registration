@@ -40,20 +40,9 @@ const Login:React.FC = () => {
             },
             withCredentials: true
         }).then(_ => {
-            console.log(_)
             setSuccess(true)
         }).catch(err => {
-            const statusCode = err.response?.status
-            if (statusCode === 400) {
-                setErrMsg("Invalid Credentials.")
-            } else if (statusCode ===  409) {
-                setErrMsg("User does not exist.")
-            } else if (statusCode === 401) {
-                setErrMsg("Password is Incorrect.")
-            } else {
-                setErrMsg("Internal server error.")
-            }
-
+            setErrMsg(err.response?.data.message)
             setTimeout(() => {
                 setErrMsg("")
             }, 3500);
@@ -64,7 +53,7 @@ const Login:React.FC = () => {
         <section className="container-center">
             { success ?
                 <article className="user-route">
-                    <p className="success">Success!</p>
+                    <p className="success">You're logged in!</p>
                     <Link to="/">Go home.</Link>
                 </article> :
             <>
