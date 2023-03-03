@@ -23,7 +23,7 @@ export const handleLogin = asyncHandler(async (req: Request, res: Response) => {
     const accessToken: Secret = jwt.sign(
         { "username": user },
         `${process.env.SECRET_ACCESS_TOKEN}`,
-        { expiresIn: '5min' }
+        { expiresIn: '1h' }
     )
     const refreshToken: Secret = jwt.sign(
         { "username": user },
