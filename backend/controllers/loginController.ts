@@ -16,7 +16,7 @@ export const handleLogin = asyncHandler(async (req: Request, res: Response) => {
     const { user, pswd } = req.body
     const username: string = user.toLowerCase()
 
-    const existingUser = await User.findOne({ username }).exec()
+    const existingUser: any = await User.findOne({ username }).exec()
 
     if (!user || !pswd || !existingUser) {
         return res.status(400).json({
@@ -26,14 +26,22 @@ export const handleLogin = asyncHandler(async (req: Request, res: Response) => {
     }
 
     const checkPswd = await bcrypt.compare(pswd, existingUser.password)
+
     if (!checkPswd) {
         return res.status(401).json({
             success: false,
             message: "Incorrect password."
         })
     }
+
+    const roles = Object.values(existingUser.roles)
     const accessToken: Secret = jwt.sign(
-        { "username": user },
+        {
+            "userInfo": {
+                "username": existingUser.username,
+                "roles": roles
+            }
+        },
         `${process.env.SECRET_ACCESS_TOKEN}`,
         { expiresIn: '1h' }
     )
@@ -45,9 +53,11 @@ export const handleLogin = asyncHandler(async (req: Request, res: Response) => {
 
     existingUser.refreshToken = refreshToken
     await existingUser.save()
+
     res.cookie('loginCookie', refreshToken, clearCookies)
-    return res.status(200).json({
+    res.status(200).json({
         success: true,
-        message: accessToken
+        accessToken,
+        roles
     })
 })
