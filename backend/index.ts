@@ -7,7 +7,6 @@ import connectDB from './config/dbConn'
 import authRoute from './routes/authRoutes'
 import corsOptions from './config/corsOptions'
 import express, { Application } from 'express'
-import errorHandler from './middlewares/errorHandler'
 
 connectDB()
 dotenv.config()
@@ -16,7 +15,6 @@ const app: Application = express()
 
 // set middlewares
 app.use(cookie())
-app.use(errorHandler)
 app.use(express.json())
 app.use(morgan('tiny'))
 app.use(cors(corsOptions))
