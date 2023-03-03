@@ -1,6 +1,6 @@
 import axios from '../api/create'
 import { Link } from 'react-router-dom'
-import React, { createContext, useContext, useRef, useState, useEffect } from 'react'
+import React, { createContext, useContext, useRef, useState, useEffect, FormEvent } from 'react'
 
 const Context: any | null = createContext({})
 
@@ -59,7 +59,7 @@ export const UserProvider: React.FC<{ children: React.ReactElement }> = ({ child
 
     const isValid:boolean = validName && validPswd && validConfirm
 
-    const handleSubmit = async (e: Event):Promise<void> => {
+    const handleSubmit = async (e: FormEvent<HTMLFormElement>):Promise<void> => {
         e.preventDefault()
         if (!isValid) {
             return setErrMsg('Warning! Invalid Entry.')
