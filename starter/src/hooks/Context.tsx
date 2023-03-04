@@ -77,7 +77,7 @@ export const UserProvider: React.FC<{ children: React.ReactElement }> = ({ child
         }
 
         await axios.post(`${REGISTER_URL}`,
-        JSON.stringify({ user, pswd }), {
+        JSON.stringify({ email, user, pswd }), {
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -114,7 +114,9 @@ export const UserProvider: React.FC<{ children: React.ReactElement }> = ({ child
             setConfirmFocus, showPswd, setShowPswd,
             confirmFocus, showConfirmPswd, handleSubmit,
             setShowConfirmPswd, isValid, success,
-            LOGIN_URL, setErrMsg, setSuccess, setAuth
+            LOGIN_URL, setErrMsg, setSuccess, setAuth,
+            email, setEmail, emailFocus, setEmailFocus,
+            validEmail
         }}>
             {children}
         </Context.Provider>
