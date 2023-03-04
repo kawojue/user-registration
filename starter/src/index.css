@@ -22,11 +22,11 @@ body {
 }
 
 .section-h3 {
-    @apply text-3xl font-medium font-roboto tracking-wider;
+    @apply text-2xl font-medium font-roboto tracking-wider;
 }
 
 .form {
-    @apply mt-5;
+    @apply mt-3;
 }
 
 .form-center {
@@ -42,11 +42,11 @@ body {
 }
 
 label {
-    @apply text-[18px] tracking-wide capitalize;
+    @apply text-[16px] tracking-wide capitalize;
 }
 
 input {
-    @apply rounded-md p-0.5 text-pry-clr-1 text-[18px] font-cabin bg-white outline-none w-full;
+    @apply rounded-md p-0.5 text-pry-clr-1 text-[17px] font-cabin bg-white outline-none w-full;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
 }
 
@@ -55,11 +55,11 @@ input:focus {
 }
 
 .btn-container {
-    @apply w-full mt-6 font-cabin;
+    @apply w-full mt-5 font-cabin;
 }
 
 .btn {
-    @apply py-2 w-full rounded-lg text-pry-clr-0 bg-blue-900 text-xl tracking-widest;
+    @apply py-1.5 w-full rounded-lg text-pry-clr-0 bg-blue-900 text-xl tracking-widest;
 }
 
 .btn:focus {
