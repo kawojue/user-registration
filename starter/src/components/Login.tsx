@@ -43,7 +43,7 @@ const Login:React.FC = () => {
         }).then(res => {
             const username: string = user.toLowerCase()
             const accessToken: string = res?.data.accessToken
-            const roles: Number[] = res?.data.roles.filter((role: any) => typeof role === 'number')
+            const roles: Number[] = res?.data.roles
             setAuth({ username, pswd, roles, accessToken })
             setSuccess(res?.data.success)
         }).catch(err => {
