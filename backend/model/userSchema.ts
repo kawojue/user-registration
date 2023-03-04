@@ -3,6 +3,10 @@ const autoincrement = require('mongoose-sequence')(mongoose)
 
 const userShema = new mongoose.Schema(
     {
+        email: {
+            type: String,
+            required: true
+        },
         username: {
             type: String,
             required: true
