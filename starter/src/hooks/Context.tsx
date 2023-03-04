@@ -95,6 +95,8 @@ export const UserProvider: React.FC<{ children: React.ReactElement }> = ({ child
                 setErrMsg("Username taken.")
             } else if (statusCode === 400) {
                 setErrMsg("Invalid credentials.")
+            } else if (statusCode === 401) {
+                setErrMsg("You already have an account.")
             } else {
                 setErrMsg("Server Error!")
             }
