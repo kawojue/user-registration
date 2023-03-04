@@ -42,8 +42,8 @@ const Login:React.FC = () => {
             withCredentials: true
         }).then(res => {
             const username: string = user.toLowerCase()
+            const roles: number[] = res?.data.roles
             const accessToken: string = res?.data.accessToken
-            const roles: Number[] = res?.data.roles
             setAuth({ username, pswd, roles, accessToken })
             setSuccess(res?.data.success)
         }).catch(err => {
