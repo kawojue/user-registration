@@ -16,6 +16,7 @@ export const handleSignup = asyncHandler(async (req: Request, res: Response) => 
 
     const hashedPswd = await bcrypt.hash(pswd, 12)
     await User.create({
+        email,
         username,
         password: hashedPswd
     })
