@@ -61,7 +61,7 @@ const Login:React.FC = () => {
     }
     
     return (
-        <section className="container-center">
+        <section className="container">
             { success ?
                 <article className="user-route">
                     <p className="success">You're logged in!</p>
