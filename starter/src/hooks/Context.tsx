@@ -13,6 +13,8 @@ export const UserProvider: React.FC<{ children: React.ReactElement }> = ({ child
     const errRef = useRef<any>()
     const userRef = useRef<HTMLInputElement>()
 
+    const [auth, setAuth] = useState<any>({})
+
     const [user, setUser] = useState<string>('')
     const [validName, setValidName] = useState<boolean>(false)
     const [userFocus, setUserFocus] = useState<boolean>(false)
@@ -103,7 +105,7 @@ export const UserProvider: React.FC<{ children: React.ReactElement }> = ({ child
             setConfirmFocus, showPswd, setShowPswd,
             confirmFocus, showConfirmPswd, handleSubmit,
             setShowConfirmPswd, isValid, success,
-            LOGIN_URL, setErrMsg, setSuccess
+            LOGIN_URL, setErrMsg, setSuccess, setAuth
         }}>
             {children}
         </Context.Provider>
