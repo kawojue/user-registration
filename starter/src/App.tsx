@@ -8,10 +8,11 @@ const App: React.FC = () => {
   return (
     <>
     <Routes>
-      <Route index element={<Home />}/>
-      <Route element={<Layout />}>
-        <Route path="/auth/signup" element={<Register />} />
+      <Route path="/" element={<Layout />}>
         <Route path="/auth/login" element={<Login />} />
+        <Route path="/auth/signup" element={<Register />} />
+
+        <Route index element={<Home />}/>
       </Route>
     </Routes>
   </>
