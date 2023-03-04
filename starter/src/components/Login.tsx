@@ -9,7 +9,8 @@ const Login:React.FC = () => {
     const  {
         Link, LOGIN_URL, errRef,
         showPswd, setShowPswd,
-        errMsg, setErrMsg, userRef
+        errMsg, setErrMsg, userRef,
+        setAuth
     } = userContext()
 
     const [user, setUser] = useState<string>("")
@@ -39,10 +40,16 @@ const Login:React.FC = () => {
                 'Content-Type': 'application/json'
             },
             withCredentials: true
-        }).then(_ => {
-            setSuccess(true)
+        }).then(res => {
+            const username: string = user.toLowerCase()
+            const accessToken: string = res?.data.accessToken
+            const roles: Number[] = res?.data.roles.filter((role: any) => typeof role === 'number')
+            setAuth({ username, pswd, roles, accessToken })
+            setSuccess(res?.data.success)
         }).catch(err => {
+            console.log(err)
             setErrMsg(err.response?.data.message)
+            setSuccess(err.response?.data.success)
             setTimeout(() => {
                 setErrMsg("")
             }, 3500);
