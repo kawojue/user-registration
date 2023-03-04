@@ -1,6 +1,7 @@
 import Home from "./components/Home"
 import Login from "./components/Login"
 import Layout from "./components/Layout"
+import Missing from "./components/Missing"
 import Register from "./components/Register"
 import { Routes, Route } from "react-router-dom"
 
@@ -13,6 +14,7 @@ const App: React.FC = () => {
         <Route path="/auth/signup" element={<Register />} />
 
         <Route index element={<Home />}/>
+        <Route path="*" element={<Missing />}/>
       </Route>
     </Routes>
   </>
