@@ -15,7 +15,7 @@ const Register: React.FC = () => {
     } = userContext()
 
     return (
-        <section className="container-center">
+        <section className="container">
             {success ? 
             <article className="user-route">
                 <p className="success">Account created successfully!</p>
