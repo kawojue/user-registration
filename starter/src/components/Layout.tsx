@@ -2,7 +2,7 @@ import { Outlet } from "react-router-dom"
 
 const Layout: React.FC = () => {
     return (
-        <main className="container">
+        <main className="app">
             <Outlet />
         </main>
     )
