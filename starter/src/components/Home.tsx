@@ -4,7 +4,7 @@ const Home: React.FC = () => {
     const { Link } = userContext()
 
     return (
-        <main className="homepage">
+        <main>
             <nav className="navbar">
                 <article className="nav-center">
                     <div>
@@ -20,6 +20,9 @@ const Home: React.FC = () => {
                     </ul>
                 </article>
             </nav>
+            <article className="container">
+
+            </article>
         </main>
     )
 }
