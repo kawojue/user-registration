@@ -5,7 +5,7 @@ const asyncHandler = require('express-async-handler')
 
 export const handleSignup = asyncHandler(async (req: Request, res: Response) => {
     const { email, user, pswd } = req.body
-    const username = user.toLowerCase()
+    const username: string = user.toLowerCase()
 
     const existingUser: any = await User.findOne({ username }).exec()
     const existingEmail: any = await User.findOne({ email }).exec()
