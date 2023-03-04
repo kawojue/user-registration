@@ -1,7 +1,7 @@
 import Button from './Button'
 import axios from '../api/create'
 import userContext from '../hooks/Context'
-import { useState, useEffect, FormEvent } from 'react'
+import { useRef, useState, useEffect, FormEvent } from 'react'
 
 const Login:React.FC = () => {
     document.title = "Login"
@@ -9,10 +9,10 @@ const Login:React.FC = () => {
     const  {
         Link, LOGIN_URL, errRef,
         showPswd, setShowPswd,
-        errMsg, setErrMsg, userRef,
-        setAuth
+        errMsg, setErrMsg, setAuth
     } = userContext()
 
+    const userRef = useRef<HTMLInputElement>(null)
     const [user, setUser] = useState<string>("")
     const [pswd, setPswd] = useState<string>("")
     const [success, setSuccess] = useState<boolean>(false)
@@ -78,7 +78,7 @@ const Login:React.FC = () => {
                 onSubmit={e => handleSubmit(e)}>
                     <article className="form-center">
                         <div className="form-group">
-                            <label htmlFor='username'>Username:</label>
+                            <label htmlFor='username'>email or username:</label>
                             <input type="text" id="username" name="username" ref={userRef}
                             value={user} onChange={e => setUser(e.target.value)}/>
                         </div>
@@ -91,6 +91,9 @@ const Login:React.FC = () => {
                                 <Button get={showPswd} set={setShowPswd} />
                             </article>
                         </div>
+                    </article>
+                    <article className="fgtpswd">
+                        <Link to="/auth/forgotten">Forgot password?</Link>
                     </article>
                     <div className="btn-container">
                         <button type="submit" className='btn' disabled={!isValid}>
