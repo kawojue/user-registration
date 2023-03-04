@@ -34,7 +34,7 @@ export const handleLogin = asyncHandler(async (req: Request, res: Response) => {
         })
     }
 
-    const roles = Object.values(existingUser.roles)
+    const roles = Object.values(existingUser.roles).filter(Boolean)
     const accessToken: Secret = jwt.sign(
         {
             "userInfo": {
