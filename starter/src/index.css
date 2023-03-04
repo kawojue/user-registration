@@ -13,11 +13,11 @@ body {
 }
 
 .container {
-    @apply max-w-full h-screen bg-blue-600 text-pry-clr-0 pt-20;
+    @apply max-w-full h-screen;
 }
 
 .container-center {
-    @apply bg-blue-900 w-[90vw] max-w-[350px] rounded-md px-5 pt-5 pb-3 mx-auto;
+    @apply w-[90vw] max-w-[350px] rounded-md px-5 pt-5 pb-3 mx-auto bg-blue-700 text-pry-clr-0 mt-20;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
 }
 
