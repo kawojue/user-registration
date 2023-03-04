@@ -20,5 +20,5 @@ export const handleSignup = asyncHandler(async (req: Request, res: Response) => 
         username,
         password: hashedPswd
     })
-    return res.sendStatus(201)
+    res.sendStatus(201)
 })
