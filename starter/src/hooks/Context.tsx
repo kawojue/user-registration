@@ -8,16 +8,21 @@ export const UserProvider: React.FC<{ children: React.ReactElement }> = ({ child
     const LOGIN_URL:string = "auth/login"
     const REGISTER_URL:string = "/auth/signup"
     const USER_REGEX:RegExp = /^[a-zA-Z][a-zA-Z0-9-_]{2,23}$/
+    const EMAIL_REGEX:RegExp = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     const PSWD_REGEX:RegExp = /^(?=(.*[a-z]){2,})(?=(.*[A-Z]){1,})(?=(.*[0-9]){1,})(?=(.*[!@#$%^&*()\-__+.]){1,}).{5,89}$/
 
     const errRef = useRef<any>()
-    const userRef = useRef<HTMLInputElement>()
+    const emailRef = useRef<HTMLInputElement>()
 
     const [auth, setAuth] = useState<any>({})
 
     const [user, setUser] = useState<string>('')
     const [validName, setValidName] = useState<boolean>(false)
     const [userFocus, setUserFocus] = useState<boolean>(false)
+
+    const [email, setEmail] = useState<string>('')
+    const [validEmail, setValidEmail] = useState<boolean>(false)
+    const [emailFocus, setEmailFocus] = useState<boolean>(false)
 
     const [pswd, setPswd] = useState<string>('')
     const [validPswd, setValidPswd] = useState<boolean>(false)
@@ -38,6 +43,10 @@ export const UserProvider: React.FC<{ children: React.ReactElement }> = ({ child
     }, [user, pswd, confirmPswd])
 
     useEffect(() => {
+        // validate email
+        const resEmail:boolean = EMAIL_REGEX.test(email)
+        setValidEmail(resEmail)
+
         // validate user
         const resUser:boolean = USER_REGEX.test(user)
         setValidName(resUser)
@@ -49,17 +58,17 @@ export const UserProvider: React.FC<{ children: React.ReactElement }> = ({ child
             const confirm:boolean = pswd === confirmPswd
             setValidConfirm(confirm)
         }
-    }, [user, pswd, confirmPswd])
+    }, [email, user, pswd, confirmPswd])
 
     useEffect(() => {
-        userRef.current?.focus()
+        emailRef.current?.focus()
     }, [])
 
     useEffect(() => {
         setErrMsg("")
     }, [user, pswd])
 
-    const isValid:boolean = validName && validPswd && validConfirm
+    const isValid:boolean = validEmail && validName && validPswd && validConfirm
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>):Promise<void> => {
         e.preventDefault()
@@ -98,7 +107,7 @@ export const UserProvider: React.FC<{ children: React.ReactElement }> = ({ child
     return (
         <Context.Provider value={{
             Link, errMsg, errRef, user, pswd,
-            confirmPswd, userRef, setUserFocus,
+            confirmPswd, setUserFocus,
             validName, userFocus, pswdFocus,
             setPswdFocus, validPswd, setUser,
             setPswd, setConfirmPswd, validConfirm,
