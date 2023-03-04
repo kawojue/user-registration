@@ -59,7 +59,7 @@ input:focus {
 }
 
 .btn {
-    @apply py-2 w-full rounded-lg text-pry-clr-0 bg-blue-700 text-xl tracking-widest;
+    @apply py-2 w-full rounded-lg text-pry-clr-0 bg-blue-900 text-xl tracking-widest;
 }
 
 .btn:focus {
@@ -67,7 +67,7 @@ input:focus {
 }
 
 .btn:hover:not([disabled]) {
-    @apply bg-[navy] text-pry-clr-1 trans;
+    @apply bg-[navy] text-black trans;
 }
 
 .btn:disabled {
