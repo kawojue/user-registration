@@ -14,7 +14,7 @@ export const handleSignup = asyncHandler(async (req: Request, res: Response) => 
     if (existingUser) return res.sendStatus(409)
     if (existingEmail) return res.sendStatus(401)
 
-    const hashedPswd = await bcrypt.hash(pswd, 12)
+    const hashedPswd: string = await bcrypt.hash(pswd, 12)
     await User.create({
         email,
         username,
