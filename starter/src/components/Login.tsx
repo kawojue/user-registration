@@ -47,9 +47,13 @@ const Login:React.FC = () => {
             setAuth({ username, pswd, roles, accessToken })
             setSuccess(res?.data.success)
         }).catch(err => {
-            console.log(err)
-            setErrMsg(err.response?.data.message)
-            setSuccess(err.response?.data.success)
+            if (err.code === 'ERR_NETWORK') {
+                setErrMsg(err.message)
+                setSuccess(false)
+            } else {
+                setErrMsg(err.response?.data.message)
+                setSuccess(err.response?.data.success)
+            }
             setTimeout(() => {
                 setErrMsg("")
             }, 3500);
