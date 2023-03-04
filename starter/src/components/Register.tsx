@@ -7,11 +7,12 @@ const Register: React.FC = () => {
 
     const {
         Link, errMsg, errRef, user, pswd,
-        confirmPswd, userRef, setUserFocus,
+        confirmPswd, emailRef, setUserFocus,
         validName, userFocus, validPswd, pswdFocus,
         setPswdFocus, setUser, setPswd, setConfirmPswd,
         setConfirmFocus, validConfirm, showPswd, setShowPswd,
-        confirmFocus, handleSubmit, isValid, success
+        confirmFocus, handleSubmit, isValid, success,
+        email, setEmail, validEmail, emailFocus, setEmailFocus
     } = userContext()
 
     return (
@@ -33,6 +34,29 @@ const Register: React.FC = () => {
                     <article className="form-center">
                         <div className="form-group">
                             <article className="validity-container">
+                                <label htmlFor='email'>
+                                    email:
+                                </label>
+                                <div>
+                                    <FaCheck className={validEmail ? 'valid': 'hidden'} />
+                                    <FaTimes className={validEmail || !email ? 'hidden': 'invalid'} />
+                                </div>
+                            </article>
+                            <input type="text" id="email" name="email" autoComplete="off"
+                                    value={email} onChange={e => setEmail(e.target.value)}
+                                    onBlur={() => setEmailFocus(false)}
+                                    onFocus={() => setEmailFocus(true)}
+                                    aria-invalid={validEmail ? "false" : "true"} aria-describedby="uidnote" max={23} />
+                                <article
+                                className={emailFocus && email && !validEmail ? 'constraint': 'hidden'}>
+                                    <FaInfoCircle />
+                                    <p id="uidnote">
+                                        Invalid email.
+                                    </p>
+                                </article>
+                        </div>
+                        <div className="form-group">
+                            <article className="validity-container">
                                 <label htmlFor='username'>
                                     username:
                                 </label>
@@ -42,7 +66,7 @@ const Register: React.FC = () => {
                                 </div>
                             </article>
                             <input type="text" id="username" name="username" autoComplete="off"
-                                ref={userRef} value={user} onChange={e => setUser(e.target.value)}
+                                value={user} onChange={e => setUser(e.target.value)}
                                 onBlur={() => setUserFocus(false)} onFocus={() => setUserFocus(true)}
                                 aria-invalid={validName ? "false" : "true"} aria-describedby="uidnote" max={23}/>
                             <article
