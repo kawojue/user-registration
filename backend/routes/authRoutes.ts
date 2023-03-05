@@ -1,9 +1,9 @@
-import express from 'express'
+import express, { Router } from 'express'
 import { handleLogin } from '../controllers/loginController'
 import { handleLogout } from '../controllers/logoutController'
 import { handleSignup } from '../controllers/signupController'
 
-const authRoute = express.Router()
+const authRoute: Router = express.Router()
 
 authRoute.post('/login', handleLogin)
 authRoute.get('/logout', handleLogout)
