@@ -134,6 +134,10 @@ input:focus {
     @apply text-pry-clr-0;
 }
 
+.fgtpswd {
+    @apply flex justify-end mt-2 font-cabin;
+}
+
 @keyframes fadeIn {
     0% {
         opacity: 0;
