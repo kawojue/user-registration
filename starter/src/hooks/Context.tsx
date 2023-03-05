@@ -83,11 +83,11 @@ export const UserProvider: React.FC<{ children: React.ReactElement }> = ({ child
             },
             withCredentials: true
         })
-        .then(_ => {
+        .then(res => {
             setUser("")
             setPswd("")
             setConfirmPswd("")
-            setSuccess(true)
+            setSuccess(res?.data.success)
         })
         .catch(err => {
             const statusCode = err.response?.status
