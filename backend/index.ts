@@ -10,7 +10,7 @@ import express, { Application } from 'express'
 
 connectDB()
 dotenv.config()
-const PORT = process.env.PORT
+const PORT = process.env.PORT || 2003
 const app: Application = express()
 
 // set middlewares
