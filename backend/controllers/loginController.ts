@@ -14,14 +14,24 @@ const clearCookies: CookieOptions = {
 
 export const handleLogin = asyncHandler(async (req: Request, res: Response) => {
     const { user, pswd } = req.body
-    const username: string = user.toLowerCase()
+    const EMAIL_REGEX:RegExp = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
-    const existingUser: any = await User.findOne({ username }).exec()
+    let existingUser: any
+    const isEmail = EMAIL_REGEX.test(user)
+    const userId: string = user.toLowerCase()
+
+    if (isEmail) {
+        existingUser = await User.findOne({ email: userId })
+    } else {
+        existingUser = await User.findOne({ username: userId })
+    }
+
+    // const existingUser: any = await User.findOne({ username }).exec()
 
     if (!user || !pswd || !existingUser) {
         return res.status(400).json({
             success: false,
-            message: "Invalid username or password."
+            message: "Invalid user ID or password."
         })
     }
 
@@ -38,6 +48,7 @@ export const handleLogin = asyncHandler(async (req: Request, res: Response) => {
     const accessToken: Secret = jwt.sign(
         {
             "userInfo": {
+                "email": existingUser.email,
                 "username": existingUser.username,
                 "roles": roles
             }
@@ -46,7 +57,7 @@ export const handleLogin = asyncHandler(async (req: Request, res: Response) => {
         { expiresIn: '1h' }
     )
     const refreshToken: Secret = jwt.sign(
-        { "username": user },
+        { "username": userId },
         `${process.env.SECRET_REFRESH_TOKEN}`,
         { expiresIn: '7d' }
     )
