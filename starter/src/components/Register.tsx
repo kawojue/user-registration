@@ -43,7 +43,8 @@ const Register: React.FC = () => {
                                 </div>
                             </article>
                             <input type="text" id="email" name="email" autoComplete="off"
-                                    value={email} onChange={e => setEmail(e.target.value)}
+                                    value={email} ref={emailRef}
+                                    onChange={e => setEmail(e.target.value)}
                                     onBlur={() => setEmailFocus(false)}
                                     onFocus={() => setEmailFocus(true)}
                                     aria-invalid={validEmail ? "false" : "true"} aria-describedby="uidnote" max={23} />
