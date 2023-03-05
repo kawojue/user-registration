@@ -7,8 +7,8 @@
     "start": "nodemon index.ts"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "kawojue",
+  "license": "MIT",
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
     "@types/cookie-parser": "^1.4.3",
