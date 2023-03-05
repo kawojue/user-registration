@@ -8,7 +8,7 @@ const Login:React.FC = () => {
 
     const  {
         Link, LOGIN_URL, errRef,
-        showPswd, setShowPswd,
+        showPswd, setShowPswd, auth,
         errMsg, setErrMsg, setAuth
     } = userContext()
 
@@ -45,6 +45,7 @@ const Login:React.FC = () => {
             const roles: number[] = res?.data.roles
             const accessToken: string = res?.data.accessToken
             setAuth({ username, pswd, roles, accessToken })
+            console.log(auth)
             setSuccess(res?.data.success)
         }).catch(err => {
             if (err.code === 'ERR_NETWORK') {
@@ -65,7 +66,7 @@ const Login:React.FC = () => {
             { success ?
                 <article className="user-route">
                     <p className="success">You're logged in!</p>
-                    <Link to="/">Go home.</Link>
+                    <Link to={`/@${auth.username}`}>Go home.</Link>
                 </article> :
             <>
                 <div className={`err-container ${errMsg ? 'errMsg offscreen' : 'hidden'}`}>
