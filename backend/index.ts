@@ -7,6 +7,7 @@ import connectDB from './config/dbConn'
 import authRoute from './routes/authRoutes'
 import corsOptions from './config/corsOptions'
 import express, { Application } from 'express'
+import userRoute from './routes/api/userRoutes'
 
 connectDB()
 dotenv.config()
@@ -22,6 +23,8 @@ app.use(express.urlencoded({ extended: false }))
 
 // set routes
 app.use('/auth', authRoute)
+app.use('/', userRoute)
+
 
 mongoose.connection.once('open', () => {
     console.log('Connected to MongoDB!')
