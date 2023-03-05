@@ -12,7 +12,7 @@ export const UserProvider: React.FC<{ children: React.ReactElement }> = ({ child
     const PSWD_REGEX:RegExp = /^(?=(.*[a-z]){2,})(?=(.*[A-Z]){1,})(?=(.*[0-9]){1,})(?=(.*[!@#$%^&*()\-__+.]){1,}).{5,89}$/
 
     const errRef = useRef<any>()
-    const emailRef = useRef<HTMLInputElement>()
+    const emailRef = useRef<HTMLInputElement>(null)
 
     const [auth, setAuth] = useState<any>({})
 
@@ -40,7 +40,7 @@ export const UserProvider: React.FC<{ children: React.ReactElement }> = ({ child
 
     useEffect(() => {
         setErrMsg('')
-    }, [user, pswd, confirmPswd])
+    }, [email, user, pswd, confirmPswd])
 
     useEffect(() => {
         // validate email
@@ -98,7 +98,7 @@ export const UserProvider: React.FC<{ children: React.ReactElement }> = ({ child
             } else if (statusCode === 401) {
                 setErrMsg("You already have an account.")
             } else {
-                setErrMsg("Server Error!")
+                setErrMsg("Network Error.")
             }
             setTimeout(() => {
                 setErrMsg("")
@@ -118,7 +118,7 @@ export const UserProvider: React.FC<{ children: React.ReactElement }> = ({ child
             setShowConfirmPswd, isValid, success,
             LOGIN_URL, setErrMsg, setSuccess, setAuth,
             email, setEmail, emailFocus, setEmailFocus,
-            validEmail
+            validEmail, emailRef
         }}>
             {children}
         </Context.Provider>
