@@ -48,8 +48,7 @@ export const handleLogin = asyncHandler(async (req: Request, res: Response) => {
     const accessToken: Secret = jwt.sign(
         {
             "userInfo": {
-                "email": existingUser.email,
-                "username": existingUser.username,
+                "userId": existingUser.username,
                 "roles": roles
             }
         },
@@ -57,7 +56,7 @@ export const handleLogin = asyncHandler(async (req: Request, res: Response) => {
         { expiresIn: '1h' }
     )
     const refreshToken: Secret = jwt.sign(
-        { "username": userId },
+        { "userId": userId },
         `${process.env.SECRET_REFRESH_TOKEN}`,
         { expiresIn: '7d' }
     )
