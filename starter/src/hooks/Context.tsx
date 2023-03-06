@@ -118,7 +118,7 @@ export const UserProvider: React.FC<{ children: React.ReactElement }> = ({ child
             setShowConfirmPswd, isValid, success,
             LOGIN_URL, setErrMsg, setSuccess, setAuth,
             email, setEmail, emailFocus, setEmailFocus,
-            validEmail, emailRef, auth
+            validEmail, emailRef, auth, EMAIL_REGEX
         }}>
             {children}
         </Context.Provider>
