@@ -41,12 +41,13 @@ const Login:React.FC = () => {
             },
             withCredentials: true
         }).then(res => {
-            const username: string = user.toLowerCase()
-            const roles: number[] = res?.data.roles
-            const accessToken: string = res?.data.accessToken
-            setAuth({ username, pswd, roles, accessToken })
-            console.log(auth)
-            setSuccess(res?.data.success)
+            const data: any = res?.data
+            const email: string = data.email
+            const roles: number[] = data.roles
+            const accessToken: string = data.accessToken
+            const username: string = data.username.toLowerCase()
+            setAuth({ email, username, roles, accessToken })
+            setSuccess(data.success)
         }).catch(err => {
             if (err.code === 'ERR_NETWORK') {
                 setErrMsg(err.message)
