@@ -25,6 +25,7 @@ const ForgotPswd: React.FC = () => {
     useEffect(() => {
         const res = EMAIL_REGEX.test(email)
         setValidEmail(res)
+        setErrMsg("")
     }, [email])
 
     const handleSubmit = async (e: FormEvent):Promise<void> => {
@@ -33,7 +34,7 @@ const ForgotPswd: React.FC = () => {
             setErrMsg('Warning!')
         }
         axios.post(
-            '/forgotten',
+            '/auth/forgotten',
             JSON.stringify({ email }),
             {
                 headers: {
@@ -44,8 +45,8 @@ const ForgotPswd: React.FC = () => {
         ).then(res => {
             setSuccess(res?.data.success)
         }).catch(err => {
-            setSuccess(err.response?.data.success)
             setErrMsg(err.response?.data.message)
+            setSuccess(err.response?.data.success)
         })
     }
 
@@ -53,7 +54,7 @@ const ForgotPswd: React.FC = () => {
     <section className="container">
             {success ? 
             <article className="user-route">
-                <p className="success">5-digits code has been sent to your registered email.</p>
+                <p className="mb-2 text-lg text-pry-clr-0">Code sent to your mail: </p>
                 <input></input>
             </article> :
             <>
