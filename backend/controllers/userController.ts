@@ -4,7 +4,7 @@ const asyncHandler = require('express-async-handler')
 
 export const handleUser = asyncHandler(async (req: Request, res: Response) => {
     const { id } = req.params
-    const user = await User.findOne({ username: id }).select('-password').exec()
+    const user = await User.findOne({ username: id }).select(('-password -refreshToken')).exec()
 
     if (!user) {
         return res.status(404).json({
