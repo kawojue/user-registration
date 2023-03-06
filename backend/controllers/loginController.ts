@@ -67,6 +67,8 @@ export const handleLogin = asyncHandler(async (req: Request, res: Response) => {
     res.cookie('loginCookie', refreshToken, clearCookies)
     res.status(200).json({
         success: true,
+        username: existingUser.username,
+        email: existingUser.email,
         accessToken,
         roles
     })
