@@ -9,15 +9,17 @@ const Dashboard: React.FC = () => {
     const userId: string | undefined = id?.slice(1)
 
     const handleUser = async (ID: string | undefined) => {
-        await axios.get(`${ID}`).then(res => {
+        await axios.get(`${ID}`)
+            .then(res => {
             console.log(res?.data)
-        }).catch(err => {
-            if (err?.response.status === 404) {
-                nav('*')
-            } else {
-                console.log('Network error')
-            }
-        })
+            })
+            .catch(err => {
+                if (err?.response.status === 404) {
+                    nav('*')
+                } else {
+                    console.log('Network error')
+                }
+            })
     }
 
     useEffect(() => {
