@@ -1,3 +1,4 @@
+import axios from '../api/create'
 import userContext from '../hooks/Context'
 import { useRef, useState, useEffect, FormEvent } from 'react'
 import { FaInfoCircle, FaTimes, FaCheck } from 'react-icons/fa'
@@ -15,6 +16,8 @@ const ForgotPswd: React.FC = () => {
     const [success, setSuccess] = useState<boolean>(false)
     const [errMsg, setErrMsg] = useState<string | null>(null)
 
+    const isValid: boolean = Boolean(validEmail)
+
     useEffect(() => {
         emailRef.current?.focus()
     }, [])
@@ -24,7 +27,27 @@ const ForgotPswd: React.FC = () => {
         setValidEmail(res)
     }, [email])
 
-    const handleSubmit = async (e: FormEvent):Promise<void> => {}
+    const handleSubmit = async (e: FormEvent):Promise<void> => {
+        e.preventDefault()
+        if (!isValid) {
+            setErrMsg('Warning!')
+        }
+        axios.post(
+            '/forgotten',
+            JSON.stringify({ email }),
+            {
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                withCredentials: true
+            }
+        ).then(res => {
+            setSuccess(res?.data.success)
+        }).catch(err => {
+            setSuccess(err.response?.data.success)
+            setErrMsg(err.response?.data.message)
+        })
+    }
 
     return (
     <section className="container">
@@ -69,7 +92,7 @@ const ForgotPswd: React.FC = () => {
                         </div>
                     </article>
                     <div className="btn-container">
-                        <button type="submit" className='btn' disabled={!Boolean(validEmail)}>
+                        <button type="submit" className='btn' disabled={!isValid}>
                             Send OTP
                         </button>
                     </div>
