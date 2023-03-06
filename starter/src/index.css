@@ -13,7 +13,7 @@ body {
 }
 
 .app {
-    @apply max-w-full h-screen bg-pry-clr-0;
+    @apply max-w-full h-screen bg-pry-clr-0 mb-10;
 }
 
 .container {
