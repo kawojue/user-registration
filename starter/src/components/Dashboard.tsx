@@ -14,7 +14,7 @@ const Dashboard: React.FC = () => {
             console.log(res?.data)
             })
             .catch(err => {
-                if (err?.response.status === 404) {
+                if (err?.response?.status === 404) {
                     nav('*')
                 } else {
                     console.log('Network error')
