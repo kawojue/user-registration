@@ -47,6 +47,9 @@ const ForgotPswd: React.FC = () => {
         }).catch(err => {
             setErrMsg(err.response?.data.message)
             setSuccess(err.response?.data.success)
+            setTimeout(() => {
+                setErrMsg("")
+            }, 3500);
         })
     }
 
