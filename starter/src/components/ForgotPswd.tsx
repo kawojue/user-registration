@@ -9,6 +9,8 @@ const ForgotPswd: React.FC = () => {
     const errRef = useRef<any>()
     const emailRef = useRef<HTMLInputElement>(null)
 
+    const [otp, setOtp] = useState<string>("")
+
     const [email, setEmail] = useState<string>("")
     const [validEmail, setValidEmail] = useState<string>("")
     const [emailFocus, setEmailFocus] = useState<boolean>(false)
@@ -53,12 +55,25 @@ const ForgotPswd: React.FC = () => {
         })
     }
 
+    const handleOTP = async (e: any):Promise<void> => {
+        e.preventDefault()
+        const val: string = e.target.value
+        setOtp(val)
+        if (val.length === 6) {
+            // submission goes here - axios
+            console.log(val)
+        }
+    }
+
     return (
     <section className="container">
             {success ? 
             <article className="user-route">
                 <p className="mb-2 text-lg text-pry-clr-0">Code sent to your mail: </p>
-                <input></input>
+                <form onSubmit={e => e.preventDefault()}>
+                    <input type='text' value={otp}
+                    onChange={async e => await handleOTP(e)} />
+                </form>
             </article> :
             <>
                 <div className={`err-container ${errMsg ? 'errMsg' : 'hidden'}`}>
