@@ -6,7 +6,7 @@ export const handleForgotPswd = asyncHandler(async (req: Request, res: Response)
     const { email } = req.body
     const mail: string = email?.toLowerCase().trim()
 
-    const exists = await User.findOne({ email: mail }).exec()
+    const exists = await User.findOne({ 'mail.email': mail }).exec()
 
     if (!email) {
         return res.status(400).json({
