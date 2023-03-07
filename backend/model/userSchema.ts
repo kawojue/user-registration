@@ -3,9 +3,15 @@ const autoincrement = require('mongoose-sequence')(mongoose)
 
 const userShema = new mongoose.Schema(
     {
-        email: {
-            type: String,
-            required: true
+        mail: {
+            email: {
+                type: String,
+                required: true
+            },
+            isVerified: {
+                type: Boolean,
+                default: false
+            }
         },
         username: {
             type: String,
@@ -23,7 +29,7 @@ const userShema = new mongoose.Schema(
             Admin: Number,
             Employee: Number,
         },
-        verifiedMail: {
+        verified: {
             type: Boolean,
             default: false
         },
