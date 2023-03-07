@@ -10,7 +10,7 @@ export const handleSignup = asyncHandler(async (req: Request, res: Response) => 
     const username: string = user.toLowerCase().trim()
 
     const existingUser: any = await User.findOne({ username }).exec()
-    const existingEmail: any = await User.findOne({ email: mail }).exec()
+    const existingEmail: any = await User.findOne({ 'mail.email': mail }).exec()
 
     if (!username || !pswd || !mail) return res.sendStatus(400)
     if (existingEmail) return res.sendStatus(401)
@@ -19,7 +19,9 @@ export const handleSignup = asyncHandler(async (req: Request, res: Response) => 
     const hashedPswd: string = await bcrypt.hash(pswd, 10)
     await User.create({
         username,
-        email: mail,
+        mail: {
+            email: mail
+        },
         password: hashedPswd
     })
     res.status(201).json({
