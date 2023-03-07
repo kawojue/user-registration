@@ -6,9 +6,7 @@ const asyncHandler = require('express-async-handler')
 
 export const handleForgotPswd = asyncHandler(async (req: Request, res: Response) => {
     const { email } = req.body
-    const mail: string = email?.toLowerCase()
-
-    console.log(mail)
+    const mail: string = email?.toLowerCase().trim()
 
     const exists = await User.findOne({ email: mail }).exec()
 
@@ -22,7 +20,7 @@ export const handleForgotPswd = asyncHandler(async (req: Request, res: Response)
     if (!exists) {
         return res.status(401).json({
             success: false,
-            message: 'Email does not exist.'
+            message: 'Account does not exist.'
         })
     }
 
