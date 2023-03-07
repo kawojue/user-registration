@@ -23,6 +23,10 @@ const userShema = new mongoose.Schema(
             Admin: Number,
             Employee: Number,
         },
+        verifiedMail: {
+            type: Boolean,
+            default: false
+        },
         refreshToken: String
     },
     {
