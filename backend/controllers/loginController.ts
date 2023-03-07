@@ -1,5 +1,6 @@
 import dotenv from 'dotenv'
 import * as bcrypt from 'bcrypt'
+import mailer from '../config/mailer'
 import User from '../model/userSchema'
 import jwt, { Secret } from 'jsonwebtoken'
 const asyncHandler = require('express-async-handler')
@@ -18,7 +19,7 @@ export const handleLogin = asyncHandler(async (req: Request, res: Response) => {
 
     let existingUser: any
     const isEmail = EMAIL_REGEX.test(user)
-    const userId: string = user.toLowerCase()
+    const userId: string = user.toLowerCase().trim()
 
     if (isEmail) {
         existingUser = await User.findOne({ email: userId })
@@ -26,16 +27,17 @@ export const handleLogin = asyncHandler(async (req: Request, res: Response) => {
         existingUser = await User.findOne({ username: userId })
     }
 
-    // const existingUser: any = await User.findOne({ username }).exec()
+    
 
-    if (!user || !pswd || !existingUser) {
+    if (!userId || !pswd || !existingUser) {
         return res.status(400).json({
             success: false,
             message: "Invalid user ID or password."
         })
     }
 
-    const checkPswd = await bcrypt.compare(pswd, existingUser.password)
+    const username: string = await existingUser.username
+    const checkPswd: boolean = await bcrypt.compare(pswd, existingUser.password)
 
     if (!checkPswd) {
         return res.status(401).json({
@@ -48,7 +50,7 @@ export const handleLogin = asyncHandler(async (req: Request, res: Response) => {
     const accessToken: Secret = jwt.sign(
         {
             "userInfo": {
-                "userId": existingUser.username,
+                "userId": username,
                 "roles": roles
             }
         },
@@ -61,13 +63,20 @@ export const handleLogin = asyncHandler(async (req: Request, res: Response) => {
         { expiresIn: '7d' }
     )
 
+    const text: string = `
+    Hello ${username.toUpperCase()},\n\n\n
+    A successful login just occurred at .\n
+    If you did not initiate this login, please visit <___> to reset your password.
+    `
+    await mailer(existingUser.email, 'Login Notification', text)
+
     existingUser.refreshToken = refreshToken
     await existingUser.save()
 
     res.cookie('loginCookie', refreshToken, clearCookies)
-    res.status(200).json({
+    res.json({
         success: true,
-        username: existingUser.username,
+        username,
         email: existingUser.email,
         accessToken,
         roles
