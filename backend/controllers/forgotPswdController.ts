@@ -1,5 +1,3 @@
-import speakeasy from 'speakeasy'
-import nodemailer from 'nodemailer'
 import User from '../model/userSchema'
 import { Request, Response } from 'express'
 const asyncHandler = require('express-async-handler')
