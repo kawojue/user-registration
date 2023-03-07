@@ -1,5 +1,6 @@
 import Button from './Button'
 import axios from '../api/create'
+import { detect } from 'detect-browser'
 import userContext from '../hooks/Context'
 import { useRef, useState, useEffect, FormEvent } from 'react'
 
@@ -12,6 +13,7 @@ const Login:React.FC = () => {
         errMsg, setErrMsg, setAuth
     } = userContext()
 
+    const loginInfo = detect()
     const userRef = useRef<HTMLInputElement>(null)
     const [user, setUser] = useState<string>("")
     const [pswd, setPswd] = useState<string>("")
@@ -34,7 +36,7 @@ const Login:React.FC = () => {
         }
 
         await axios.post(`${LOGIN_URL}`,
-        JSON.stringify({ user, pswd }),
+        JSON.stringify({ user, pswd, loginInfo }),
         {
             headers: {
                 'Content-Type': 'application/json'
