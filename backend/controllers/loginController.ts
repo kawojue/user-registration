@@ -8,7 +8,7 @@ import { CookieOptions, Request, Response } from 'express'
 
 dotenv.config()
 
-const clearCookies: CookieOptions = {
+const newCookie: CookieOptions = {
     httpOnly: true,
     maxAge: 7 * 24 * 60 * 60 * 1000
 }
@@ -22,7 +22,7 @@ export const handleLogin = asyncHandler(async (req: Request, res: Response) => {
     const userId: string = user.toLowerCase().trim()
 
     if (isEmail) {
-        existingUser = await User.findOne({ email: userId })
+        existingUser = await User.findOne({ 'mail.email': userId })
     } else {
         existingUser = await User.findOne({ username: userId })
     }
@@ -66,16 +66,16 @@ export const handleLogin = asyncHandler(async (req: Request, res: Response) => {
     const text: string = `
     Hello ${username.toUpperCase()},\n\n\nA successful login just occurred at ${loginInfo.name} ${loginInfo.os} on ${new Date()}.\nIf you did not initiate this login, please visit https:// to reset your password.
     `
-    await mailer(existingUser.email, 'Login Notification', text)
+    await mailer(existingUser.mail.email, 'Login Notification', text)
 
     existingUser.refreshToken = refreshToken
     await existingUser.save()
 
-    res.cookie('loginCookie', refreshToken, clearCookies)
+    res.cookie('loginCookie', refreshToken, newCookie)
     res.json({
         success: true,
         username,
-        email: existingUser.email,
+        email: existingUser.mail.email,
         accessToken,
         roles
     })
