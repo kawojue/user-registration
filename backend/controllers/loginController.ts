@@ -14,7 +14,7 @@ const clearCookies: CookieOptions = {
 }
 
 export const handleLogin = asyncHandler(async (req: Request, res: Response) => {
-    const { user, pswd } = req.body
+    const { user, pswd, loginInfo } = req.body
     const EMAIL_REGEX:RegExp = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
     let existingUser: any
@@ -64,9 +64,7 @@ export const handleLogin = asyncHandler(async (req: Request, res: Response) => {
     )
 
     const text: string = `
-    Hello ${username.toUpperCase()},\n\n\n
-    A successful login just occurred at .\n
-    If you did not initiate this login, please visit <___> to reset your password.
+    Hello ${username.toUpperCase()},\n\n\nA successful login just occurred at ${loginInfo.name} ${loginInfo.os} on ${new Date()}.\nIf you did not initiate this login, please visit https:// to reset your password.
     `
     await mailer(existingUser.email, 'Login Notification', text)
 
