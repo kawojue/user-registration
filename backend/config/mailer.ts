@@ -14,12 +14,12 @@ const transporter: Transporter = nodemailer.createTransport({
     }
 })
 
-async function mailer(recv: string, subj: string, msg: string | string):Promise<void> {
+async function mailer(senderName: string, to: string, subject: string, text: string):Promise<void> {
     await transporter.sendMail({
-        from: `Kawojue Raheem <${process.env.EMAIL}>`,
-        to: recv,
-        subject: subj,
-        text: msg,
+        from: `${senderName} <${process.env.EMAIL}>`,
+        to,
+        subject,
+        text,
         headers: {
             'Content-Type': 'application/text',
         }
