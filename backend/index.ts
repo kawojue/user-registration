@@ -4,11 +4,11 @@ import dotenv from 'dotenv'
 import mongoose from 'mongoose'
 import cookie from 'cookie-parser'
 import connectDB from './config/dbConn'
-import otpRoute from './routes/otpRoutes'
 import authRoute from './routes/authRoutes'
-import corsOptions from './config/corsOptions'
 import express, { Application } from 'express'
+import corsOptions from './config/corsOptions'
 import userRoute from './routes/api/userRoutes'
+import accountRoute from './routes/accountRoutes'
 
 connectDB()
 dotenv.config()
@@ -23,7 +23,7 @@ app.use(cors(corsOptions))
 app.use(express.urlencoded({ extended: false }))
 
 // set routes
-app.use('/account', otpRoute)
+app.use('/account', accountRoute)
 app.use('/auth', authRoute)
 app.use('/', userRoute)
 
