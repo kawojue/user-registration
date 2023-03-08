@@ -66,7 +66,7 @@ export const handleLogin = asyncHandler(async (req: Request, res: Response) => {
     const text: string = `
     Hello ${username.toUpperCase()},\n\n\nA successful login just occurred at ${loginInfo.name} ${loginInfo.os} on ${new Date()}.\nIf you did not initiate this login, please visit https:// to reset your password.
     `
-    await mailer(existingUser.mail.email, 'Login Notification', text)
+    await mailer('Kawojue Raheem', existingUser.mail.email, 'Login Notification', text)
 
     existingUser.refreshToken = refreshToken
     await existingUser.save()
