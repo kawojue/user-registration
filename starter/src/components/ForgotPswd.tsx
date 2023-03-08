@@ -10,6 +10,7 @@ const ForgotPswd: React.FC = () => {
     const emailRef = useRef<HTMLInputElement>(null)
 
     const [otp, setOtp] = useState<string>("")
+    const [userId, setUserId] = useState<string>("")
 
     const [email, setEmail] = useState<string>("")
     const [validEmail, setValidEmail] = useState<string>("")
@@ -45,6 +46,7 @@ const ForgotPswd: React.FC = () => {
                 withCredentials: true
             }
         ).then(res => {
+            setUserId(email)
             setSuccess(res?.data.success)
         }).catch(err => {
             setErrMsg(err.response?.data.message)
@@ -55,14 +57,18 @@ const ForgotPswd: React.FC = () => {
         })
     }
 
-    const handleOTP = async (e: any):Promise<void> => {
+    const verifyOTP = async (e: FormEvent):Promise<void> => {
         e.preventDefault()
-        const val: string = e.target.value
-        setOtp(val)
-        if (val.length === 6) {
-            // submission goes here - axios
-            console.log(val)
-        }
+        await axios.post(
+            '/account/reset',
+            JSON.stringify({ userId, otp }),
+            {
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                withCredentials: true
+            }
+        )
     }
 
     return (
@@ -70,9 +76,14 @@ const ForgotPswd: React.FC = () => {
             {success ? 
             <article className="user-route">
                 <p className="mb-2 text-lg text-pry-clr-0">Code sent to your mail: </p>
-                <form onSubmit={e => e.preventDefault()}>
+                <form onSubmit={e => verifyOTP(e)}>
                     <input type='text' value={otp}
-                    onChange={async e => await handleOTP(e)} />
+                    onChange={e => setOtp(e.target.value)} />
+                    <div className="btn-container">
+                        <button type="submit" className='btn'>
+                            Verify
+                        </button>
+                    </div>
                 </form>
             </article> :
             <>
