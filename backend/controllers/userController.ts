@@ -16,3 +16,10 @@ export const handleUser = asyncHandler(async (req: Request, res: Response) => {
         user
     })
 })
+
+export const handleAllUsers = asyncHandler(async (req: Request, res: Response) => {
+    const allUsers =  await User.find().select('-password')
+    res.status(200).json({
+        allUsers
+    })
+})
