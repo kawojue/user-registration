@@ -6,7 +6,8 @@ const userShema = new mongoose.Schema(
         mail: {
             email: {
                 type: String,
-                required: true
+                required: true,
+                unique: true
             },
             isVerified: {
                 type: Boolean,
@@ -15,7 +16,8 @@ const userShema = new mongoose.Schema(
         },
         username: {
             type: String,
-            required: true
+            required: true,
+            unique: true
         },
         password: {
             type: String,
@@ -33,7 +35,8 @@ const userShema = new mongoose.Schema(
             type: Boolean,
             default: false
         },
-        refreshToken: String
+        refreshToken: String,
+        resetPasswordToken: String
     },
     {
         collection: 'usersDB',
