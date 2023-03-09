@@ -1,7 +1,5 @@
-import mailer from '../config/mailer'
 import User from '../model/userSchema'
 import { Request, Response } from 'express'
-import { manageOTP } from '../config/manageOTP'
 const asyncHandler = require('express-async-handler')
 
 export const handleForgotPswd = asyncHandler(async (req: Request, res: Response) => {
@@ -24,11 +22,7 @@ export const handleForgotPswd = asyncHandler(async (req: Request, res: Response)
         })
     }
 
-    const { totp, secret } = manageOTP()
-    await mailer('Always Appear', exists.mail?.email, 'Forgot Password', `Code: ${totp}`)
-
     res.status(200).json({
         success: true,
-        secret
     })
 })
