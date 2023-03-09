@@ -1,8 +1,11 @@
 import express, { Router } from 'express'
-import { handleUser } from '../../controllers/userController'
+import { verifyJWT } from '../../middlewares/verifyJWT'
+import { handleUser, handleAllUsers } from '../../controllers/userController'
 
 const router: Router = express.Router()
 
-router.get('/:id', handleUser)
+router.get('/', handleAllUsers)
+
+router.get('/:id', verifyJWT, handleUser)
 
 export default router
