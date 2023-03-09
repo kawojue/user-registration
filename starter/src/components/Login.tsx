@@ -13,7 +13,8 @@ const Login:React.FC = () => {
         errMsg, setErrMsg, setAuth
     } = userContext()
 
-    const loginInfo = detect()
+    const deviceInfo = detect()
+
     const userRef = useRef<HTMLInputElement>(null)
     const [user, setUser] = useState<string>("")
     const [pswd, setPswd] = useState<string>("")
@@ -36,7 +37,7 @@ const Login:React.FC = () => {
         }
 
         await axios.post(`${LOGIN_URL}`,
-        JSON.stringify({ user, pswd, loginInfo }),
+        JSON.stringify({ user, pswd, deviceInfo }),
         {
             headers: {
                 'Content-Type': 'application/json'
