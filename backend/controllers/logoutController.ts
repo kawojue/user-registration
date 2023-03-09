@@ -15,8 +15,7 @@ export const handleLogout = asyncHandler (async (req: Request, res: Response) =>
 
     if (!existingUser) {
         res.clearCookie('loginCookie', clearCookies)
-        res.sendStatus(204)
-        return
+        return res.sendStatus(204)
     }
 
     existingUser.refreshToken = ""
