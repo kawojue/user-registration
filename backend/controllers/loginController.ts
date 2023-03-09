@@ -14,7 +14,7 @@ const newCookie: CookieOptions = {
 }
 
 export const handleLogin = asyncHandler(async (req: Request, res: Response) => {
-    const { user, pswd, loginInfo } = req.body
+    const { user, pswd, deviceInfo } = req.body
     const EMAIL_REGEX:RegExp = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
     let existingUser: any
@@ -26,8 +26,6 @@ export const handleLogin = asyncHandler(async (req: Request, res: Response) => {
     } else {
         existingUser = await User.findOne({ username: userId })
     }
-
-    
 
     if (!userId || !pswd || !existingUser) {
         return res.status(400).json({
@@ -58,16 +56,16 @@ export const handleLogin = asyncHandler(async (req: Request, res: Response) => {
         { expiresIn: '1h' }
     )
     const refreshToken: Secret = jwt.sign(
-        { "userId": userId },
+        { "userId": username },
         `${process.env.SECRET_REFRESH_TOKEN}`,
         { expiresIn: '7d' }
     )
 
-    const text: string = `
-    Hello ${username.toUpperCase()},\n\n\nA successful login just occurred at ${loginInfo.name} ${loginInfo.os} on ${new Date()}.\nIf you did not initiate this login, please visit https:// to reset your password.
+    const text: string = `Hello ${username.toUpperCase()},\n\n\nA successful login just occurred at ${deviceInfo?.name} ${deviceInfo?.os} on ${new Date()}.\nIf you did not initiate this login, please visit https:// to reset your password.
     `
     await mailer('Kawojue Raheem', existingUser.mail.email, 'Login Notification', text)
 
+    existingUser.deviceInfo = deviceInfo
     existingUser.refreshToken = refreshToken
     await existingUser.save()
 
