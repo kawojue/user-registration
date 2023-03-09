@@ -1,4 +1,5 @@
 import axios from '../api/create'
+import { detect } from 'detect-browser'
 import { Link } from 'react-router-dom'
 import React, { createContext, useContext, useRef, useState, useEffect, FormEvent } from 'react'
 
@@ -10,6 +11,8 @@ export const UserProvider: React.FC<{ children: React.ReactElement }> = ({ child
     const USER_REGEX:RegExp = /^[a-zA-Z][a-zA-Z0-9-_]{2,23}$/
     const EMAIL_REGEX:RegExp = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     const PSWD_REGEX:RegExp = /^(?=(.*[a-z]){2,})(?=(.*[A-Z]){1,})(?=(.*[0-9]){1,})(?=(.*[!@#$%^&*()\-__+.]){1,}).{5,89}$/
+    
+    const deviceInfo = detect()
 
     const errRef = useRef<any>()
     const emailRef = useRef<HTMLInputElement>(null)
@@ -77,7 +80,7 @@ export const UserProvider: React.FC<{ children: React.ReactElement }> = ({ child
         }
 
         await axios.post(`${REGISTER_URL}`,
-        JSON.stringify({ email, user, pswd }), {
+        JSON.stringify({ email, user, pswd, deviceInfo }), {
             headers: {
                 'Content-Type': 'application/json'
             },
