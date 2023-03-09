@@ -36,7 +36,12 @@ const userShema = new mongoose.Schema(
             default: false
         },
         refreshToken: String,
-        resetPasswordToken: String
+        resetPasswordToken: String,
+        deviceInfo: {
+            name: String,
+            version: String,
+            os: String
+        }
     },
     {
         collection: 'usersDB',
