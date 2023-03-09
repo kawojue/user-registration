@@ -13,8 +13,11 @@ const Dashboard: React.FC = () => {
                 console.log(res?.data)
             })
             .catch(err => {
-                if (err?.response?.status === 404) {
+                const statusCode:number = err?.response.status
+                if (statusCode === 404) {
                     nav('*')
+                } else if (statusCode === 401) {
+                    console.log('Unautorized')
                 } else {
                     console.log('Network error')
                 }
