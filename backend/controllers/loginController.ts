@@ -14,12 +14,13 @@ const newCookie: CookieOptions = {
 }
 
 export const handleLogin = asyncHandler(async (req: Request, res: Response) => {
-    const { user, pswd, deviceInfo } = req.body
+    let { user, pswd, deviceInfo } = req.body
     const EMAIL_REGEX:RegExp = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
     let existingUser: any
     const isEmail = EMAIL_REGEX.test(user)
     const userId: string = user.toLowerCase().trim()
+    const { name: devName, os: devOs}: any = deviceInfo
 
     if (isEmail) {
         existingUser = await User.findOne({ 'mail.email': userId })
@@ -35,7 +36,7 @@ export const handleLogin = asyncHandler(async (req: Request, res: Response) => {
     }
 
     const username: string = await existingUser.username
-    const existedDevInfo: any = await existingUser.deviceInfo
+    const { name: eDevName, os: eDevOs }: any = await existingUser.deviceInfo
     const checkPswd: boolean = await bcrypt.compare(pswd, existingUser.password)
 
     if (!checkPswd) {
@@ -64,7 +65,7 @@ export const handleLogin = asyncHandler(async (req: Request, res: Response) => {
 
     const text: string = `Hello ${username.toUpperCase()},\n\n\nA successful login just occurred at ${deviceInfo?.name.toUpperCase()} ${deviceInfo?.os.toUpperCase()} on ${new Date()}.\nIf you did not initiate this login, please visit http://localhost:5173/account/reset to reset your password.`
 
-    if (deviceInfo?.name !== existedDevInfo?.name || deviceInfo?.os !== existedDevInfo?.os) {
+    if (devName !== eDevName || devOs !== eDevOs) {
         await mailer('Kawojue Raheem', existingUser.mail.email, 'Login Notification', text)
     }
 
