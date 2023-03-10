@@ -4,7 +4,7 @@ import { Request, Response } from 'express'
 const asyncHandler = require('express-async-handler')
 
 export const handleSignup = asyncHandler(async (req: Request, res: Response) => {
-    let { email, user, pswd, deviceInfo } = req.body
+    const { email, user, pswd, deviceInfo } = req.body
 
     const mail: string = email?.toLowerCase().trim()
     const username: string = user?.toLowerCase().trim()
@@ -16,12 +16,13 @@ export const handleSignup = asyncHandler(async (req: Request, res: Response) => 
     if (existingEmail) return res.sendStatus(401)
     if (existingUser) return res.sendStatus(409)
 
-    const hashedPswd: string = await bcrypt.hash(pswd, 10)
+    const hashedPswd: string = await bcrypt.hash(pswd, 12)
     await User.create({
         username,
         mail: {
             email: mail
         },
+        originalUsername: user?.trim(),
         password: hashedPswd,
         deviceInfo
     })
