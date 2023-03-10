@@ -64,7 +64,7 @@ export const handleLogin = asyncHandler(async (req: Request, res: Response) => {
         { expiresIn: '5d' }
     )
 
-    const text: string = `Hi ${originalUsername},\n\n\nA successful login just occurred at ${devName.toUpperCase()} ${devOs.toUpperCase()} on ${new Date()}.\nIf you did not initiate this login, please visit http://localhost:5173/account/reset to reset your password.`
+    const text: string = `Hi ${originalUsername},\n\n\nA successful login just occurred at ${devName?.toUpperCase()} ${devOs?.toUpperCase()} on ${new Date()}.\nIf you did not initiate this login, please visit http://localhost:5173/account/reset to reset your password.`
 
     if (devName !== eDevName || devOs !== eDevOs) {
         await mailer('Kawojue Raheem', existingUser.mail.email, 'Login Notification', text)
