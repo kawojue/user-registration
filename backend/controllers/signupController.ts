@@ -4,7 +4,7 @@ import { Request, Response } from 'express'
 const asyncHandler = require('express-async-handler')
 
 export const handleSignup = asyncHandler(async (req: Request, res: Response) => {
-    const { email, user, pswd, deviceInfo } = req.body
+    let { email, user, pswd, deviceInfo } = req.body
 
     const mail: string = email?.toLowerCase().trim()
     const username: string = user?.toLowerCase().trim()
