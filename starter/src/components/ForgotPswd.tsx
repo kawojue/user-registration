@@ -10,11 +10,15 @@ const ForgotPswd: React.FC = () => {
     const emailRef = useRef<HTMLInputElement>(null)
 
     const [otp, setOtp] = useState<string>("")
+    const [totp, setTotp] = useState<string>("")
     const [userId, setUserId] = useState<string>("")
+    const [verified, setVerified] = useState<boolean>(false)
 
     const [email, setEmail] = useState<string>("")
     const [validEmail, setValidEmail] = useState<string>("")
     const [emailFocus, setEmailFocus] = useState<boolean>(false)
+
+    const [pswd, setPswd] = useState<string>("")
 
     const [success, setSuccess] = useState<boolean>(false)
     const [errMsg, setErrMsg] = useState<string | null>(null)
@@ -29,7 +33,7 @@ const ForgotPswd: React.FC = () => {
         const res = EMAIL_REGEX.test(email)
         setValidEmail(res)
         setErrMsg("")
-    }, [email])
+    }, [email, otp])
 
     const handleSubmit = async (e: FormEvent):Promise<void> => {
         e.preventDefault()
@@ -47,6 +51,7 @@ const ForgotPswd: React.FC = () => {
             }
         ).then(res => {
             setUserId(email)
+            setTotp(res?.data.totp)
             setSuccess(res?.data.success)
         }).catch(err => {
             setErrMsg(err.response?.data.message)
@@ -61,19 +66,60 @@ const ForgotPswd: React.FC = () => {
         e.preventDefault()
         await axios.post(
             '/account/reset',
-            JSON.stringify({ userId, otp }),
+            JSON.stringify({ userId, otp, totp }),
             {
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 withCredentials: true
             }
-        )
+        ).then(res => {
+            const data = res?.data
+            setUserId(data.userId)
+            setVerified(data.verified)
+        }).catch(err => {
+            setErrMsg(err.response?.data.message)
+        })
+    }
+
+    const handleChangePswd = async (e: FormEvent):Promise<void> => {
+        e.preventDefault()
+        await axios.post(
+            '/account/passwordreset',
+            JSON.stringify({ userId, verified, pswd }),
+            {
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                withCredentials: true
+            }
+        ).catch(err => {
+            setErrMsg(err.response?.data.message)
+        })
     }
 
     return (
     <section className="container">
-            {success ? 
+        <div className={`err-container ${errMsg ? 'errMsg' : 'hidden'}`}>
+            <p ref={errRef} aria-live="assertive">
+                {errMsg}
+            </p>
+        </div>
+        { verified ?
+        <article className="user-route">
+            {/* <p className="mb-2 text-lg text-pry-clr-0">New Password: </p>
+            <form onSubmit={e => verifyOTP(e)}>
+                <input type='text' value={otp}
+                onChange={e => setOtp(e.target.value)} />
+                <div className="btn-container">
+                    <button type="submit" className='btn'>
+                        Save
+                    </button>
+                </div>
+            </form> */}
+        </article> :
+            <>
+            {success ?
             <article className="user-route">
                 <p className="mb-2 text-lg text-pry-clr-0">Code sent to your mail: </p>
                 <form onSubmit={e => verifyOTP(e)}>
@@ -87,11 +133,6 @@ const ForgotPswd: React.FC = () => {
                 </form>
             </article> :
             <>
-                <div className={`err-container ${errMsg ? 'errMsg' : 'hidden'}`}>
-                    <p ref={errRef} aria-live="assertive">
-                        {errMsg}
-                    </p>
-                </div>
                 <h3 className="section-h3">Forgot Password</h3>
                 <form className="form" method="POST"
                 onSubmit={e => handleSubmit(e)}>
@@ -127,7 +168,7 @@ const ForgotPswd: React.FC = () => {
                         </button>
                     </div>
                 </form>
-            </> }
+            </> }</>}
         </section>
     )
 }
