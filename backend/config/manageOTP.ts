@@ -1,10 +1,16 @@
-export function generateOTP() {
-    let OTP = ''
-    const length = 6
-    const digits = '0123456789'
+export interface IGenOTP {
+    OTP: string
+    now: number
+}
+
+export function generateOTP(): IGenOTP {
+    let OTP: string = ''
+    const now: number = Date.now()
+    const digits: string = '0123456789'
+    const length: number = parseInt('56'[Math.floor(Math.random() * 2)])
     for (let i = 0; i < length; i++) {
         OTP += digits[Math.floor(Math.random() * length)]
     }
 
-    return OTP
+    return { OTP, now }
 }
