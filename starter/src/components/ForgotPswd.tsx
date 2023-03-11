@@ -11,6 +11,7 @@ const ForgotPswd: React.FC = () => {
 
     const [otp, setOtp] = useState<string>("")
     const [totp, setTotp] = useState<string>("")
+    const [otpDate, setOtpDate] = useState<number>(0)
     const [userId, setUserId] = useState<string>("")
     const [verified, setVerified] = useState<boolean>(false)
 
@@ -50,9 +51,11 @@ const ForgotPswd: React.FC = () => {
                 withCredentials: true
             }
         ).then(res => {
+            const { totp, success, date }: any = res?.data
+            setTotp(totp)
+            setOtpDate(date)
             setUserId(email)
-            setTotp(res?.data.totp)
-            setSuccess(res?.data.success)
+            setSuccess(success)
         }).catch(err => {
             setErrMsg(err.response?.data.message)
             setSuccess(err.response?.data.success)
@@ -66,7 +69,7 @@ const ForgotPswd: React.FC = () => {
         e.preventDefault()
         await axios.post(
             '/account/reset',
-            JSON.stringify({ userId, otp, totp }),
+            JSON.stringify({ userId, otp, totp, date: otpDate }),
             {
                 headers: {
                     'Content-Type': 'application/json'
