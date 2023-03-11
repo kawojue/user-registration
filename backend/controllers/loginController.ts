@@ -19,7 +19,7 @@ export const handleLogin = asyncHandler(async (req: Request, res: Response) => {
 
     let existingUser: any
     const isEmail = EMAIL_REGEX.test(user)
-    const userId: string = user?.toLowerCase().trim()
+    const userId: string = user?.trim().toLowerCase()
     const { name: devName, os: devOs}: any = deviceInfo
 
     if (isEmail) {
