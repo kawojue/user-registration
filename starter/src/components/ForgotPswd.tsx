@@ -1,4 +1,5 @@
 import axios from '../api/create'
+import ChangePswd from './ChangePswd'
 import userContext from '../hooks/Context'
 import { useRef, useState, useEffect, FormEvent } from 'react'
 import { FaInfoCircle, FaTimes, FaCheck } from 'react-icons/fa'
@@ -85,22 +86,6 @@ const ForgotPswd: React.FC = () => {
         })
     }
 
-    const handleChangePswd = async (e: FormEvent):Promise<void> => {
-        e.preventDefault()
-        await axios.post(
-            '/account/passwordreset',
-            JSON.stringify({ userId, verified, pswd }),
-            {
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                withCredentials: true
-            }
-        ).catch(err => {
-            setErrMsg(err.response?.data.message)
-        })
-    }
-
     return (
     <section className="container">
         <div className={`err-container ${errMsg ? 'errMsg' : 'hidden'}`}>
@@ -109,18 +94,7 @@ const ForgotPswd: React.FC = () => {
             </p>
         </div>
         { verified ?
-        <article className="user-route">
-            {/* <p className="mb-2 text-lg text-pry-clr-0">New Password: </p>
-            <form onSubmit={e => verifyOTP(e)}>
-                <input type='text' value={otp}
-                onChange={e => setOtp(e.target.value)} />
-                <div className="btn-container">
-                    <button type="submit" className='btn'>
-                        Save
-                    </button>
-                </div>
-            </form> */}
-        </article> :
+        <ChangePswd verified={verified} password={pswd} userId={userId} />:
             <>
             {success ?
             <article className="user-route">
