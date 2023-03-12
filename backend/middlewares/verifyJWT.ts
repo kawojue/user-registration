@@ -14,9 +14,10 @@ export const verifyJWT = (req: Request, res: Response, next: NextFunction) => {
         `${process.env.SECRET_ACCESS_TOKEN}`,
         (err: any, user:any) => {
             if (err) return res.sendStatus(403)
-            // console.log(user)
+            console.log(user)
             // console.log(req)
-            // req.user = user.userInfo.userId
+            // req.user = user.userId
+            req.body.user = user.userId
             next()
         }
     )
