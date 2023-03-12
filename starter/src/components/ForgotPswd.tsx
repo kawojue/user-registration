@@ -1,5 +1,5 @@
 import axios from '../api/create'
-import ChangePswd from './ChangePswd'
+import ResetPswd from './ResetPswd'
 import userContext from '../hooks/Context'
 import { useRef, useState, useEffect, FormEvent } from 'react'
 import { FaInfoCircle, FaTimes, FaCheck } from 'react-icons/fa'
@@ -19,8 +19,6 @@ const ForgotPswd: React.FC = () => {
     const [email, setEmail] = useState<string>("")
     const [validEmail, setValidEmail] = useState<string>("")
     const [emailFocus, setEmailFocus] = useState<boolean>(false)
-
-    const [pswd, setPswd] = useState<string>("")
 
     const [success, setSuccess] = useState<boolean>(false)
     const [errMsg, setErrMsg] = useState<string | null>(null)
@@ -43,7 +41,7 @@ const ForgotPswd: React.FC = () => {
             setErrMsg('Warning!')
         }
         axios.post(
-            '/auth/forgotten',
+            '/account/reset',
             JSON.stringify({ email }),
             {
                 headers: {
@@ -69,7 +67,7 @@ const ForgotPswd: React.FC = () => {
     const verifyOTP = async (e: FormEvent):Promise<void> => {
         e.preventDefault()
         await axios.post(
-            '/account/reset',
+            '/account/verify',
             JSON.stringify({ userId, otp, totp, date: otpDate }),
             {
                 headers: {
@@ -94,7 +92,7 @@ const ForgotPswd: React.FC = () => {
             </p>
         </div>
         { verified ?
-        <ChangePswd verified={verified} password={pswd} userId={userId} />:
+        <ResetPswd verified={verified} userId={userId} />:
             <>
             {success ?
             <article className="user-route">
