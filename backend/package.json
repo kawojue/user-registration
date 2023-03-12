@@ -4,7 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.ts"
+    "start": "ts-node index.ts"
+  },
+  "engines": {
+    "node": "14.x"
   },
   "keywords": [],
   "author": "kawojue",
