@@ -105,7 +105,7 @@ const Login:React.FC = () => {
                 </form>
                 <article className="user-route">
                     <p>Don't have an account?</p>
-                    <Link to="/auth/signup">Sign up</Link>
+                    <Link to="/account/reset">Sign up</Link>
                 </article>
             </> }
         </section>
