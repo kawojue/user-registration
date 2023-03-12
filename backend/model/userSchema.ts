@@ -40,8 +40,8 @@ const userShema = new mongoose.Schema(
             type: Boolean,
             default: false
         },
+        loginToken: String,
         refreshToken: String,
-        resetPasswordToken: String,
         deviceInfo: {
             name: String,
             version: String,
