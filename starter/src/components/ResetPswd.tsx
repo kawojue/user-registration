@@ -30,6 +30,7 @@ const ResetPswd: React.FC<IResetPswd> = ({ userId, verified }) => {
 
         if (!isValid) {
             setErrMsg("Password does not match.")
+            return
         }
 
         await axios.post(
