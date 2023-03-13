@@ -27,6 +27,11 @@ const ResetPswd: React.FC<IResetPswd> = ({ userId, verified }) => {
 
     const handleSubmit = async (e: FormEvent):Promise<void> => {
         e.preventDefault()
+
+        if (!isValid) {
+            setErrMsg("Password does not match.")
+        }
+
         await axios.post(
             '/account/passwordreset',
             JSON.stringify({ userId, verified, pswd, deviceInfo }),
@@ -58,7 +63,7 @@ const ResetPswd: React.FC<IResetPswd> = ({ userId, verified }) => {
                         {errMsg}
                     </p>
                 </div>
-                <h3 className="section-h3">Signup</h3>
+                <h3 className="section-h3">New Password</h3>
                 <form className="form" method="POST"
                 onSubmit={e => handleSubmit(e)}>
                     <article className="form-center">
