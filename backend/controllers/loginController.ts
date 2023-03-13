@@ -10,7 +10,7 @@ dotenv.config()
 
 const newCookie: CookieOptions = {
     httpOnly: true,
-    maxAge: 7 * 24 * 60 * 60 * 1000
+    maxAge: 5 * 24 * 60 * 60 * 1000
 }
 
 export const handleLogin = asyncHandler(async (req: Request, res: Response) => {
@@ -37,7 +37,7 @@ export const handleLogin = asyncHandler(async (req: Request, res: Response) => {
 
     const username: string = await existingUser.username
     const originalUsername: string = await existingUser.originalUsername
-    const { name: eDevName, os: eDevOs }: any = await existingUser.deviceInfo
+    const { name: exDevName, os: exDevOs }: any = await existingUser.deviceInfo
     const checkPswd: boolean = await bcrypt.compare(pswd, existingUser.password)
 
     if (!checkPswd) {
@@ -56,7 +56,7 @@ export const handleLogin = asyncHandler(async (req: Request, res: Response) => {
             }
         },
         `${process.env.SECRET_ACCESS_TOKEN}`,
-        { expiresIn: '5m' }
+        { expiresIn: '3m' }
     )
     const refreshToken: Secret = jwt.sign(
         { "userId": username },
@@ -66,7 +66,7 @@ export const handleLogin = asyncHandler(async (req: Request, res: Response) => {
 
     const text: string = `Hi ${originalUsername},\n\n\nA successful login just occurred at ${devName?.toUpperCase()} ${devOs?.toUpperCase()} on ${new Date()}.\nIf you did not initiate this login, please visit http://localhost:5173/auth/forgotten to reset your password.`
 
-    if (devName !== eDevName || devOs !== eDevOs) {
+    if (devName !== exDevName || devOs !== exDevOs) {
         await mailer('Kawojue Raheem', existingUser.mail.email, 'Login Notification', text)
     }
 
