@@ -1,5 +1,6 @@
 import Button from "./Button"
 import axios from '../api/create'
+import { detect } from "detect-browser"
 import { FormEvent, useState } from 'react'
 import userContext from "../hooks/Context"
 import { FaInfoCircle, FaTimes, FaCheck } from 'react-icons/fa'
@@ -10,6 +11,7 @@ interface IResetPswd {
 }
 
 const ResetPswd: React.FC<IResetPswd> = ({ userId, verified }) => {
+    const deviceInfo = detect()
     const [success, setSuccess] = useState<boolean>(false)
 
     const {
@@ -27,7 +29,7 @@ const ResetPswd: React.FC<IResetPswd> = ({ userId, verified }) => {
         e.preventDefault()
         await axios.post(
             '/account/passwordreset',
-            JSON.stringify({ userId, verified, pswd }),
+            JSON.stringify({ userId, verified, pswd, deviceInfo }),
             {
                 headers: {
                     'Content-Type': 'application/json'
