@@ -28,7 +28,7 @@ export const handleRefreshToken = asyncHandler(async (req: Request, res: Respons
                     }
                 },
                 `${process.env.SECRET_ACCESS_TOKEN}`,
-                { expiresIn: '1h'}
+                { expiresIn: '3m' }
             )
             res.status(200).json({ success: true, accessToken })
         }
