@@ -4,7 +4,7 @@ import { Request, Response } from 'express'
 const asyncHandler = require('express-async-handler')
 
 export const handleResetPswd = asyncHandler(async (req: Request, res: Response) => {
-    const { userId, verified, pswd } = req.body
+    const { userId, verified, pswd, deviceInfo } = req.body
 
     if (!userId || !pswd || !verified) {
         return res.status(400).json({
@@ -32,6 +32,7 @@ export const handleResetPswd = asyncHandler(async (req: Request, res: Response) 
 
     const hashedPswd = await bcrypt.hash(pswd, 12)
     getUser.password = hashedPswd
+    getUser.deviceInfo = deviceInfo
     await getUser.save()
 
     res.json({
