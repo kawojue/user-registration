@@ -1,12 +1,8 @@
 import express, { Router } from 'express'
-import { verify } from '../controllers/verifyOTPController'
-import { handleResetPswd } from '../controllers/resetPswdController'
-import { handleForgotPswd } from '../controllers/forgotPswdController'
+import passwordRoute from './passwordRoutes'
 
 const accountRoute: Router = express.Router()
 
-accountRoute.post('/verify', verify)
-accountRoute.post('/reset', handleForgotPswd)
-accountRoute.post('/passwordreset', handleResetPswd)
+accountRoute.use('/password', passwordRoute)
 
 export default accountRoute
