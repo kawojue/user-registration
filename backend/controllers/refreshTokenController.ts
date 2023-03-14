@@ -10,11 +10,12 @@ export const handleRefreshToken = asyncHandler(async (req: Request, res: Respons
     const cookies = req.cookies
     if (!cookies?.loginCookie) return res.sendStatus(401) // unauthorized
 
-    const refreshToken = cookies.loginCookie
-    const existingUser = await User.findOne({ refreshToken }).exec()
+    const refreshToken: string = cookies.loginCookie
+    const existingUser: any = await User.findOne({ refreshToken }).exec()
 
     if (!existingUser) return res.sendStatus(403) // forbidden
 
+    const roles = Object.values(existingUser.roles).filter(Boolean)
     jwt.verify(
         refreshToken,
         `${process.env.SECRET_REFRESH_TOKEN}`,
@@ -24,7 +25,7 @@ export const handleRefreshToken = asyncHandler(async (req: Request, res: Respons
                 {
                     "userInfo": {
                         "userId": userInfo.userId,
-                        "roles": userInfo.roles
+                        "roles": roles
                     }
                 },
                 `${process.env.SECRET_ACCESS_TOKEN}`,
