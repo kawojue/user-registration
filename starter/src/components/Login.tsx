@@ -95,7 +95,7 @@ const Login:React.FC = () => {
                         </div>
                     </article>
                     <article className="fgtpswd">
-                        <Link to="/auth/forgotten">Forgot password?</Link>
+                        <Link to="/account/password/reset">Forgot password?</Link>
                     </article>
                     <div className="btn-container">
                         <button type="submit" className='btn' disabled={!isValid}>
@@ -105,7 +105,7 @@ const Login:React.FC = () => {
                 </form>
                 <article className="user-route">
                     <p>Don't have an account?</p>
-                    <Link to="/account/reset">Sign up</Link>
+                    <Link to="/auth/signup">Sign up</Link>
                 </article>
             </> }
         </section>
