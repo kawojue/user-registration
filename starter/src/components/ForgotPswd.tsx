@@ -41,7 +41,7 @@ const ForgotPswd: React.FC = () => {
             setErrMsg('Warning!')
         }
         axios.post(
-            '/account/reset',
+            '/account/password/reset',
             JSON.stringify({ email }),
             {
                 headers: {
@@ -67,7 +67,7 @@ const ForgotPswd: React.FC = () => {
     const verifyOTP = async (e: FormEvent):Promise<void> => {
         e.preventDefault()
         await axios.post(
-            '/account/verify',
+            '/account/password/verify',
             JSON.stringify({ userId, otp, totp, date: otpDate }),
             {
                 headers: {
