@@ -34,7 +34,7 @@ const ResetPswd: React.FC<IResetPswd> = ({ userId, verified }) => {
         }
 
         await axios.post(
-            '/account/passwordreset',
+            '/account/password/forgotten',
             JSON.stringify({ userId, verified, pswd, deviceInfo }),
             {
                 headers: {
