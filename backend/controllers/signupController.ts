@@ -22,7 +22,6 @@ export const handleSignup = asyncHandler(async (req: Request, res: Response) => 
         mail: {
             email: mail
         },
-        originalUsername: user?.trim(),
         password: hashedPswd,
         deviceInfo
     })
