@@ -15,7 +15,7 @@ const App: React.FC = () => {
         <Route path="/" element={<Layout />}>
           <Route path="/auth/login" element={<Login />} />
           <Route path="/auth/signup" element={<Register />} />
-          <Route path="/auth/forgotten" element={<ForgotPswd />} />
+          <Route path="/account/password/reset" element={<ForgotPswd />} />
 
           <Route index element={<Home />}/>
           <Route path="*" element={<Missing />}/>
