@@ -5,7 +5,7 @@ dotenv.config()
 
 const transporter: Transporter = nodemailer.createTransport({
     host: 'smtp.gmail.com',
-    secure: false,
+    secure: true,
     service: 'gmail',
     requireTLS: true,
     auth: {
