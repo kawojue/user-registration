@@ -4,10 +4,10 @@ import { useParams, useNavigate } from 'react-router-dom'
 
 const Dashboard: React.FC = () => {
     const nav = useNavigate()
-    const { id } = useParams()
-    const userId: string | undefined = id?.slice(1)
+    const { id }: any = useParams()
+    const userId: string = id.slice(1)
 
-    const handleUser = async (ID: string | undefined) => {
+    const handleUser = async (ID: string) => {
         await axios.get(`${ID}`)
             .then(res => {
                 console.log(res?.data)
