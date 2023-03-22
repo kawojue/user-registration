@@ -3,9 +3,9 @@ import * as mongoose from 'mongoose'
 
 dotenv.config()
 
-const connectDB = () => {
+const connectDB = async (DATABASE_URI: string) => {
     try {
-        mongoose.connect(`${process.env.DATABASE_URI}`)
+        await mongoose.connect(DATABASE_URI)
     } catch (err: any) {
         console.error(err)
     }
