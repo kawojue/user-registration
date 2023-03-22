@@ -1,5 +1,5 @@
-import rateLimit, { RateLimitRequestHandler, Options } from 'express-rate-limit'
 import { Request, Response, NextFunction } from 'express'
+import rateLimit, { RateLimitRequestHandler, Options } from 'express-rate-limit'
 
 const timerArr: number[] = [61, 69, 78, 89, 99]
 
