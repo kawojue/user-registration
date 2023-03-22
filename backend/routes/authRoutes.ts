@@ -1,5 +1,5 @@
 import express, { Router } from 'express'
-import loginLimiter from '../middlewares/loginLimiter'
+import loginLimiter from '../middlewares/limiter'
 import { handleLogin } from '../controllers/loginController'
 import { handleLogout } from '../controllers/logoutController'
 import { handleSignup } from '../controllers/signupController'
