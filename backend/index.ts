@@ -10,8 +10,9 @@ import corsOptions from './config/corsOptions'
 import userRoute from './routes/api/userRoutes'
 import accountRoute from './routes/accountRoutes'
 
-connectDB()
 dotenv.config()
+connectDB(`${process.env.DATABASE_URI}`)
+
 const PORT = process.env.PORT || 2003
 const app: Application = express()
 
