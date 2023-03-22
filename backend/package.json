@@ -14,9 +14,6 @@
     "build",
     "add-build"
   ],
-  "engines": {
-    "node": "18.x"
-  },
   "keywords": [],
   "author": "kawojue",
   "license": "MIT",
