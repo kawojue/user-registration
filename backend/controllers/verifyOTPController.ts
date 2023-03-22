@@ -6,7 +6,7 @@ export const verify = asyncHandler(async (req: Request, res: Response) => {
     otp = otp?.trim()
     userId = userId?.trim().toLowerCase()
 
-    const expiry:number = date + 180*1000
+    const expiry:number = date + 60 * 60 * 1000
 
     if (expiry < Date.now()) {
         return res.status(400).json({
