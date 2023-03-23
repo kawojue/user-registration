@@ -19,7 +19,7 @@ const app: Application = express()
 
 // set middlewares
 app.use(cookie())
-app.use()
+// app.use(handleCors)
 app.use(express.json())
 app.use(morgan('tiny'))
 app.use(cors())
