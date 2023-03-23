@@ -1,8 +1,8 @@
 import { CorsOptions } from 'cors'
-import { allowedLists } from './allowedLists'
+import { allowedUrl } from './allowedUrl'
 
 const corsOptions: CorsOptions = {
-    origin: allowedLists,
+    origin: allowedUrl,
     optionsSuccessStatus: 200,
     credentials: true,
     methods: ['GET', 'POST']
