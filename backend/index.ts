@@ -20,7 +20,7 @@ const app: Application = express()
 app.use(cookie())
 app.use(express.json())
 app.use(morgan('tiny'))
-app.use(cors(corsOptions))
+app.use(cors())
 app.use(express.urlencoded({ extended: false }))
 
 // set routes
