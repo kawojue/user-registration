@@ -9,7 +9,7 @@ import express, { Application } from 'express'
 import corsOptions from './config/corsOptions'
 import userRoute from './routes/api/userRoutes'
 import accountRoute from './routes/accountRoutes'
-import { handleCors } from './middlewares/allowedCors'
+import handleCors from './middlewares/allowedCors'
 
 dotenv.config()
 connectDB(`${process.env.DATABASE_URI}`)
@@ -19,10 +19,10 @@ const app: Application = express()
 
 // set middlewares
 app.use(cookie())
-app.use(handleCors)
+app.use()
 app.use(express.json())
 app.use(morgan('tiny'))
-app.use(cors(corsOptions))
+app.use(cors())
 app.use(express.urlencoded({ extended: false }))
 
 // set routes
