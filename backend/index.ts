@@ -5,11 +5,11 @@ import mongoose from 'mongoose'
 import cookie from 'cookie-parser'
 import connectDB from './config/dbConn'
 import authRoute from './routes/authRoutes'
-import express, { Application } from 'express'
 import corsOptions from './config/corsOptions'
 import userRoute from './routes/api/userRoutes'
 import accountRoute from './routes/accountRoutes'
 import handleCors from './middlewares/allowedCors'
+import express, { Application, Request, Response } from 'express'
 
 dotenv.config()
 connectDB(`${process.env.DATABASE_URI}`)
@@ -29,6 +29,11 @@ app.use(express.urlencoded({ extended: false }))
 app.use('/account', accountRoute)
 app.use('/auth', authRoute)
 app.use('/', userRoute)
+
+
+app.get("/", (req: Request, res: Response) => {
+    return res.status(200).send("User Registration.")
+})
 
 
 mongoose.connection.once('open', () => {
