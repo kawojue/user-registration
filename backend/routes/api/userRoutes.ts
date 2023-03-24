@@ -4,7 +4,7 @@ import { handleUser, handleAllUsers } from '../../controllers/userController'
 
 const router: Router = express.Router()
 
-router.get('/', handleAllUsers)
+router.get('/api/all', handleAllUsers)
 
 router.get('/:id', verifyJWT, handleUser)
 
