@@ -5,15 +5,11 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon index.ts",
-    "build": "rimraf dist && tsc",
-    "ts.check": "tsc --project tsconfig.json",
-    "add-build": "git add dist"
+    "build": "tsc index.ts"
   },
-  "pre-commit": [
-    "ts.check",
-    "build",
-    "add-build"
-  ],
+  "engines": {
+    "node": "18.x"
+  },
   "keywords": [],
   "author": "kawojue",
   "license": "MIT",
