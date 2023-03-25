@@ -67,7 +67,7 @@ const Login:React.FC = () => {
             { success ?
                 <article className="user-route">
                     <p className="success">You're logged in!</p>
-                    <Link to={`/@${auth.username}`}>Go home.</Link>
+                    <Link to={`/`}>Go home.</Link>
                 </article> :
             <>
                 <div className={`err-container ${errMsg ? 'errMsg offscreen' : 'hidden'}`}>
