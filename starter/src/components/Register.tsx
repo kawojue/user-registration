@@ -1,5 +1,5 @@
 import Button from "./Button"
-import userContext from "../hooks/Context"
+import userContext from "../hooks/useContext"
 import { FaInfoCircle, FaTimes, FaCheck } from 'react-icons/fa'
 
 const Register: React.FC = () => {

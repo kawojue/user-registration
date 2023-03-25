@@ -2,7 +2,7 @@ import Button from "./Button"
 import axios from '../api/create'
 import { detect } from "detect-browser"
 import { FormEvent, useState } from 'react'
-import userContext from "../hooks/Context"
+import userContext from "../hooks/useContext"
 import { FaInfoCircle, FaTimes, FaCheck } from 'react-icons/fa'
 
 interface IResetPswd {

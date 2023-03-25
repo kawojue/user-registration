@@ -1,6 +1,6 @@
 import axios from '../api/create'
 import ResetPswd from './ResetPswd'
-import userContext from '../hooks/Context'
+import userContext from '../hooks/useContext'
 import { useRef, useState, useEffect, FormEvent } from 'react'
 import { FaInfoCircle, FaTimes, FaCheck } from 'react-icons/fa'
 
