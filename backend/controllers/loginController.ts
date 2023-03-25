@@ -3,6 +3,7 @@ import * as bcrypt from 'bcrypt'
 import mailer from '../config/mailer'
 import User from '../model/userSchema'
 import jwt, { Secret } from 'jsonwebtoken'
+import { allowedUrl } from '../config/corsOptions'
 const asyncHandler = require('express-async-handler')
 import { CookieOptions, Request, Response } from 'express'
 
@@ -20,7 +21,7 @@ export const handleLogin = asyncHandler(async (req: Request, res: Response) => {
     let existingUser: any
     const isEmail = EMAIL_REGEX.test(user)
     const userId: string = user?.trim().toLowerCase()
-    const { name: devName, os: devOs}: any = deviceInfo
+    const { name: devName, os: devOs, version: devVersion }: any = deviceInfo
 
     if (isEmail) {
         existingUser = await User.findOne({ 'mail.email': userId })
@@ -36,7 +37,7 @@ export const handleLogin = asyncHandler(async (req: Request, res: Response) => {
     }
 
     const username: string = await existingUser.username
-    const { name: exDevName, os: exDevOs }: any = await existingUser.deviceInfo
+    const { name: exDevName, os: exDevOs, version: exDevVersion }: any = await existingUser.deviceInfo
     const checkPswd: boolean = await bcrypt.compare(pswd, existingUser.password)
 
     if (!checkPswd) {
@@ -63,9 +64,9 @@ export const handleLogin = asyncHandler(async (req: Request, res: Response) => {
         { expiresIn: '5d' }
     )
 
-    const text: string = `Hi ${username?.toLowerCase()},\n\n\nA successful login just occurred at ${devName?.toUpperCase()} ${devOs?.toUpperCase()} on ${new Date()}.\nIf you did not initiate this login, please visit http://localhost:5173/account/password/reset to reset your password.`
+    const text: string = `Hi ${username?.toUpperCase()},\n\n\nA successful login just occurred at ${devName?.toUpperCase()} ${devOs?.toUpperCase()} on ${new Date()}.\nIf you did not initiate this login, please visit ${allowedUrl}/account/password/reset to reset your password.`
 
-    if (devName !== exDevName || devOs !== exDevOs) {
+    if (devName !== exDevName || devOs !== exDevOs || devVersion !== exDevVersion) {
         await mailer('Kawojue Raheem', existingUser.mail.email, 'Login Notification', text)
     }
 
