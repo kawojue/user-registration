@@ -10,6 +10,7 @@ import LinkPage from "./components/LinkPage"
 import Dashboard from "./components/Dashboard"
 import { Routes, Route } from "react-router-dom"
 import ForgotPswd from "./components/ForgotPswd"
+import RequireAuth from "./components/RequireAuth"
 import Unauthorized from "./components/Unauthorized"
 
 const App: React.FC = () => {
@@ -17,7 +18,7 @@ const App: React.FC = () => {
     <>
       <Routes>
         <Route path="profile/:id" element={<Dashboard />} />
-        <Route path="/" element={<Layout />}>
+        <Route element={<Layout />}>
           {/* Public routes */}
           <Route path="*" element={<Missing />} />
           <Route path="/auth/login" element={<Login />} />
@@ -27,11 +28,13 @@ const App: React.FC = () => {
           <Route path="/account/password/reset" element={<ForgotPswd />} />
 
           {/* Protected routes */}
-          <Route index element={<Home />} />
-          <Route path="/admin" element={<Admin />} />
-          <Route path="/editor" element={<Editor />} />
-          <Route path="/lounge" element={<Lounge />} />
-          <Route path="/lounge" element={<Lounge />} />
+          <Route element={<RequireAuth />}>
+            <Route index element={<Home />} />
+            <Route path="/admin" element={<Admin />} />
+            <Route path="/editor" element={<Editor />} />
+            <Route path="/lounge" element={<Lounge />} />
+            <Route path="/lounge" element={<Lounge />} />
+          </Route>
         </Route>
       </Routes>
     </>
