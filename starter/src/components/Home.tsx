@@ -6,10 +6,10 @@ const Home: React.FC = () => {
             <h1 className="section-h3">Home</h1>
             <p>You're logged in!</p>
             <article className="home-links">
-                <Link to="/profile/editor">Go to Editor's page</Link>
-                <Link to="/profile/admin">Go to Admin's page</Link>
-                <Link to="/profile/lounge">Go to Lounge's page</Link>
-                <Link to="/profile/linkpage">Go to Link's page</Link>
+                <Link to="/editor">Go to Editor's page</Link>
+                <Link to="/admin">Go to Admin's page</Link>
+                <Link to="/lounge">Go to Lounge's page</Link>
+                <Link to="/linkpage">Go to Link's page</Link>
             </article>
             <button>
                 Sign out
