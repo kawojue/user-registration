@@ -13,12 +13,32 @@ body {
 }
 
 .app {
-    @apply max-w-full h-screen bg-pry-clr-0 mb-10;
+    @apply max-w-full h-screen bg-pry-clr-0 mb-10 grid place-items-center;
 }
 
 .container {
-    @apply w-[90vw] max-w-[350px] rounded-md px-5 pt-5 pb-3 mx-auto bg-blue-700 text-pry-clr-0 mt-20;
+    @apply w-[90vw] max-w-[350px] rounded-md px-5 pt-5 pb-3 mx-auto bg-blue-700 text-pry-clr-0;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+}
+
+.home p {
+    @apply my-3;
+}
+
+.home-links {
+    @apply flex flex-col gap-3 mb-5;
+}
+
+.home-links a {
+    @apply underline;
+}
+
+.home button {
+    @apply px-3 py-1.5 rounded-lg bg-white text-black font-medium tracking-wider trans;
+}
+
+.home button:hover {
+    @apply bg-red-400 text-pry-clr-0;
 }
 
 .section-h3 {
@@ -41,6 +61,7 @@ body {
     @apply flex gap-1.5 items-center;
 }
 
+.home p,
 label {
     @apply text-[16px] tracking-wide capitalize;
 }
@@ -116,22 +137,6 @@ input:focus {
 
 .success {
     @apply text-[16px] mb-2 tracking-wide text-green-300;
-}
-
-.navbar {
-    @apply py-3 px-14 bg-blue-600 tracking-widest text-xl;
-}
-
-.nav-center {
-    @apply flex justify-between;
-}
-
-.nav-center ul {
-    @apply flex gap-9;
-}
-
-.nav-center ul a {
-    @apply text-pry-clr-0;
 }
 
 .fgtpswd {
