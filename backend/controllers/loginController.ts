@@ -81,9 +81,9 @@ export const handleLogin = asyncHandler(async (req: Request, res: Response) => {
 
     res.cookie('loginCookie', refreshToken, newCookie)
     res.json({
-        success: true,
+        success: true as boolean,
         username,
-        email: existingUser.mail.email,
+        email: existingUser.mail.email as string,
         accessToken,
         roles
     })
