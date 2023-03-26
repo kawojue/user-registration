@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon index.ts",
-    "build": "rimraf dist && tsc",
+    "build": "rimraf && tsc",
     "ts.check": "tsc --project tsconfig.json",
-    "add-build": "git add dist"
+    "add-build": "git add ."
   },
   "pre-commit": [
     "ts.check",
