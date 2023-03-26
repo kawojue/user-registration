@@ -1,9 +1,9 @@
 import dotenv from 'dotenv'
 import * as bcrypt from 'bcrypt'
-import mailer from '../config/mailer'
 import User from '../model/userSchema'
 import jwt, { Secret } from 'jsonwebtoken'
 import { allowedUrl } from '../config/corsOptions'
+import mailer, { IMailer } from '../config/mailer'
 const asyncHandler = require('express-async-handler')
 import { CookieOptions, Request, Response } from 'express'
 
@@ -71,8 +71,15 @@ export const handleLogin = asyncHandler(async (req: Request, res: Response) => {
 
     const text: string = `Hi ${username?.toUpperCase()},\n\n\nA successful login just occurred at ${devName?.toUpperCase()} ${devOs?.toUpperCase()} on ${new Date()}.\nIf you did not initiate this login, please visit ${allowedUrl}/account/password/reset to reset your password.`
 
+    const transportMail: IMailer = {
+        senderName: 'Kawojue Raheem',
+        to: existingUser.mail.email,
+        subject: 'Login Notification',
+        text
+    }
+
     if (devName !== exDevName || devOs !== exDevOs || devVersion !== exDevVersion) {
-        await mailer('Kawojue Raheem', existingUser.mail.email, 'Login Notification', text)
+        await mailer(transportMail)
     }
 
     existingUser.deviceInfo = deviceInfo
