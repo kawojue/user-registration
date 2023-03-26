@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js",
+    "start": "nodemon index.ts",
     "build": "rimraf dist && tsc",
     "ts.check": "tsc --project tsconfig.json",
     "add-build": "git add dist"
