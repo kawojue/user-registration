@@ -3,6 +3,7 @@ import axios from '../api/create'
 import { detect } from 'detect-browser'
 import userContext from '../hooks/useContext'
 import { useRef, useState, useEffect, FormEvent } from 'react'
+import { useNavigate, Location, useLocation, NavigateFunction } from 'react-router-dom'
 
 const Login:React.FC = () => {
     document.title = "Login"
@@ -14,6 +15,9 @@ const Login:React.FC = () => {
     } = userContext()
 
     const deviceInfo = detect()
+    const locaion: Location = useLocation()
+    const navigate: NavigateFunction = useNavigate()
+    const from: string = locaion.state?.from?.pathname || "/"
 
     const userRef = useRef<HTMLInputElement>(null)
     const [user, setUser] = useState<string>("")
@@ -48,6 +52,7 @@ const Login:React.FC = () => {
             const { mail, roles, accessToken, username } = data
             setAuth({ mail, username: username.toLowerCase(), roles, accessToken })
             setSuccess(data.success)
+            navigate(from, { replace: true })
         }).catch(err => {
             if (err.code === 'ERR_NETWORK') {
                 setErrMsg(err.message)
