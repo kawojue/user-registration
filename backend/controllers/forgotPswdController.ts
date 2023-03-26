@@ -1,6 +1,6 @@
-import mailer from '../config/mailer'
 import User from '../model/userSchema'
 import { Request, Response } from 'express'
+import mailer, { IMailer } from '../config/mailer'
 import { generateOTP, IGenOTP } from '../config/manageOTP'
 const asyncHandler = require('express-async-handler')
 
@@ -25,7 +25,14 @@ export const handleForgotPswd = asyncHandler(async (req: Request, res: Response)
         })
     }
 
-    await mailer("Always Appear", mail, "Forgot Password", `Code: ${OTP}`)
+    const transportMail: IMailer = {
+        senderName: "Always Appear",
+        to: mail,
+        subject: "Forgot Password",
+        text: `Code: ${OTP}`
+    }
+
+    await mailer(transportMail)
 
     res.status(200).json({
         success: true,
