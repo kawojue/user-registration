@@ -9,9 +9,14 @@ import { CookieOptions, Request, Response } from 'express'
 
 dotenv.config()
 
-const newCookie: CookieOptions = {
+const newCookie: CookieOptions = process.env.NODE_ENV === 'production' ? {
     httpOnly: true,
-    maxAge: 5 * 24 * 60 * 60 * 1000
+    maxAge: 14 * 24 * 60 * 60 * 1000, // 14 days
+    sameSite: 'none',
+    secure: true
+} : {
+    httpOnly: true,
+    maxAge: 5 * 60 * 1000 // 5 mins
 }
 
 export const handleLogin = asyncHandler(async (req: Request, res: Response) => {
