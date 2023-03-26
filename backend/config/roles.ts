@@ -1,13 +1,13 @@
 export interface IRoles {
-    Employee?: Number,
-    Admin?: Number,
-    User: Number
+    Employee?: string,
+    Admin?: string,
+    User: string
 }
 
 const roles: IRoles = {
-    Employee: 2384,
-    User: 9823,
-    Admin: 4589
+    User: process.env.USER_CODE,
+    Admin: process.env.ADMIN_CODE,
+    Employee: process.env.EMPLOYEE_CODE
 }
 
 export default roles
