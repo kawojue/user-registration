@@ -101,7 +101,7 @@ export const UserProvider: React.FC<{ children: React.ReactElement }> = ({ child
             } else if (statusCode === 401) {
                 setErrMsg("You already have an account.")
             } else {
-                setErrMsg("Network Error.")
+                setErrMsg("Something went wrong.")
             }
             setTimeout(() => {
                 setErrMsg("")
