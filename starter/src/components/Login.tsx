@@ -69,50 +69,43 @@ const Login:React.FC = () => {
     
     return (
         <section className="container">
-            { success ?
-                <article className="user-route">
-                    <p className="success">You're logged in!</p>
-                    <Link to={`/`}>Go home.</Link>
-                </article> :
-            <>
-                <div className={`err-container ${errMsg ? 'errMsg offscreen' : 'hidden'}`}>
-                        <p ref={errRef} aria-live="assertive">
-                            {errMsg}
-                        </p>
-                </div>
-                <h3 className="section-h3">Login</h3>
-                <form className="form" method='POST'
-                onSubmit={e => handleSubmit(e)}>
-                    <article className="form-center">
-                        <div className="form-group">
-                            <label htmlFor='username'>email or username:</label>
-                            <input type="text" id="username" name="username" ref={userRef}
-                            value={user} onChange={e => setUser(e.target.value)}/>
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor='pswd'>Password:</label>
-                            <article className="pswd-container">
-                                <input type={showPswd ? 'text': 'password'}
-                                id="pswd" name="password" value={pswd}
-                                onChange={e => setPswd(e.target.value)} />
-                                <Button get={showPswd} set={setShowPswd} />
-                            </article>
-                        </div>
-                    </article>
-                    <article className="fgtpswd">
-                        <Link to="/account/password/reset">Forgot password?</Link>
-                    </article>
-                    <div className="btn-container">
-                        <button type="submit" className='btn' disabled={!isValid}>
-                            Login
-                        </button>
+            <div className={`err-container ${errMsg ? 'errMsg offscreen' : 'hidden'}`}>
+                    <p ref={errRef} aria-live="assertive">
+                        {errMsg}
+                    </p>
+            </div>
+            <h3 className="section-h3">Login</h3>
+            <form className="form" method='POST'
+            onSubmit={e => handleSubmit(e)}>
+                <article className="form-center">
+                    <div className="form-group">
+                        <label htmlFor='username'>email or username:</label>
+                        <input type="text" id="username" name="username" ref={userRef}
+                        value={user} onChange={e => setUser(e.target.value)}/>
                     </div>
-                </form>
-                <article className="user-route">
-                    <p>Don't have an account?</p>
-                    <Link to="/auth/signup">Sign up</Link>
+                    <div className="form-group">
+                        <label htmlFor='pswd'>Password:</label>
+                        <article className="pswd-container">
+                            <input type={showPswd ? 'text': 'password'}
+                            id="pswd" name="password" value={pswd}
+                            onChange={e => setPswd(e.target.value)} />
+                            <Button get={showPswd} set={setShowPswd} />
+                        </article>
+                    </div>
                 </article>
-            </> }
+                <article className="fgtpswd">
+                    <Link to="/account/password/reset">Forgot password?</Link>
+                </article>
+                <div className="btn-container">
+                    <button type="submit" className='btn' disabled={!isValid}>
+                        Login
+                    </button>
+                </div>
+            </form>
+            <article className="user-route">
+                <p>Don't have an account?</p>
+                <Link to="/auth/signup">Sign up</Link>
+            </article>
         </section>
     )
 }
