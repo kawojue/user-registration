@@ -1,13 +1,15 @@
 import axios from '../api/create'
-import { Link } from "react-router-dom"
+import { useNavigate, NavigateFunction } from "react-router-dom"
 import userContext from '../hooks/useContext'
 
 const Home: React.FC = () => {
-    const { setAuth }: any = userContext()
+    const { setAuth, Link }: any = userContext()
+    const navigate: NavigateFunction = useNavigate()
 
     const handleLogout = async () => {
         await axios.get('/auth/logout')
         setAuth({})
+        navigate('/linkpage', { replace: true })
     }
 
     return(
