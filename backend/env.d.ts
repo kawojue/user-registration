@@ -6,6 +6,9 @@ declare global {
             SECRET_REFRESH_TOKEN?: string,
             EMAIL: string
             EMAIL_PSWD: string
+            USER_CODE: string
+            ADMIN_CODE: string
+            EMPLOYEE_CODE: string
         }
     }
 }
