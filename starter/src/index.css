@@ -5,7 +5,7 @@
 @tailwind components;
 
 body {
-    @apply font-poppins;
+    @apply font-poppins bg-pry-clr-0;
 }
 
 .trans {
@@ -13,7 +13,7 @@ body {
 }
 
 .app {
-    @apply max-w-full h-screen bg-pry-clr-0 mb-10 grid place-items-center;
+    @apply max-w-full mb-10 mt-16;
 }
 
 .container {
