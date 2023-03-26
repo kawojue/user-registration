@@ -49,8 +49,8 @@ const Login:React.FC = () => {
             withCredentials: true
         }).then(res => {
             const data: any = res?.data
-            const { mail, roles, accessToken, username } = data
-            setAuth({ mail, username: username.toLowerCase(), roles, accessToken })
+            const { email, roles, accessToken, username } = data
+            setAuth({ email, username: username.toLowerCase(), roles, accessToken })
             setSuccess(data.success)
             navigate(from, { replace: true })
         }).catch(err => {
