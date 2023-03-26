@@ -8,9 +8,9 @@ const Login:React.FC = () => {
     document.title = "Login"
 
     const  {
+        setErrMsg, setAuth,
         Link, LOGIN_URL, errRef,
-        showPswd, setShowPswd, auth,
-        errMsg, setErrMsg, setAuth
+        showPswd, setShowPswd, errMsg
     } = userContext()
 
     const deviceInfo = detect()

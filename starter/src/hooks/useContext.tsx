@@ -6,7 +6,7 @@ import React, { createContext, useContext, useRef, useState, useEffect, FormEven
 const Context: any | null = createContext({})
 
 export const UserProvider: React.FC<{ children: React.ReactElement }> = ({ children }) => {
-    const LOGIN_URL:string = "auth/login"
+    const LOGIN_URL:string = "/auth/login"
     const REGISTER_URL:string = "/auth/signup"
     const USER_REGEX:RegExp = /^[a-zA-Z][a-zA-Z0-9-_]{2,23}$/
     const EMAIL_REGEX:RegExp = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
