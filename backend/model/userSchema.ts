@@ -16,7 +16,6 @@ const userShema = new mongoose.Schema(
         },
         username: {
             type: String,
-            required: true,
             unique: true
         },
         password: {
@@ -30,10 +29,6 @@ const userShema = new mongoose.Schema(
             },
             Admin: Number,
             Employee: Number,
-        },
-        verified: {
-            type: Boolean,
-            default: false
         },
         loginToken: String,
         refreshToken: String,
