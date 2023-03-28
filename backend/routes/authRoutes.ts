@@ -1,9 +1,9 @@
 import express, { Router } from 'express'
 import limiter from '../middlewares/limiter'
-import { handleLogin } from '../controllers/loginController'
-import { handleLogout } from '../controllers/logoutController'
-import { handleSignup } from '../controllers/signupController'
-import { handleRefreshToken } from '../controllers/refreshTokenController'
+import { handleLogin } from '../controllers/login'
+import { handleLogout } from '../controllers/logout'
+import { handleSignup } from '../controllers/signup'
+import { handleRefreshToken } from '../controllers/refreshToken'
 
 const authRoute: Router = express.Router()
 
