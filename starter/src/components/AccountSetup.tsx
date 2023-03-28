@@ -1,5 +1,5 @@
 import axios from '../api/create'
-import { useEffect } from 'react'
+import { FormEvent, useEffect } from 'react'
 import userContext from '../hooks/useContext'
 import { FaInfoCircle, FaTimes, FaCheck } from 'react-icons/fa'
 
@@ -7,13 +7,21 @@ const AccountSetup: React.FC = () => {
     const {
         Link, errMsg, errRef,
         user, setUserFocus, validName,
-        userFocus, setUser, handleSubmit,
-        isValid, success, userRef
+        userFocus, setUser, success,
+        userRef, vCode, setVCode,
+        verifyEmail
     }: any = userContext()
 
     useEffect(() => {
         userRef.current?.focus()
     })
+
+    const isValid: boolean = Boolean(validName) && Boolean(vCode)
+
+    const handleSubmit = async (e: FormEvent): Promise<void> => {
+        e.preventDefault()
+
+    }
 
     return (
         <section className="container">
@@ -30,7 +38,7 @@ const AccountSetup: React.FC = () => {
                 </div>
                 <h3 className="section-h3">Account Setup</h3>
                 <form className="form" method="POST"
-                onSubmit={e => handleSubmit(e)}>
+                onSubmit={handleSubmit}>
                     <article className="form-center">
                         <div className="form-group">
                             <article className="validity-container">
@@ -59,27 +67,13 @@ const AccountSetup: React.FC = () => {
                         {/* Email verification field */}
                         <div className="form-group">
                             <article className="validity-container">
-                                <label htmlFor='username'>
+                                <label htmlFor='vcode'>
                                     username:
                                 </label>
-                                <div>
-                                    <FaCheck className={validName ? 'valid': 'hidden'} />
-                                    <FaTimes className={validName || !user ? 'hidden': 'invalid'} />
-                                </div>
                             </article>
-                            <input type="text" id="username" name="username" autoComplete="off"
-                                value={user} onChange={e => setUser(e.target.value)}
-                                onBlur={() => setUserFocus(false)} onFocus={() => setUserFocus(true)}
-                                aria-invalid={validName ? "false" : "true"} aria-describedby="uidnote" max={6} />
-                            <article
-                            className={userFocus && user && !validName ? 'constraint': 'hidden'}>
-                                <FaInfoCircle />
-                                <p id="uidnote">
-                                    3 to 23 characters. <br />
-                                    Must begin with a letter. <br />
-                                    Only hyphens, underscores are allowed.
-                                </p>
-                            </article>
+                            <input type="text" id="vcode" autoComplete="off"
+                                value={vCode} max={6}
+                                onChange={e => setVCode(e.target.value)} />
                         </div>
                     </article>
                     <div className="btn-container">
