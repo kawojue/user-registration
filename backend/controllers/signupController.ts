@@ -26,6 +26,7 @@ export const handleSignup = asyncHandler(async (req: Request, res: Response) => 
         deviceInfo
     })
     res.status(201).json({
-        success: true
+        success: true,
+        email: mail as string
     })
 })
