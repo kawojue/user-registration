@@ -15,6 +15,7 @@ export const UserProvider: React.FC<{ children: React.ReactElement }> = ({ child
     const deviceInfo = detect()
 
     const errRef = useRef<any>()
+    const userRef = useRef<HTMLInputElement>(null)
     const emailRef = useRef<HTMLInputElement>(null)
 
     const [auth, setAuth] = useState<any>({})
@@ -22,6 +23,10 @@ export const UserProvider: React.FC<{ children: React.ReactElement }> = ({ child
     const [user, setUser] = useState<string>('')
     const [validName, setValidName] = useState<boolean>(false)
     const [userFocus, setUserFocus] = useState<boolean>(false)
+
+    const [vCode, setVCode] = useState<string>('')
+    const [verifyEmail, setVerifyEmail] = useState<string>('')
+    const [vCodeFocus, setVCodeFocus] = useState<boolean>(false)
 
     const [email, setEmail] = useState<string>('')
     const [validEmail, setValidEmail] = useState<boolean>(false)
@@ -64,14 +69,10 @@ export const UserProvider: React.FC<{ children: React.ReactElement }> = ({ child
     }, [email, user, pswd, confirmPswd])
 
     useEffect(() => {
-        emailRef.current?.focus()
-    }, [])
-
-    useEffect(() => {
         setErrMsg("")
-    }, [user, pswd])
+    }, [email, pswd])
 
-    const isValid:boolean = validEmail && validName && validPswd && validConfirm
+    const isValid:boolean = validEmail && validPswd && validConfirm
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>):Promise<void> => {
         e.preventDefault()
@@ -80,23 +81,22 @@ export const UserProvider: React.FC<{ children: React.ReactElement }> = ({ child
         }
 
         await axios.post(`${REGISTER_URL}`,
-        JSON.stringify({ email, user, pswd, deviceInfo }), {
+        JSON.stringify({ email, pswd, deviceInfo }), {
             headers: {
                 'Content-Type': 'application/json'
             },
             withCredentials: true
         })
-        .then(res => {
-            setUser("")
+        .then((res: any) => {
             setPswd("")
+            setEmail("")
             setConfirmPswd("")
+            setVerifyEmail(res?.data.email)
             setSuccess(res?.data.success)
         })
         .catch(err => {
             const statusCode = err.response?.status
-            if (statusCode === 409) {
-                setErrMsg("Username taken.")
-            } else if (statusCode === 400) {
+            if (statusCode === 400) {
                 setErrMsg("Invalid credentials.")
             } else if (statusCode === 401) {
                 setErrMsg("You already have an account.")
@@ -121,7 +121,9 @@ export const UserProvider: React.FC<{ children: React.ReactElement }> = ({ child
             setShowConfirmPswd, isValid, success,
             LOGIN_URL, setErrMsg, setSuccess, setAuth,
             email, setEmail, emailFocus, setEmailFocus,
-            validEmail, emailRef, auth, EMAIL_REGEX
+            validEmail, emailRef, auth, EMAIL_REGEX,
+            userRef, vCode, setVCode, vCodeFocus,
+            setVCodeFocus, verifyEmail
         }}>
             {children}
         </Context.Provider>
