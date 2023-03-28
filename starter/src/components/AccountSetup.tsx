@@ -1,30 +1,43 @@
 import axios from '../api/create'
-import { FormEvent, useEffect } from 'react'
 import userContext from '../hooks/useContext'
+import { FormEvent, useEffect, useState } from 'react'
 import { FaInfoCircle, FaTimes, FaCheck } from 'react-icons/fa'
 
 const AccountSetup: React.FC = () => {
     const {
         Link, errMsg, errRef,
         user, setUserFocus, validName,
-        userFocus, setUser, success,
-        userRef, vCode, setVCode,
-        verifyEmail
+        userFocus, setUser, userRef,
+        vCode, setVCode, verifyEmail,
+        setErrMsg
     }: any = userContext()
+
+    const [success, setSuccess] = useState<boolean>(false)
 
     useEffect(() => {
         userRef.current?.focus()
     })
 
+    useEffect(() => {
+        setErrMsg("")
+    }, [vCode, user])
+
     const isValid: boolean = Boolean(validName) && Boolean(vCode)
 
     const handleSubmit = async (e: FormEvent): Promise<void> => {
         e.preventDefault()
-
+        await axios.post(
+            '/account/setup',
+            JSON.stringify({ verifyEmail, vCode }),
+            {
+                headers: { 'Content-Type': 'application/json' },
+                withCredentials: true
+            },
+        )
     }
 
     return (
-        <section className="container">
+        <>
             {success ? 
             <article className="user-route">
                 <p className="success">Account created successfully!</p>
@@ -68,12 +81,13 @@ const AccountSetup: React.FC = () => {
                         <div className="form-group">
                             <article className="validity-container">
                                 <label htmlFor='vcode'>
-                                    username:
+                                    Code:
                                 </label>
                             </article>
                             <input type="text" id="vcode" autoComplete="off"
-                                value={vCode} max={6}
-                                onChange={e => setVCode(e.target.value)} />
+                            placeholder='OTP sent to your mail.'
+                            value={vCode} max={6}
+                            onChange={e => setVCode(e.target.value)} />
                         </div>
                     </article>
                     <div className="btn-container">
@@ -88,7 +102,7 @@ const AccountSetup: React.FC = () => {
                 </article>
             </>
             }
-        </section>
+        </>
     )
 }
 
