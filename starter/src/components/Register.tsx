@@ -1,4 +1,6 @@
 import Button from "./Button"
+import { useEffect } from 'react'
+import AccountSetup from "./AccountSetup"
 import userContext from "../hooks/useContext"
 import { FaInfoCircle, FaTimes, FaCheck } from 'react-icons/fa'
 
@@ -6,22 +8,24 @@ const Register: React.FC = () => {
     document.title = "Sign Up"
 
     const {
-        Link, errMsg, errRef, user, pswd,
-        confirmPswd, emailRef, setUserFocus,
-        validName, userFocus, validPswd, pswdFocus,
-        setPswdFocus, setUser, setPswd, setConfirmPswd,
-        setConfirmFocus, validConfirm, showPswd, setShowPswd,
-        confirmFocus, handleSubmit, isValid, success,
-        email, setEmail, validEmail, emailFocus, setEmailFocus
-    } = userContext()
+        Link, errMsg, errRef, pswd,
+        confirmPswd, emailRef, validPswd,
+        pswdFocus, setPswdFocus, setPswd,
+        setConfirmPswd, setConfirmFocus,
+        validConfirm, showPswd, setShowPswd,
+        confirmFocus, handleSubmit, isValid,
+        success, email, setEmail, validEmail,
+        emailFocus, setEmailFocus
+    }: any = userContext()
+
+    useEffect(() => {
+        emailRef.current?.focus()
+    }, [])
 
     return (
         <section className="container">
             {success ? 
-            <article className="user-route">
-                <p className="success">Account created successfully!</p>
-                <Link to="/auth/login">Sign in</Link>
-            </article> :
+            <AccountSetup /> :
             <>
                 <div className={`err-container ${errMsg ? 'errMsg' : 'hidden'}`}>
                     <p ref={errRef} aria-live="assertive">
@@ -58,30 +62,6 @@ const Register: React.FC = () => {
                         </div>
                         <div className="form-group">
                             <article className="validity-container">
-                                <label htmlFor='username'>
-                                    username:
-                                </label>
-                                <div>
-                                    <FaCheck className={validName ? 'valid': 'hidden'} />
-                                    <FaTimes className={validName || !user ? 'hidden': 'invalid'} />
-                                </div>
-                            </article>
-                            <input type="text" id="username" name="username" autoComplete="off"
-                                value={user} onChange={e => setUser(e.target.value)}
-                                onBlur={() => setUserFocus(false)} onFocus={() => setUserFocus(true)}
-                                aria-invalid={validName ? "false" : "true"} aria-describedby="uidnote" max={23}/>
-                            <article
-                            className={userFocus && user && !validName ? 'constraint': 'hidden'}>
-                                <FaInfoCircle />
-                                <p id="uidnote">
-                                    3 to 23 characters. <br />
-                                    Must begin with a letter. <br />
-                                    Only hyphens, underscores are allowed.
-                                </p>
-                            </article>
-                        </div>
-                        <div className="form-group">
-                            <article className="validity-container">
                                 <label htmlFor='pswd'>
                                     password:
                                 </label>
@@ -96,7 +76,7 @@ const Register: React.FC = () => {
                                 onFocus={() => setPswdFocus(true)}
                                 onBlur={() => setPswdFocus(false)}
                                 aria-invalid={validPswd ? "false": "true"} max={89} />
-                                <Button get={showPswd} set={setShowPswd}/>
+                                <Button get={showPswd} set={setShowPswd} />
                             </article>
                             <article
                             className={pswdFocus && pswd && !validPswd ? 'constraint' : 'hidden'}>
