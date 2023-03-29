@@ -1,6 +1,7 @@
 import Button from './Button'
 import axios from '../api/create'
 import { detect } from 'detect-browser'
+import AccountSetup from './AccountSetup'
 import userContext from '../hooks/useContext'
 import { useRef, useState, useEffect, FormEvent } from 'react'
 import { useNavigate, Location, useLocation, NavigateFunction } from 'react-router-dom'
@@ -23,6 +24,7 @@ const Login:React.FC = () => {
     const [user, setUser] = useState<string>("")
     const [pswd, setPswd] = useState<string>("")
     const [success, setSuccess] = useState<boolean>(false)
+    const [verified, setVerified] = useState<boolean>(false)
 
     const isValid = Boolean(user) && Boolean(pswd)
 
@@ -47,24 +49,33 @@ const Login:React.FC = () => {
                 'Content-Type': 'application/json'
             },
             withCredentials: true
-        }).then(res => {
-            const data: any = res?.data
-            const { email, roles, accessToken, username } = data
-            setAuth({ email, username: username.toLowerCase(), roles, accessToken })
-            setSuccess(data.success)
-            navigate(from, { replace: true })
+        }).then((res: any) => {
+            const { success, mail, roles, accessToken, username }: any = res?.data
+            setSuccess(success)
+            setVerified(mail.isVerified)
+            if (mail.isVerified) {
+                setAuth({ mail, username: username, roles, accessToken })
+                navigate(from, { replace: true })
+                return
+            }
         }).catch(err => {
             if (err.code === 'ERR_NETWORK') {
                 setErrMsg(err.message)
-                setSuccess(false)
             } else {
                 setErrMsg(err.response?.data.message)
-                setSuccess(err.response?.data.success)
             }
             setTimeout(() => {
                 setErrMsg("")
             }, 3500);
         })
+    }
+
+    if (!verified && success) {
+        return (
+            <section className="container">
+                <AccountSetup />
+            </section>
+        )
     }
     
     return (
