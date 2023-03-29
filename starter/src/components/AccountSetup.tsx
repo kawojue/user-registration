@@ -9,7 +9,7 @@ const AccountSetup: React.FC = () => {
         user, setUserFocus, validName,
         userFocus, setUser, userRef,
         vCode, setVCode, verifyEmail,
-        setErrMsg
+        setErrMsg, totp, otpDate,
     }: any = userContext()
 
     const [success, setSuccess] = useState<boolean>(false)
@@ -28,11 +28,11 @@ const AccountSetup: React.FC = () => {
         e.preventDefault()
         await axios.post(
             '/account/setup',
-            JSON.stringify({ verifyEmail, vCode }),
+            JSON.stringify({ userId: user, verifyEmail, vCode, totp, otpDate }),
             {
                 headers: { 'Content-Type': 'application/json' },
                 withCredentials: true
-            },
+            }
         )
     }
 
