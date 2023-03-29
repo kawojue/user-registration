@@ -1,8 +1,8 @@
 import User from '../model/userSchema'
 import { Request, Response } from 'express'
 import mailer, { IMailer } from '../config/mailer'
-import { generateOTP, IGenOTP } from '../config/manageOTP'
 const asyncHandler = require('express-async-handler')
+import generateOTP, { IGenOTP } from '../config/manageOTP'
 
 export const handleForgotPswd = asyncHandler(async (req: Request, res: Response) => {
     const { email } = req.body
