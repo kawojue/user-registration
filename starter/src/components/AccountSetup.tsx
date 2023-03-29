@@ -5,13 +5,13 @@ import { FaInfoCircle, FaTimes, FaCheck } from 'react-icons/fa'
 
 const AccountSetup: React.FC = () => {
     const {
-        Link, errMsg, errRef,
-        user, setUserFocus, validName,
-        userFocus, setUser, userRef,
-        vCode, setVCode, verifyEmail,
-        setErrMsg, totp, otpDate,
+        Link, errRef, user, setUserFocus,
+        validName, userFocus, setUser, totp,
+        userRef, vCode, setVCode, verifyEmail,
+        otpDate,
     }: any = userContext()
 
+    const [errMsg, setErrMsg] = useState<string>("")
     const [success, setSuccess] = useState<boolean>(false)
 
     useEffect(() => {
@@ -33,7 +33,11 @@ const AccountSetup: React.FC = () => {
                 headers: { 'Content-Type': 'application/json' },
                 withCredentials: true
             }
-        )
+        ).then((res: any) => {
+            setSuccess(res?.data.success)
+        }).catch((err: any) => {
+            setErrMsg(err.response.data?.message)
+        })
     }
 
     return (
@@ -56,17 +60,21 @@ const AccountSetup: React.FC = () => {
                         <div className="form-group">
                             <article className="validity-container">
                                 <label htmlFor='username'>
-                                    username:
+                                    set your username:
                                 </label>
                                 <div>
                                     <FaCheck className={validName ? 'valid': 'hidden'} />
                                     <FaTimes className={validName || !user ? 'hidden': 'invalid'} />
                                 </div>
                             </article>
-                            <input type="text" id="username" name="username" autoComplete="off"
-                                value={user} onChange={e => setUser(e.target.value)}
-                                onBlur={() => setUserFocus(false)} onFocus={() => setUserFocus(true)}
-                                aria-invalid={validName ? "false" : "true"} aria-describedby="uidnote" max={23}/>
+                            <input type="text" id="username"
+                            placeholder='abc1'
+                            autoComplete="off" value={user}
+                            onChange={e => setUser(e.target.value)}
+                            onBlur={() => setUserFocus(false)}
+                            onFocus={() => setUserFocus(true)}
+                            aria-invalid={validName ? "false" : "true"}
+                            aria-describedby="uidnote" max={23} />
                             <article
                             className={userFocus && user && !validName ? 'constraint': 'hidden'}>
                                 <FaInfoCircle />
@@ -81,7 +89,7 @@ const AccountSetup: React.FC = () => {
                         <div className="form-group">
                             <article className="validity-container">
                                 <label htmlFor='vcode'>
-                                    Code:
+                                    verify your email:
                                 </label>
                             </article>
                             <input type="text" id="vcode" autoComplete="off"
