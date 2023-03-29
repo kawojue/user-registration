@@ -90,7 +90,7 @@ export const handleLogin = asyncHandler(async (req: Request, res: Response) => {
     res.json({
         success: true as boolean,
         username,
-        email: existingUser.mail.email as string,
+        mail: existingUser.mail,
         accessToken,
         roles
     })
