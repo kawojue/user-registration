@@ -19,6 +19,8 @@ export const UserProvider: React.FC<{ children: React.ReactElement }> = ({ child
     const emailRef = useRef<HTMLInputElement>(null)
 
     const [auth, setAuth] = useState<any>({})
+    const [totp, setTotp] = useState<number>()
+    const [otpDate, setOtpDate] = useState<number>()
 
     const [user, setUser] = useState<string>('')
     const [validName, setValidName] = useState<boolean>(false)
@@ -88,11 +90,14 @@ export const UserProvider: React.FC<{ children: React.ReactElement }> = ({ child
             withCredentials: true
         })
         .then((res: any) => {
+            const { email, success, otpDate, totp }: any = res?.data
             setPswd("")
             setEmail("")
             setConfirmPswd("")
-            setVerifyEmail(res?.data.email)
-            setSuccess(res?.data.success)
+            setTotp(totp)
+            setSuccess(success)
+            setOtpDate(otpDate)
+            setVerifyEmail(email)
         })
         .catch(err => {
             const statusCode = err.response?.status
@@ -123,7 +128,7 @@ export const UserProvider: React.FC<{ children: React.ReactElement }> = ({ child
             email, setEmail, emailFocus, setEmailFocus,
             validEmail, emailRef, auth, EMAIL_REGEX,
             userRef, vCode, setVCode, vCodeFocus,
-            setVCodeFocus, verifyEmail
+            setVCodeFocus, verifyEmail, totp, otpDate,
         }}>
             {children}
         </Context.Provider>
