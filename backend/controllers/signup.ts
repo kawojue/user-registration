@@ -1,12 +1,15 @@
 import * as bcrypt from 'bcrypt'
 import User from '../model/userSchema'
 import { Request, Response } from 'express'
+import mailer, { IMailer } from '../config/mailer'
 const asyncHandler = require('express-async-handler')
+import generateOTP, { IGenOTP } from '../config/manageOTP'
 
 export const handleSignup = asyncHandler(async (req: Request, res: Response) => {
     const { email, pswd, deviceInfo }: any = req.body
 
     const mail: string = email?.toLowerCase().trim()
+    const { now, OTP }: IGenOTP = generateOTP()
 
     const existingEmail: any = await User.findOne({ 'mail.email': mail }).exec()
 
@@ -21,8 +24,19 @@ export const handleSignup = asyncHandler(async (req: Request, res: Response) => 
         password: hashedPswd,
         deviceInfo
     })
+
+    const transportMail: IMailer = {
+        senderName: "Always Appear",
+        to: mail,
+        subject: "Verify your Email.",
+        text: `Code: ${OTP}`
+    }
+    await mailer(transportMail)
+
     res.status(201).json({
         success: true,
-        email: mail as string
+        email: mail as string,
+        otpDate: now,
+        totp: OTP
     })
 })
