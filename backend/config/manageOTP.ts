@@ -3,7 +3,7 @@ export interface IGenOTP {
     now: number
 }
 
-export function generateOTP(): IGenOTP {
+export default function generateOTP(): IGenOTP {
     let OTP: string = ''
     const now: number = Date.now()
     const digits: string = '0123456789'
