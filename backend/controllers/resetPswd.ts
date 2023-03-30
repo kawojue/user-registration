@@ -33,6 +33,7 @@ export const handleResetPswd = asyncHandler(async (req: Request, res: Response) 
     const hashedPswd = await bcrypt.hash(pswd, 12)
     getUser.password = hashedPswd
     getUser.deviceInfo = deviceInfo
+    getUser.manageOTP = {}
     await getUser.save()
 
     res.json({
