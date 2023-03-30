@@ -19,6 +19,7 @@ export const UserProvider: React.FC<{ children: React.ReactElement }> = ({ child
     const emailRef = useRef<HTMLInputElement>(null)
 
     const [auth, setAuth] = useState<any>({})
+    const [userId, setUserId] = useState<string>("")
 
     const [user, setUser] = useState<string>('')
     const [validName, setValidName] = useState<boolean>(false)
@@ -110,6 +111,26 @@ export const UserProvider: React.FC<{ children: React.ReactElement }> = ({ child
         })
     }
 
+    const requestOtp = async (email: string):Promise<void> => {
+        await axios.post(
+            '/account/password/reset',
+            JSON.stringify({ email }),
+            {
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                withCredentials: true
+            }
+        ).then((res: any) => {
+            setUserId(email)
+        }).catch(err => {
+            setErrMsg(err.response?.data.message)
+            setTimeout(() => {
+                setErrMsg("")
+            }, 3500);
+        })
+    }
+
     return (
         <Context.Provider value={{
             Link, errMsg, errRef, user, pswd,
@@ -124,7 +145,8 @@ export const UserProvider: React.FC<{ children: React.ReactElement }> = ({ child
             email, setEmail, emailFocus, setEmailFocus,
             validEmail, emailRef, auth, EMAIL_REGEX,
             userRef, vCode, setVCode, vCodeFocus,
-            setVCodeFocus, verifyEmail
+            setVCodeFocus, verifyEmail, requestOtp,
+            userId, setUserId
         }}>
             {children}
         </Context.Provider>
