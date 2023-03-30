@@ -24,6 +24,7 @@ const Login:React.FC = () => {
     const [user, setUser] = useState<string>("")
     const [pswd, setPswd] = useState<string>("")
     const [success, setSuccess] = useState<boolean>(false)
+    const [verifyEmail, setVerifyEmail] = useState<string>("")
     const [verified, setVerified] = useState<boolean>(false)
 
     const isValid = Boolean(user) && Boolean(pswd)
@@ -52,6 +53,7 @@ const Login:React.FC = () => {
         }).then((res: any) => {
             const { success, mail, roles, accessToken, username }: any = res?.data
             setSuccess(success)
+            setVerifyEmail(mail.email)
             setVerified(mail.isVerified)
             if (mail.isVerified) {
                 setAuth({ mail, username: username, roles, accessToken })
@@ -73,7 +75,7 @@ const Login:React.FC = () => {
     if (!verified && success) {
         return (
             <section className="container">
-                <AccountSetup />
+                <AccountSetup verifyEmail={verifyEmail} />
             </section>
         )
     }
