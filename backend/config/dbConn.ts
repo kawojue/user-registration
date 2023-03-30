@@ -11,4 +11,4 @@ const connectDB = async (DATABASE_URI: string) => {
     }
 }
 
-export default connectDB;
+export default connectDB
