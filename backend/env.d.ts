@@ -2,6 +2,7 @@ declare global {
     namespace NodeJS {
         interface ProcessEnv {
             EMAIL: string
+            PROD_URL: string
             USER_CODE: string
             EMAIL_PSWD: string
             ADMIN_CODE: string
