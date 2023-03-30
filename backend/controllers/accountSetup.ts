@@ -3,14 +3,14 @@ import { Request, Response } from 'express'
 const asyncHandler = require('express-async-handler')
 
 export const handleAccountSetup = asyncHandler(async (req: Request, res: Response) => {
-    let { userId, verifyEmail, vCode }: any = req.body
-    userId = userId?.trim()?.toLowerCase()
+    let { username, verifyEmail, vCode }: any = req.body
+    username = username?.trim()?.toLowerCase()
     verifyEmail = verifyEmail?.trim()?.toLowerCase()
 
-    const userExists: any = await User.findOne({ username: userId }).exec()
+    const userExists: any = await User.findOne({ username }).exec()
     const getUser: any = await User.findOne({ 'mail.email': verifyEmail }).exec()
 
-    if (!userId) {
+    if (!username) {
         return res.status(400).json({
             message: "Invalid Input"
         })
@@ -45,7 +45,7 @@ export const handleAccountSetup = asyncHandler(async (req: Request, res: Respons
     }
 
     getUser.manageOTP = {}
-    getUser.username = userId
+    getUser.username = username
     getUser.mail.isVerified = true
     await getUser.save()
 
