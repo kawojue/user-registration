@@ -16,4 +16,17 @@ const limiter: RateLimitRequestHandler = rateLimit({
     legacyHeaders: false,
 })
 
+export const otpRequestLimiter: RateLimitRequestHandler = rateLimit({
+    windowMs: 180 * 1000,
+    max: 1,
+    message: {
+        message: 'Request after 180sec'
+    },
+    handler: (req: Request, res: Response, next: NextFunction, options: Options) => {
+        res.status(options.statusCode).send(options.message)
+    },
+    standardHeaders: true,
+    legacyHeaders: false
+})
+
 export default limiter
