@@ -4,9 +4,9 @@ import userContext from '../hooks/useContext'
 import { FaInfoCircle, FaTimes, FaCheck } from 'react-icons/fa'
 import { useNavigate, NavigateFunction, Location, useLocation } from 'react-router-dom'
 
-const AccountSetup = ({ verifyEmail } : {verifyEmail?: string}) => {
+const AccountSetup = ({ verifyEmail } : { verifyEmail?: string }) => {
     const {
-        Link, errRef, setUserFocus, user,
+        errRef, setUserFocus, user,
         validName, userFocus, setUser, userRef,
         vCode, setVCode, userId, requestOtp
     }: any = userContext()
@@ -16,7 +16,6 @@ const AccountSetup = ({ verifyEmail } : {verifyEmail?: string}) => {
     const from: string = locaion.state?.from?.pathname || "/"
 
     const [errMsg, setErrMsg] = useState<string>("")
-    const [success, setSuccess] = useState<boolean>(false)
 
     useEffect(() => {
         userRef.current?.focus()
@@ -103,7 +102,7 @@ const AccountSetup = ({ verifyEmail } : {verifyEmail?: string}) => {
                 </article>
                 <div className="btn-container">
                     <button type="submit" className='btn'
-                    disabled={!isValid} onClick={async () => handleSubmit()}>
+                    disabled={!isValid} onClick={async () => await handleSubmit()}>
                         Finish
                     </button>
                 </div>
