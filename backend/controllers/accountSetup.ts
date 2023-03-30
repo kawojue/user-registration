@@ -3,14 +3,12 @@ import { Request, Response } from 'express'
 const asyncHandler = require('express-async-handler')
 
 export const handleAccountSetup = asyncHandler(async (req: Request, res: Response) => {
-    let { userId, verifyEmail, vCode, totp, otpDate }: any = req.body
+    let { userId, verifyEmail, vCode }: any = req.body
     userId = userId?.trim()?.toLowerCase()
     verifyEmail = verifyEmail?.trim()?.toLowerCase()
 
     const userExists: any = await User.findOne({ username: userId }).exec()
     const getUser: any = await User.findOne({ 'mail.email': verifyEmail }).exec()
-
-    const expiry:number = otpDate + 60 * 60 * 1000
 
     if (!userId) {
         return res.status(400).json({
@@ -23,6 +21,10 @@ export const handleAccountSetup = asyncHandler(async (req: Request, res: Respons
             message: "Account not found."
         })
     }
+
+    const totp: string = getUser.manageOTP.totp
+    const totpDate: number = getUser.manageOTP.totpDate
+     const expiry:number = totpDate + 60 * 60 * 1000
 
     if (expiry < Date.now()) {
         return res.status(400).json({
@@ -42,6 +44,7 @@ export const handleAccountSetup = asyncHandler(async (req: Request, res: Respons
         })
     }
 
+    getUser.manageOTP = {}
     getUser.username = userId
     getUser.mail.isVerified = true
     await getUser.save()
