@@ -1,12 +1,22 @@
+import { IGenOTP } from '../config/manageOTP'
+import User from '../model/userSchema'
 import { Request, Response } from 'express'
 const asyncHandler = require('express-async-handler')
 
 export const verify = asyncHandler(async (req: Request, res: Response) => {
-    let { userId, otp, totp, date }: any = req.body
+    let { userId, otp }: any = req.body
     otp = otp?.trim()
-    userId = userId?.trim().toLowerCase()
+    userId = userId?.trim()?.toLowerCase()
 
-    const expiry:number = date + 60 * 60 * 1000
+    const getUser = await User.findOne({ 'mail.email': userId })
+    const { totp, totpDate }: any = getUser?.manageOTP
+    const expiry: number = totpDate + 60 * 60 * 1000 // after 1hr
+
+    if (!getUser || !userId) {
+        return res.status(404).json({
+            message: "Account not found!"
+        })
+    }
 
     if (expiry < Date.now()) {
         return res.status(400).json({
