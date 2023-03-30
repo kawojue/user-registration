@@ -8,8 +8,8 @@ const Context: any | null = createContext({})
 export const UserProvider: React.FC<{ children: React.ReactElement }> = ({ children }) => {
     const LOGIN_URL:string = "/auth/login"
     const REGISTER_URL:string = "/auth/signup"
-    const USER_REGEX:RegExp = /^[a-zA-Z][a-zA-Z0-9-_]{2,23}$/
     const EMAIL_REGEX:RegExp = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    const USER_REGEX:RegExp = /^[a-zA-Z][a-zA-Z0-9-_]{2,23}$/
     const PSWD_REGEX:RegExp = /^(?=(.*[a-z]){1,})(?=(.*[A-Z]){1,})(?=(.*[0-9]){1,})(?=(.*[!@#$%^&*()\-__+.]){1,}).{4,89}$/
     
     const deviceInfo = detect()
@@ -19,8 +19,6 @@ export const UserProvider: React.FC<{ children: React.ReactElement }> = ({ child
     const emailRef = useRef<HTMLInputElement>(null)
 
     const [auth, setAuth] = useState<any>({})
-    const [totp, setTotp] = useState<number>()
-    const [otpDate, setOtpDate] = useState<number>()
 
     const [user, setUser] = useState<string>('')
     const [validName, setValidName] = useState<boolean>(false)
@@ -90,13 +88,11 @@ export const UserProvider: React.FC<{ children: React.ReactElement }> = ({ child
             withCredentials: true
         })
         .then((res: any) => {
-            const { email, success, otpDate, totp }: any = res?.data
+            const { email, success }: any = res?.data
             setPswd("")
             setEmail("")
             setConfirmPswd("")
-            setTotp(totp)
             setSuccess(success)
-            setOtpDate(otpDate)
             setVerifyEmail(email)
         })
         .catch(err => {
@@ -128,7 +124,7 @@ export const UserProvider: React.FC<{ children: React.ReactElement }> = ({ child
             email, setEmail, emailFocus, setEmailFocus,
             validEmail, emailRef, auth, EMAIL_REGEX,
             userRef, vCode, setVCode, vCodeFocus,
-            setVCodeFocus, verifyEmail, totp, otpDate,
+            setVCodeFocus, verifyEmail
         }}>
             {children}
         </Context.Provider>
