@@ -36,6 +36,10 @@ const userShema = new mongoose.Schema(
             name: String,
             version: String,
             os: String
+        },
+        manageOTP: {
+            totp: String,
+            totpDate: Number
         }
     },
     {
