@@ -3,7 +3,7 @@ import { CorsOptions } from 'cors'
 
 dotenv.config()
 
-export const allowedUrl: string = process.env.NODE_ENV === 'production' ? 'https://user-registration-kawojue.vercel.app' : 'http://localhost:5173'
+export const allowedUrl: string = process.env.NODE_ENV === 'production' ? process.env.PROD_URL : 'http://localhost:5173'
 
 const corsOptions: CorsOptions = {
     origin: allowedUrl,
