@@ -15,7 +15,7 @@ const Register: React.FC = () => {
         validConfirm, showPswd, setShowPswd,
         confirmFocus, handleSubmit, isValid,
         success, email, setEmail, validEmail,
-        emailFocus, setEmailFocus
+        emailFocus, setEmailFocus, verifyEmail
     }: any = userContext()
 
     useEffect(() => {
@@ -25,7 +25,7 @@ const Register: React.FC = () => {
     return (
         <section className="container">
             {success ? 
-            <AccountSetup /> :
+            <AccountSetup verifyEmail={verifyEmail} /> :
             <>
                 <div className={`err-container ${errMsg ? 'errMsg' : 'hidden'}`}>
                     <p ref={errRef} aria-live="assertive">
