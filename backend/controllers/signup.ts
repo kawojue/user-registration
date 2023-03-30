@@ -9,7 +9,7 @@ export const handleSignup = asyncHandler(async (req: Request, res: Response) => 
     const { email, pswd, deviceInfo }: any = req.body
 
     const mail: string = email?.toLowerCase().trim()
-    const { now, OTP }: IGenOTP = generateOTP()
+    const { totpDate, totp }: IGenOTP = generateOTP()
 
     const existingEmail: any = await User.findOne({ 'mail.email': mail }).exec()
 
@@ -22,21 +22,23 @@ export const handleSignup = asyncHandler(async (req: Request, res: Response) => 
             email: mail
         },
         password: hashedPswd,
-        deviceInfo
+        deviceInfo,
+        manageOTP: {
+            totp,
+            totpDate
+        }
     })
 
     const transportMail: IMailer = {
         senderName: "Always Appear",
         to: mail,
         subject: "Verify your Email.",
-        text: `Code: ${OTP}`
+        text: `Code: ${totp}`
     }
     await mailer(transportMail)
 
     res.status(201).json({
         success: true,
-        email: mail as string,
-        otpDate: now,
-        totp: OTP
+        email: mail
     })
 })
