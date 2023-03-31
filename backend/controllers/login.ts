@@ -24,7 +24,7 @@ export const handleLogin = asyncHandler(async (req: Request, res: Response) => {
     const EMAIL_REGEX: RegExp = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
     const isEmail: boolean = EMAIL_REGEX.test(user)
-    const userId: string = user?.trim().toLowerCase()
+    const userId: string = user?.trim()?.toLowerCase()
     const { name: devName, os: devOs, version: devVersion }: any = deviceInfo
 
     const existingUser: any = await User.findOne(
@@ -86,7 +86,7 @@ export const handleLogin = asyncHandler(async (req: Request, res: Response) => {
     await existingUser.save()
 
     res.cookie('loginCookie', refreshToken, newCookie)
-    res.json({
+    res.status(200).json({
         success: true as boolean,
         username,
         mail: existingUser.mail,
