@@ -4,15 +4,16 @@ import { detect } from 'detect-browser'
 import AccountSetup from './AccountSetup'
 import userContext from '../hooks/useContext'
 import { useRef, useState, useEffect, FormEvent } from 'react'
-import { useNavigate, Location, useLocation, NavigateFunction } from 'react-router-dom'
+import { Link, useNavigate, Location, useLocation, NavigateFunction } from 'react-router-dom'
 
 const Login:React.FC = () => {
     document.title = "Login"
 
     const  {
-        setErrMsg, setAuth,
-        Link, LOGIN_URL, errRef,
-        showPswd, setShowPswd, errMsg
+        LOGIN_URL,
+        showPswd, setShowPswd,
+        setAuth, ToastContainer,
+        showToastMessage
     } = userContext()
 
     const deviceInfo = detect()
@@ -33,14 +34,10 @@ const Login:React.FC = () => {
         userRef.current?.focus()
     }, [])
 
-    useEffect(() => {
-        setErrMsg("")
-    }, [user, pswd])
-
     const handleSubmit = async (e: FormEvent<HTMLFormElement>):Promise<void> => {
         e.preventDefault()
         if (!isValid) {
-            setErrMsg("Invalid Entry!")
+            showToastMessage("error", "Invalid Entry!")
         }
 
         await axios.post(`${LOGIN_URL}`,
@@ -51,24 +48,23 @@ const Login:React.FC = () => {
             },
             withCredentials: true
         }).then((res: any) => {
-            const { success, mail, roles, accessToken, username }: any = res?.data
+            const { success, mail }: any = res?.data
             setSuccess(success)
             setVerifyEmail(mail.email)
             setVerified(mail.isVerified)
             if (mail.isVerified) {
-                setAuth({ mail, username: username, roles, accessToken })
+                setAuth(res?.data)
+                localStorage.setItem("user", JSON.stringify(res?.data))
                 navigate(from, { replace: true })
                 return
             }
-        }).catch(err => {
+        }).catch((err: any) => {
+            const errMsg: string = err.response?.data?.message
             if (err.code === 'ERR_NETWORK') {
-                setErrMsg(err.message)
+                showToastMessage("error", "Something went wrong")
             } else {
-                setErrMsg(err.response?.data.message)
+                showToastMessage("error", errMsg)
             }
-            setTimeout(() => {
-                setErrMsg("")
-            }, 3500);
         })
     }
 
@@ -82,11 +78,7 @@ const Login:React.FC = () => {
     
     return (
         <section className="container">
-            <div className={`err-container ${errMsg ? 'errMsg offscreen' : 'hidden'}`}>
-                    <p ref={errRef} aria-live="assertive">
-                        {errMsg}
-                    </p>
-            </div>
+            <ToastContainer />
             <h3 className="section-h3">Login</h3>
             <form className="form" method='POST'
             onSubmit={e => handleSubmit(e)}>
