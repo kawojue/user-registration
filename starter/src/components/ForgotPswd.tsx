@@ -6,12 +6,12 @@ import { FaInfoCircle, FaTimes, FaCheck } from 'react-icons/fa'
 
 const ForgotPswd: React.FC = () => {
     const {
+        ToastContainer,
+        showToastMessage,
         userId, setUserId,
-        errMsg, setErrMsg,
         EMAIL_REGEX, requestOtp,
     } = userContext()
-
-    const errRef = useRef<any>()
+    
     const emailRef = useRef<HTMLInputElement>(null)
 
     const [otp, setOtp] = useState<string>("")
@@ -30,7 +30,6 @@ const ForgotPswd: React.FC = () => {
     useEffect(() => {
         const res = EMAIL_REGEX.test(email)
         setValidEmail(res)
-        setErrMsg("")
     }, [email, otp])
 
     const verifyOTP = async ():Promise<void> => {
@@ -48,17 +47,13 @@ const ForgotPswd: React.FC = () => {
             setUserId(data.userId)
             setVerified(data.verified)
         }).catch(err => {
-            setErrMsg(err.response?.data.message)
+            showToastMessage("error", err.response?.data?.message)
         })
     }
 
     return (
     <section className="container">
-        <div className={`err-container ${errMsg ? 'errMsg' : 'hidden'}`}>
-            <p ref={errRef} aria-live="assertive">
-                {errMsg}
-            </p>
-        </div>
+        <ToastContainer />
         { verified ?
             <ResetPswd verified={verified} userId={userId} /> :
             <>
