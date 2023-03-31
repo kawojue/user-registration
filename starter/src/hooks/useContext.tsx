@@ -104,6 +104,7 @@ export const UserProvider: React.FC<{ children: React.ReactElement }> = ({ child
             }
         ).then((res: any) => {
             setUserId(email)
+            showToastMessage("success", "OTP sent to your email.")
         }).catch(err => {
             showToastMessage("warning", err.response?.data?.message)
         })
@@ -129,20 +130,23 @@ export const UserProvider: React.FC<{ children: React.ReactElement }> = ({ child
 
     return (
         <Context.Provider value={{
-            Link, pswd,
-            confirmPswd, setUserFocus,
-            userFocus, pswdFocus,
+            Link, pswd, confirmPswd,
+            setUserFocus, userFocus,
             setPswdFocus, validPswd,
-            setPswd, setConfirmPswd, validConfirm,
-            setConfirmFocus, showPswd, setShowPswd,
-            confirmFocus, showConfirmPswd, handleSubmit,
-            setShowConfirmPswd, isValid, success,
-            LOGIN_URL, setSuccess, setAuth,
-            email, setEmail, emailFocus, setEmailFocus,
-            validEmail, emailRef, auth, EMAIL_REGEX,
-            userRef, vCode, setVCode, vCodeFocus,
-            setVCodeFocus, verifyEmail, requestOtp,
-            userId, setUserId, USER_REGEX, showToastMessage,
+            setPswd, setConfirmPswd,
+            validConfirm, pswdFocus,
+            setConfirmFocus, showPswd,
+            setShowPswd, confirmFocus,
+            showConfirmPswd, handleSubmit,
+            setShowConfirmPswd, isValid,
+            success, LOGIN_URL, setSuccess,
+            setAuth, email, setEmail, auth,
+            emailFocus, vCode, setVCode,
+            setEmailFocus, vCodeFocus,
+            validEmail, emailRef, EMAIL_REGEX,
+            userRef, setVCodeFocus, verifyEmail,
+            requestOtp, userId, setUserId,
+            USER_REGEX, showToastMessage,
             ToastContainer
         }}>
             {children}

@@ -3,8 +3,8 @@ import axios from '../api/create'
 import { FormEvent } from 'react'
 import { detect } from "detect-browser"
 import userContext from "../hooks/useContext"
-import { useNavigate, Location, useLocation, NavigateFunction } from 'react-router-dom'
 import { FaInfoCircle, FaTimes, FaCheck } from 'react-icons/fa'
+import { useNavigate, Location, useLocation, NavigateFunction } from 'react-router-dom'
 
 interface IResetPswd {
     userId: string,
