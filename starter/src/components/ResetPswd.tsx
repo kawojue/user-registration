@@ -1,8 +1,9 @@
 import Button from "./Button"
 import axios from '../api/create'
-import { detect } from "detect-browser"
 import { FormEvent, useState } from 'react'
+import { detect } from "detect-browser"
 import userContext from "../hooks/useContext"
+import { useNavigate, Location, useLocation, NavigateFunction } from 'react-router-dom'
 import { FaInfoCircle, FaTimes, FaCheck } from 'react-icons/fa'
 
 interface IResetPswd {
@@ -21,6 +22,10 @@ const ResetPswd: React.FC<IResetPswd> = ({ userId, verified }) => {
         validConfirm, showPswd, setShowPswd,
         showToastMessage
     } = userContext()
+
+    const locaion: Location = useLocation()
+    const navigate: NavigateFunction = useNavigate()
+    const from: string = locaion.state?.from?.pathname || "/"
 
     const isValid = Boolean(validPswd) && Boolean(validConfirm)
 
@@ -45,6 +50,9 @@ const ResetPswd: React.FC<IResetPswd> = ({ userId, verified }) => {
             setPswd("")
             setConfirmPswd("")
             showToastMessage("success", "Password reset successfully.")
+            setTimeout(() => {
+                navigate(from, { replace: true })
+            }, 2000)
         }).catch(err => {
             showToastMessage("error", err.response?.data?.message)
         })
