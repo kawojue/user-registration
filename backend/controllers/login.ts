@@ -20,19 +20,16 @@ const newCookie: CookieOptions = process.env.NODE_ENV === 'production' ? {
 }
 
 export const handleLogin = asyncHandler(async (req: Request, res: Response) => {
-    let { user, pswd, deviceInfo } = req.body
-    const EMAIL_REGEX:RegExp = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    let { user, pswd, deviceInfo }: any = req.body
+    const EMAIL_REGEX: RegExp = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
-    let existingUser: any
-    const isEmail = EMAIL_REGEX.test(user)
+    const isEmail: boolean = EMAIL_REGEX.test(user)
     const userId: string = user?.trim().toLowerCase()
     const { name: devName, os: devOs, version: devVersion }: any = deviceInfo
 
-    if (isEmail) {
-        existingUser = await User.findOne({ 'mail.email': userId })
-    } else {
-        existingUser = await User.findOne({ username: userId })
-    }
+    const existingUser: any = await User.findOne(
+        isEmail ? { 'mail.email': userId } : { username: userId }
+    ).exec()
 
     if (!userId || !pswd || !existingUser) {
         return res.status(400).json({
@@ -41,8 +38,8 @@ export const handleLogin = asyncHandler(async (req: Request, res: Response) => {
         })
     }
 
-    const username: string = await existingUser.username
-    const { name: exDevName, os: exDevOs, version: exDevVersion }: any = await existingUser.deviceInfo
+    const username: string = existingUser?.username
+    const { name: exDevName, os: exDevOs, version: exDevVersion }: any = existingUser?.deviceInfo
     const checkPswd: boolean = await bcrypt.compare(pswd, existingUser.password)
 
     if (!checkPswd) {
@@ -78,8 +75,10 @@ export const handleLogin = asyncHandler(async (req: Request, res: Response) => {
         text
     }
 
-    if (devName !== exDevName || devOs !== exDevOs || devVersion !== exDevVersion) {
-        await mailer(transportMail)
+    if(existingUser.mail.isVerified) {
+        if (devName !== exDevName || devOs !== exDevOs || devVersion !== exDevVersion) {
+            await mailer(transportMail)
+        }
     }
 
     existingUser.deviceInfo = deviceInfo
