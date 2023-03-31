@@ -6,22 +6,29 @@ import { useNavigate, NavigateFunction, Location, useLocation } from 'react-rout
 
 const AccountSetup = ({ verifyEmail } : { verifyEmail?: string }) => {
     const {
-        errRef, setUserFocus, user,
-        validName, userFocus, setUser, userRef,
-        vCode, setVCode, userId, requestOtp
+        errRef, userRef,
+        userFocus, setUserFocus,
+        vCode, setVCode, userId,
+        requestOtp, USER_REGEX
     }: any = userContext()
 
     const locaion: Location = useLocation()
     const navigate: NavigateFunction = useNavigate()
     const from: string = locaion.state?.from?.pathname || "/"
 
+    const [user, setUser] = useState<string>('')
     const [errMsg, setErrMsg] = useState<string>("")
+    const [validName, setValidName] = useState<boolean>(false)
 
     useEffect(() => {
         userRef.current?.focus()
     })
 
     useEffect(() => {
+        // validate user
+        const resUser: boolean = USER_REGEX.test(user)
+        setValidName(resUser)
+
         setErrMsg("")
     }, [vCode, user])
 
@@ -36,7 +43,7 @@ const AccountSetup = ({ verifyEmail } : { verifyEmail?: string }) => {
                 withCredentials: true
             }
         ).then((res: any) => {
-            if (res?.data.success) {
+            if (res?.data?.success) {
                 navigate(from, { replace: true })
                 return
             }
