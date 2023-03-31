@@ -8,14 +8,14 @@ const Register: React.FC = () => {
     document.title = "Sign Up"
 
     const {
-        Link, errMsg, errRef, pswd,
+        Link, pswd, ToastContainer,
         confirmPswd, emailRef, validPswd,
         pswdFocus, setPswdFocus, setPswd,
         setConfirmPswd, setConfirmFocus,
         validConfirm, showPswd, setShowPswd,
         confirmFocus, handleSubmit, isValid,
         success, email, setEmail, validEmail,
-        emailFocus, setEmailFocus, verifyEmail
+        emailFocus, setEmailFocus, verifyEmail,
     }: any = userContext()
 
     useEffect(() => {
@@ -27,11 +27,7 @@ const Register: React.FC = () => {
             {success ? 
             <AccountSetup verifyEmail={verifyEmail} /> :
             <>
-                <div className={`err-container ${errMsg ? 'errMsg' : 'hidden'}`}>
-                    <p ref={errRef} aria-live="assertive">
-                        {errMsg}
-                    </p>
-                </div>
+                < ToastContainer />
                 <h3 className="section-h3">Signup</h3>
                 <form className="form" method="POST"
                 onSubmit={e => handleSubmit(e)}>
