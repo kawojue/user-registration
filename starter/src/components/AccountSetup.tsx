@@ -6,10 +6,11 @@ import { useNavigate, NavigateFunction, Location, useLocation } from 'react-rout
 
 const AccountSetup = ({ verifyEmail } : { verifyEmail?: string }) => {
     const {
-        errRef, userRef,
+        userRef, ToastContainer,
         userFocus, setUserFocus,
         vCode, setVCode, userId,
-        requestOtp, USER_REGEX
+        requestOtp, USER_REGEX,
+        showToastMessage,
     }: any = userContext()
 
     const locaion: Location = useLocation()
@@ -17,7 +18,6 @@ const AccountSetup = ({ verifyEmail } : { verifyEmail?: string }) => {
     const from: string = locaion.state?.from?.pathname || "/"
 
     const [user, setUser] = useState<string>('')
-    const [errMsg, setErrMsg] = useState<string>("")
     const [validName, setValidName] = useState<boolean>(false)
 
     useEffect(() => {
@@ -28,8 +28,6 @@ const AccountSetup = ({ verifyEmail } : { verifyEmail?: string }) => {
         // validate user
         const resUser: boolean = USER_REGEX.test(user)
         setValidName(resUser)
-
-        setErrMsg("")
     }, [vCode, user])
 
     const isValid: boolean = Boolean(validName) && Boolean(vCode)
@@ -48,17 +46,13 @@ const AccountSetup = ({ verifyEmail } : { verifyEmail?: string }) => {
                 return
             }
         }).catch((err: any) => {
-            setErrMsg(err.response.data?.message)
+            showToastMessage("error", err?.response?.message)
         })
     }
 
     return (
         <>
-            <div className={`err-container ${errMsg ? 'errMsg' : 'hidden'}`}>
-                <p ref={errRef} aria-live="assertive">
-                    {errMsg}
-                </p>
-            </div>
+            <ToastContainer />
             <h3 className="section-h3">Account Setup</h3>
             <form className="form" method="POST"
             onSubmit={e => e.preventDefault()}>
