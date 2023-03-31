@@ -1,6 +1,7 @@
 import axios from '../api/create'
 import { detect } from 'detect-browser'
 import { Link } from 'react-router-dom'
+import { ToastContainer, toast } from 'react-toastify'
 import React, { createContext, useContext, useRef, useState, useEffect, FormEvent } from 'react'
 
 const Context: any | null = createContext({})
@@ -13,13 +14,11 @@ export const UserProvider: React.FC<{ children: React.ReactElement }> = ({ child
     const PSWD_REGEX:RegExp = /^(?=(.*[a-z]){1,})(?=(.*[A-Z]){1,})(?=(.*[0-9]){1,})(?=(.*[!@#$%^&*()\-__+.]){1,}).{4,89}$/
     
     const deviceInfo = detect()
-
-    const errRef = useRef<any>()
     const userRef = useRef<HTMLInputElement>(null)
     const emailRef = useRef<HTMLInputElement>(null)
 
-    const [auth, setAuth] = useState<any>({})
     const [userId, setUserId] = useState<string>("")
+    const [auth, setAuth] = useState<any>(JSON.parse(localStorage.getItem("user") as any) || {})
 
     const [userFocus, setUserFocus] = useState<boolean>(false)
 
@@ -40,8 +39,6 @@ export const UserProvider: React.FC<{ children: React.ReactElement }> = ({ child
     const [confirmFocus, setConfirmFocus] = useState<boolean>(false)
 
     const [success, setSuccess] = useState<boolean>(false)
-    const [errMsg, setErrMsg] = useState<string | null>(null)
-    
     const [showPswd, setShowPswd] = useState<boolean>(false)
     const [showConfirmPswd, setShowConfirmPswd] = useState<boolean>(false)
 
@@ -57,8 +54,6 @@ export const UserProvider: React.FC<{ children: React.ReactElement }> = ({ child
             const confirm: boolean = pswd === confirmPswd
             setValidConfirm(confirm)
         }
-
-        setErrMsg('')
     }, [email, pswd, confirmPswd])
 
     const isValid:boolean = validEmail && validPswd && validConfirm
@@ -66,7 +61,8 @@ export const UserProvider: React.FC<{ children: React.ReactElement }> = ({ child
     const handleSubmit = async (e: FormEvent<HTMLFormElement>):Promise<void> => {
         e.preventDefault()
         if (!isValid) {
-            return setErrMsg('Warning! Invalid Entry.')
+            showToastMessage("error", "Invalid entry!")
+            return
         }
 
         await axios.post(`${REGISTER_URL}`,
@@ -87,15 +83,12 @@ export const UserProvider: React.FC<{ children: React.ReactElement }> = ({ child
         .catch(err => {
             const statusCode = err.response?.status
             if (statusCode === 400) {
-                setErrMsg("Invalid credentials.")
+                showToastMessage("error", "Invalid credentials.")
             } else if (statusCode === 401) {
-                setErrMsg("You already have an account.")
+                showToastMessage("warning", "You already have an account.")
             } else {
-                setErrMsg("Something went wrong.")
+                showToastMessage("error", "Something went wrong.")
             }
-            setTimeout(() => {
-                setErrMsg("")
-            }, 3500);
         })
     }
 
@@ -112,16 +105,31 @@ export const UserProvider: React.FC<{ children: React.ReactElement }> = ({ child
         ).then((res: any) => {
             setUserId(email)
         }).catch(err => {
-            setErrMsg(err.response?.data.message)
-            setTimeout(() => {
-                setErrMsg("")
-            }, 3500);
+            showToastMessage("warning", err.response?.data?.message)
         })
+    }
+
+    const showToastMessage = (action: string, msg: string) => {
+        if (action === "success") {
+            toast.success(msg, {
+                position: toast.POSITION.TOP_RIGHT
+            })
+        }
+        if (action === "warning") {
+            toast.warning(msg, {
+                position: toast.POSITION.TOP_RIGHT
+            })
+        }
+        if (action === "error") {
+            toast.error(msg, {
+                position: toast.POSITION.TOP_LEFT
+            })
+        }
     }
 
     return (
         <Context.Provider value={{
-            Link, errMsg, errRef, pswd,
+            Link, pswd,
             confirmPswd, setUserFocus,
             userFocus, pswdFocus,
             setPswdFocus, validPswd,
@@ -129,12 +137,13 @@ export const UserProvider: React.FC<{ children: React.ReactElement }> = ({ child
             setConfirmFocus, showPswd, setShowPswd,
             confirmFocus, showConfirmPswd, handleSubmit,
             setShowConfirmPswd, isValid, success,
-            LOGIN_URL, setErrMsg, setSuccess, setAuth,
+            LOGIN_URL, setSuccess, setAuth,
             email, setEmail, emailFocus, setEmailFocus,
             validEmail, emailRef, auth, EMAIL_REGEX,
             userRef, vCode, setVCode, vCodeFocus,
             setVCodeFocus, verifyEmail, requestOtp,
-            userId, setUserId, USER_REGEX
+            userId, setUserId, USER_REGEX, showToastMessage,
+            ToastContainer
         }}>
             {children}
         </Context.Provider>
