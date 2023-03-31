@@ -40,6 +40,9 @@ const userShema = new mongoose.Schema(
         manageOTP: {
             totp: String,
             totpDate: Number
+        },
+        lastLogout: {
+            type: Date
         }
     },
     {
