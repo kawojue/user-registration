@@ -90,12 +90,12 @@ const ForgotPswd: React.FC = () => {
                             <input type='text' value={otp} id="otp"
                             onChange={e => setOtp(e.target.value)}
                             placeholder="OTP sent to your mail"/>
-                            <div className="btn-container">
-                                <button className='btn'
-                                onClick={async () => await requestOtp(email)}>
-                                    Request OTP
-                                </button>
-                            </div>
+                        <div className="reqOtp-btn-container">
+                            <button className="reqOtp-btn"
+                            onClick={async () => await requestOtp()}>
+                                Resend
+                            </button>
+                        </div>
                         </div>
                     </article>
                     <div className="btn-container">
