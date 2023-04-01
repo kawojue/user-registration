@@ -3,17 +3,22 @@ import Admin from "./components/Admin"
 import Login from "./components/Login"
 import Layout from "./components/Layout"
 import Lounge from "./components/Lounge"
-import Editor from "./components/Editor"
+import Employee from "./components/Employee"
+import userContext from "./hooks/useContext"
 import Missing from "./components/Missing"
 import Register from "./components/Register"
 import LinkPage from "./components/LinkPage"
 import Dashboard from "./components/Dashboard"
 import { Routes, Route } from "react-router-dom"
 import ForgotPswd from "./components/ForgotPswd"
-import RequireAuth from "./components/RequireAuth"
+import RequireUser from "./components/RequireUser"
 import Unauthorized from "./components/Unauthorized"
+import { Navigate, Location, useLocation } from "react-router-dom"
 
 const App: React.FC = () => {
+  const { auth } = userContext()
+  const location: Location  = useLocation()
+
   return (
     <>
       <Routes>
@@ -21,18 +26,31 @@ const App: React.FC = () => {
         <Route element={<Layout />}>
           {/* Public routes */}
           <Route path="*" element={<Missing />} />
-          <Route path="/auth/login" element={<Login />} />
+          <Route path="/auth/login"
+          element={auth?.username && auth?.accessToken ?
+          <Navigate to="/" state={{ from: location }} replace /> :
+          <Login />} />
           <Route path="/linkpage" element={<LinkPage />} />
-          <Route path="/auth/signup" element={<Register />} />
+          <Route path="/auth/signup" element={auth?.username && auth?.accessToken ?
+          <Navigate to="/" state={{ from: location }} replace /> :
+          <Register />} />
           <Route path="/unauthorized" element={<Unauthorized />} />
           <Route path="/account/password/reset" element={<ForgotPswd />} />
 
           {/* Protected routes */}
-          <Route element={<RequireAuth />}>
+          <Route element={<RequireUser allowedRoles={[9823]} />}>
             <Route index element={<Home />} />
+          </Route>
+
+          <Route element={<RequireUser allowedRoles={[4589]} />}>
             <Route path="/admin" element={<Admin />} />
-            <Route path="/editor" element={<Editor />} />
-            <Route path="/lounge" element={<Lounge />} />
+          </Route>
+
+          <Route element={<RequireUser allowedRoles={[2384]} />}>
+            <Route path="/employee" element={<Employee />} />
+          </Route>
+
+          <Route element={<RequireUser allowedRoles={[4589, 2384]} />}>
             <Route path="/lounge" element={<Lounge />} />
           </Route>
         </Route>
