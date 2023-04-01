@@ -1,6 +1,6 @@
 const Lounge: React.FC = () => {
     return (
-        <p>Lounge</p>
+        <p>Admin & Employee's page</p>
     )
 }
 
