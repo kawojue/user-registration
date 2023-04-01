@@ -22,7 +22,9 @@ const AccountSetup = ({ verifyEmail } : { verifyEmail?: string }) => {
 
     useEffect(() => {
         userRef.current?.focus()
-    })
+        showToastMessage("warning", "You need to verify your email.");
+        (async ():Promise<void> => await requestOtp(verifyEmail))()
+    }, [])
 
     useEffect(() => {
         // validate user
@@ -46,7 +48,7 @@ const AccountSetup = ({ verifyEmail } : { verifyEmail?: string }) => {
                 return
             }
         }).catch((err: any) => {
-            showToastMessage("error", err?.response?.message)
+            showToastMessage("error", err.response?.data?.message)
         })
     }
 
@@ -96,10 +98,12 @@ const AccountSetup = ({ verifyEmail } : { verifyEmail?: string }) => {
                         value={vCode} max={6}
                         onChange={e => setVCode(e.target.value)} />
                     </div>
-                    <button className="btn"
-                    onClick={async () => await requestOtp(verifyEmail)}>
-                        Request OTP
-                    </button>
+                    <div className="reqOtp-container">
+                        <button className="reqOtp-btn"
+                        onClick={async () => await requestOtp(verifyEmail)}>
+                            Resend
+                        </button>
+                    </div>
                 </article>
                 <div className="btn-container">
                     <button type="submit" className='btn'
