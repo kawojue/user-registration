@@ -1,6 +1,6 @@
 const Unauthorized: React.FC = () => {
     return (
-        <p>Unauthorized</p>
+        <p>You don't have access to this page.</p>
     )
 }
 
