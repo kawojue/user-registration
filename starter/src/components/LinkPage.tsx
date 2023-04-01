@@ -15,7 +15,7 @@ const LinkPage: React.FC = () => {
                 <h3 className="section-h3">Private</h3>
                 <article className="home-links">
                     <Link to="/">Home</Link>
-                    <Link to="/editor">Editor's page</Link>
+                    <Link to="/employee">Employee's page</Link>
                     <Link to="/admin">Admin's page</Link>
                 </article>
             </section>
