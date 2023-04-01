@@ -20,7 +20,7 @@ export const handleForgotPswd = asyncHandler(async (req: Request, res: Response)
     }
 
     if (!exists) {
-        return res.status(401).json({
+        return res.status(404).json({
             success: false,
             message: 'Account does not exist.'
         })
