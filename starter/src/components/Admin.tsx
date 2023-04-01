@@ -1,6 +1,6 @@
 const Admin: React.FC = () => {
     return (
-        <p>Admin</p>
+        <p>Admin's page</p>
     )
 }
 
