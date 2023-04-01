@@ -117,8 +117,7 @@ input:focus {
     @apply text-xl;
 }
 
-.invalid,
-.errMsg {
+.invalid {
     @apply text-red-500;
 }
 
@@ -130,15 +129,6 @@ input:focus {
     @apply absolute top-2 right-3 text-pry-clr-1 text-xl;
 }
 
-.err-container {
-    @apply w-full mx-auto px-3 py-2 bg-red-300 rounded-md;
-}
-
-.errMsg {
-    @apply text-center mb-2;
-    animation: fadeIn 800ms ease-in-out;
-}
-
 .success {
     @apply text-[16px] mb-2 tracking-wide text-green-300;
 }
@@ -147,12 +137,14 @@ input:focus {
     @apply flex justify-end mt-2 font-cabin;
 }
 
-@keyframes fadeIn {
-    0% {
-        opacity: 0;
-    }
+.reqOtp-container {
+    @apply w-full flex justify-end;
+}
 
-    100% {
-        opacity: 1;
-    }
+.reqOtp-btn {
+    @apply tracking-wider text-sm px-3 py-1 rounded-md text-white;
+}
+
+.reqOtp-btn:disabled {
+    @apply text-pry-clr-0;
 }
