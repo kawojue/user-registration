@@ -55,7 +55,10 @@ const Login:React.FC = () => {
             if (mail.isVerified) {
                 setAuth(res?.data)
                 localStorage.setItem("user", JSON.stringify(res?.data))
-                navigate(from, { replace: true })
+                showToastMessage("success", "Login successful.")
+                setTimeout(() => {
+                    navigate(from, { replace: true })
+                }, 2000)
                 return
             }
         }).catch((err: any) => {
