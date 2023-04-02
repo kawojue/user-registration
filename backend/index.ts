@@ -19,10 +19,11 @@ const app: Application = express()
 
 // set middlewares
 app.use(cookie())
-app.use(handleCors)
+// app.use(handleCors)
 app.use(express.json())
 app.use(morgan('tiny'))
-app.use(cors(corsOptions))
+app.use(cors())
+// app.use(cors(corsOptions))
 app.use(express.urlencoded({ extended: false }))
 
 // set routes
