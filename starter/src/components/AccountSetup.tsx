@@ -45,8 +45,11 @@ const AccountSetup = ({ verifyEmail } : { verifyEmail?: string }) => {
             }
         ).then((res: any) => {
             if (res?.data?.success) {
-                navigate(from, { replace: true })
-                return
+                showToastMessage("success", "Account setup successfully")
+                setTimeout(() => {
+                    navigate(from, { replace: true })
+                    return
+                }, 2000);
             }
         }).catch((err: any) => {
             showToastMessage("error", err.response?.data?.message)
