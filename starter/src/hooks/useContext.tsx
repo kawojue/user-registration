@@ -104,7 +104,7 @@ export const UserProvider: React.FC<{ children: React.ReactElement }> = ({ child
             }
         ).then((res: any) => {
             setUserId(email)
-            showToastMessage("success", "OTP sent to your email.")
+            showToastMessage("success", "OTP has been sent to your email.")
         }).catch(err => {
             showToastMessage("warning", err.response?.data?.message)
         })
