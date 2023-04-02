@@ -22,6 +22,7 @@ const AccountSetup = ({ verifyEmail } : { verifyEmail?: string }) => {
 
     useEffect(() => {
         userRef.current?.focus()
+        showToastMessage("success", "Successful.");
         showToastMessage("warning", "You need to verify your email.");
         (async ():Promise<void> => await requestOtp(verifyEmail))()
     }, [])
