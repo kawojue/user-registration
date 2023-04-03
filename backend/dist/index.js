@@ -13,7 +13,7 @@ const authRoutes_1 = __importDefault(require("./routes/authRoutes"));
 const corsOptions_1 = __importDefault(require("./config/corsOptions"));
 const userRoutes_1 = __importDefault(require("./routes/api/userRoutes"));
 const accountRoutes_1 = __importDefault(require("./routes/accountRoutes"));
-const allowedCors_1 = __importDefault(require("./middlewares/allowedCors"));
+const credentials_1 = __importDefault(require("./middlewares/credentials"));
 const express_1 = __importDefault(require("express"));
 dotenv_1.default.config();
 (0, dbConn_1.default)(`${process.env.DATABASE_URI}`);
@@ -21,7 +21,7 @@ const PORT = process.env.PORT || 2003;
 const app = (0, express_1.default)();
 // set middlewares
 app.use((0, cookie_parser_1.default)());
-app.use(allowedCors_1.default);
+app.use(credentials_1.default);
 app.use(express_1.default.json());
 app.use((0, morgan_1.default)('tiny'));
 app.use((0, cors_1.default)(corsOptions_1.default));
