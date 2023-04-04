@@ -33,7 +33,7 @@ export const handleForgotPswd = asyncHandler(async (req: Request, res: Response)
     const transportMail: IMailer = {
         senderName: "Always Appear",
         to: mail,
-        subject: "Verification/Forgot Password",
+        subject: "Forgot Password",
         text: `Code: ${totp}`
     }
 
