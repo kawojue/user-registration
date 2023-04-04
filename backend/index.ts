@@ -29,7 +29,7 @@ app.use(express.urlencoded({ extended: false }))
 // set routes
 app.use('/account', accountRoute)
 app.use('/auth', authRoute)
-app.use('/', userRoute)
+app.use('/api', userRoute)
 
 
 app.get("/", (req: Request, res: Response) => {
