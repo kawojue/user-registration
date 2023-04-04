@@ -4,8 +4,8 @@ import { handleUser, handleAllUsers } from '../../controllers/user'
 
 const router: Router = express.Router()
 
-router.get('/api/all', handleAllUsers)
+router.get('/all/users', handleAllUsers)
 
-router.get('/:id', verifyJWT, handleUser)
+router.get('/user/:id', verifyJWT, handleUser)
 
 export default router
