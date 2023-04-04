@@ -1,10 +1,14 @@
 import axios from '../api/create'
+import nav from '../../utils/nav'
 import { useEffect, useState } from 'react'
 import userContext from '../hooks/useContext'
 import { FaInfoCircle, FaTimes, FaCheck } from 'react-icons/fa'
-import { useNavigate, NavigateFunction, Location, useLocation } from 'react-router-dom'
 
-const AccountSetup = ({ verifyEmail } : { verifyEmail?: string }) => {
+interface IAccountSetup {
+    verifyEmail?: string,
+}
+
+const AccountSetup = ({ verifyEmail } : IAccountSetup) => {
     const {
         userRef, ToastContainer,
         userFocus, setUserFocus,
@@ -12,10 +16,6 @@ const AccountSetup = ({ verifyEmail } : { verifyEmail?: string }) => {
         requestOtp, USER_REGEX,
         showToastMessage,
     }: any = userContext()
-
-    const locaion: Location = useLocation()
-    const navigate: NavigateFunction = useNavigate()
-    const from: string = locaion.state?.from?.pathname || "/"
 
     const [user, setUser] = useState<string>('')
     const [validName, setValidName] = useState<boolean>(false)
@@ -45,9 +45,10 @@ const AccountSetup = ({ verifyEmail } : { verifyEmail?: string }) => {
             }
         ).then((res: any) => {
             if (res?.data?.success) {
+                setVCode("")
                 showToastMessage("success", "Account setup successfully")
                 setTimeout(() => {
-                    navigate(from, { replace: true })
+                    nav({})
                     return
                 }, 2000);
             }
@@ -101,12 +102,12 @@ const AccountSetup = ({ verifyEmail } : { verifyEmail?: string }) => {
                         placeholder='OTP sent to your mail.'
                         value={vCode} max={6}
                         onChange={e => setVCode(e.target.value)} />
-                    </div>
-                    <div className="reqOtp-container">
+                        <div className="reqOtp-container">
                         <button className="reqOtp-btn"
                         onClick={async () => await requestOtp(verifyEmail)}>
                             Resend
                         </button>
+                        </div>
                     </div>
                 </article>
                 <div className="btn-container">
