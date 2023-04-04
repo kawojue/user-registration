@@ -12,12 +12,11 @@ import Dashboard from "./components/Dashboard"
 import { Routes, Route } from "react-router-dom"
 import ForgotPswd from "./components/ForgotPswd"
 import RequireUser from "./components/RequireUser"
+import UseNavigate from "./components/UseNavigate"
 import Unauthorized from "./components/Unauthorized"
-import { Navigate, Location, useLocation } from "react-router-dom"
 
 const App: React.FC = () => {
-  const { auth } = userContext()
-  const location: Location  = useLocation()
+  const { auth }: any = userContext()
 
   return (
     <>
@@ -28,12 +27,11 @@ const App: React.FC = () => {
           <Route path="*" element={<Missing />} />
           <Route path="/auth/login"
           element={auth?.username && auth?.accessToken ?
-          <Navigate to="/" state={{ from: location }} replace /> :
-          <Login />} />
+          <UseNavigate /> : <Login />} />
           <Route path="/linkpage" element={<LinkPage />} />
-          <Route path="/auth/signup" element={auth?.username && auth?.accessToken ?
-          <Navigate to="/" state={{ from: location }} replace /> :
-          <Register />} />
+          <Route path="/auth/signup"
+          element={auth?.username && auth?.accessToken ?
+          <UseNavigate /> :<Register />} />
           <Route path="/unauthorized" element={<Unauthorized />} />
           <Route path="/account/password/reset" element={<ForgotPswd />} />
 
