@@ -92,9 +92,9 @@ export const UserProvider: React.FC<{ children: React.ReactElement }> = ({ child
         })
     }
 
-    const requestOtp = async (email: string):Promise<void> => {
+    const requestOtp = async (email: string, route: string):Promise<void> => {
         await axios.post(
-            '/account/password/reset',
+            route,
             JSON.stringify({ email }),
             {
                 headers: {
