@@ -1,22 +1,22 @@
 import axios from '../api/create'
+import { customNav } from '../../utils/nav'
 import userContext from '../hooks/useContext'
-import { Link, useNavigate, NavigateFunction } from "react-router-dom"
 
 const Home: React.FC = () => {
     const {
-        showToastMessage,
+        showToastMessage, Link,
         ToastContainer, setAuth
     }: any = userContext()
-    const navigate: NavigateFunction = useNavigate()
 
     const handleLogout = async () => {
         await axios.get('/auth/logout')
         .catch((err: any) => {
+            console.error(err)
             showToastMessage("error", "Can't logout! Something went wrong.")
         })
         localStorage.removeItem("user")
         setAuth({})
-        navigate('/linkpage', { replace: true })
+        customNav({ from: '/linkpage' })
     }
 
     return(
