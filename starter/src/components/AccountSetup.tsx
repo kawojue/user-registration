@@ -24,7 +24,7 @@ const AccountSetup = ({ verifyEmail } : IAccountSetup) => {
         userRef.current?.focus()
         showToastMessage("success", "Successful.");
         showToastMessage("warning", "You need to verify your email.");
-        (async ():Promise<void> => await requestOtp(verifyEmail))()
+        (async ():Promise<void> => await requestOtp(verifyEmail, '/account/req-otp'))()
     }, [])
 
     useEffect(() => {
@@ -49,8 +49,7 @@ const AccountSetup = ({ verifyEmail } : IAccountSetup) => {
                 showToastMessage("success", "Account setup successfully")
                 setTimeout(() => {
                     nav({})
-                    return
-                }, 2000);
+                }, 2000)
             }
         }).catch((err: any) => {
             showToastMessage("error", err.response?.data?.message)
@@ -104,7 +103,9 @@ const AccountSetup = ({ verifyEmail } : IAccountSetup) => {
                         onChange={e => setVCode(e.target.value)} />
                         <div className="reqOtp-container">
                         <button className="reqOtp-btn"
-                        onClick={async () => await requestOtp(verifyEmail)}>
+                        onClick={
+                            async () => await requestOtp(verifyEmail, '/account/req-otp')
+                        }>
                             Resend
                         </button>
                         </div>
