@@ -8,8 +8,9 @@ export const verify = asyncHandler(async (req: Request, res: Response) => {
     otp = otp?.trim()
     userId = userId?.trim()?.toLowerCase()
 
-    const getUser = await User.findOne({ 'mail.email': userId })
-    const { totp, totpDate }: any = getUser?.manageOTP
+    const getUser = await User.findOne({ 'mail.email': userId }).exec()
+    const totp: string = getUser?.manageOTP.totp
+    const totpDate: number = getUser?.manageOTP.totpDate
     const expiry: number = totpDate + 60 * 60 * 1000 // after 1hr
 
     if (!getUser || !userId) {
