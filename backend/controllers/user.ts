@@ -11,15 +11,15 @@ export const handleUser = asyncHandler(async (req: Request, res: Response) => {
             success: false
         })
     }
+
     res.status(200).json({
-        success: true,
         user
     })
 })
 
 export const handleAllUsers = asyncHandler(async (req: Request, res: Response) => {
-    const allUsers =  await User.find().select('-password')
+    const users =  await User.find().select(('-password -refreshToken')).lean().exec()
     res.status(200).json({
-        allUsers
+        users
     })
 })
