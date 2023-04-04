@@ -1,25 +1,22 @@
 import Button from './Button'
 import axios from '../api/create'
+import nav from '../../utils/nav'
 import { detect } from 'detect-browser'
 import AccountSetup from './AccountSetup'
 import userContext from '../hooks/useContext'
 import { useRef, useState, useEffect, FormEvent } from 'react'
-import { Link, useNavigate, Location, useLocation, NavigateFunction } from 'react-router-dom'
 
 const Login:React.FC = () => {
     document.title = "Login"
 
     const  {
-        LOGIN_URL,
+        LOGIN_URL, Link,
         showPswd, setShowPswd,
         setAuth, ToastContainer,
         showToastMessage
     } = userContext()
 
     const deviceInfo = detect()
-    const locaion: Location = useLocation()
-    const navigate: NavigateFunction = useNavigate()
-    const from: string = locaion.state?.from?.pathname || "/"
 
     const userRef = useRef<HTMLInputElement>(null)
     const [user, setUser] = useState<string>("")
@@ -55,10 +52,7 @@ const Login:React.FC = () => {
             if (mail.isVerified) {
                 setAuth(res?.data)
                 localStorage.setItem("user", JSON.stringify(res?.data))
-                showToastMessage("success", "Login successful.")
-                setTimeout(() => {
-                    navigate(from, { replace: true })
-                }, 2000)
+                nav({})
                 return
             }
         }).catch((err: any) => {
