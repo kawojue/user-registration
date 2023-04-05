@@ -2,6 +2,7 @@ import axios from '../api/create'
 import { useEffect, useState } from 'react'
 import userContext from '../hooks/useContext'
 import { FaInfoCircle, FaTimes, FaCheck } from 'react-icons/fa'
+import { useLocation, useNavigate, NavigateFunction, Location } from 'react-router-dom'
 
 interface IAccountSetup {
     verifyEmail?: string,
@@ -13,12 +14,15 @@ const AccountSetup = ({ verifyEmail } : IAccountSetup) => {
         userFocus, setUserFocus,
         vCode, setVCode, userId,
         requestOtp, USER_REGEX,
-        showToastMessage, from,
-        navigate
+        showToastMessage
     }: any = userContext()
 
     const [user, setUser] = useState<string>('')
     const [validName, setValidName] = useState<boolean>(false)
+
+    const location: Location = useLocation()
+    const navigate: NavigateFunction = useNavigate()
+    const from: string = location.state?.from?.pathname || '/'
 
     useEffect(() => {
         userRef.current?.focus()
