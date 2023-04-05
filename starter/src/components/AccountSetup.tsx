@@ -48,7 +48,7 @@ const AccountSetup = ({ verifyEmail } : IAccountSetup) => {
                 setVCode("")
                 showToastMessage("success", "Account setup successfully")
                 setTimeout(() => {
-                    nav({})
+                    // nav({})
                 }, 2000)
             }
         }).catch((err: any) => {
