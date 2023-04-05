@@ -4,17 +4,21 @@ import { detect } from 'detect-browser'
 import AccountSetup from './AccountSetup'
 import userContext from '../hooks/useContext'
 import { useRef, useState, useEffect, FormEvent } from 'react'
+import { useLocation, useNavigate, NavigateFunction, Location } from 'react-router-dom'
 
 const Login:React.FC = () => {
     document.title = "Login"
 
     const  {
         Link, showPswd, setShowPswd,
-        setAuth, ToastContainer, from,
-        showToastMessage, navigate, 
+        setAuth, ToastContainer,
+        showToastMessage, 
     } = userContext()
 
     const deviceInfo = detect()
+    const location: Location = useLocation()
+    const navigate: NavigateFunction = useNavigate()
+    const from: string = location.state?.from?.pathname || '/'
 
     const userRef = useRef<HTMLInputElement>(null)
     const [user, setUser] = useState<string>("")
