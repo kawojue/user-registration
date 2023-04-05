@@ -1,6 +1,5 @@
 import Button from './Button'
 import axios from '../api/create'
-import nav from '../../utils/nav'
 import { detect } from 'detect-browser'
 import AccountSetup from './AccountSetup'
 import userContext from '../hooks/useContext'
@@ -11,8 +10,8 @@ const Login:React.FC = () => {
 
     const  {
         Link, showPswd, setShowPswd,
-        setAuth, ToastContainer,
-        showToastMessage
+        setAuth, ToastContainer, from,
+        showToastMessage, navigate, 
     } = userContext()
 
     const deviceInfo = detect()
@@ -51,7 +50,7 @@ const Login:React.FC = () => {
             if (mail.isVerified) {
                 setAuth(res?.data)
                 localStorage.setItem("user", JSON.stringify(res?.data))
-                // nav({})
+                navigate(from, { replace: true })
                 return
             }
         }).catch((err: any) => {
