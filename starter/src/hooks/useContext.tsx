@@ -7,8 +7,6 @@ import React, { createContext, useContext, useRef, useState, useEffect, FormEven
 const Context: any | null = createContext({})
 
 export const UserProvider: React.FC<{ children: React.ReactElement }> = ({ children }) => {
-    const LOGIN_URL:string = "/auth/login"
-    const REGISTER_URL:string = "/auth/signup"
     const EMAIL_REGEX:RegExp = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     const USER_REGEX:RegExp = /^[a-zA-Z][a-zA-Z0-9-_]{2,23}$/
     const PSWD_REGEX:RegExp = /^(?=(.*[a-z]){1,})(?=(.*[A-Z]){1,})(?=(.*[0-9]){1,})(?=(.*[!@#$%^&*()\-__+.]){1,}).{4,89}$/
@@ -65,7 +63,7 @@ export const UserProvider: React.FC<{ children: React.ReactElement }> = ({ child
             return
         }
 
-        await axios.post(`${REGISTER_URL}`,
+        await axios.post("/auth/signup",
         JSON.stringify({ email, pswd, deviceInfo }), {
             headers: {
                 'Content-Type': 'application/json'
@@ -92,7 +90,7 @@ export const UserProvider: React.FC<{ children: React.ReactElement }> = ({ child
         })
     }
 
-    const requestOtp = async (email: string, route: string):Promise<void> => {
+    const requestOtp = async (email: string, route: string): Promise<void> => {
         await axios.post(
             route,
             JSON.stringify({ email }),
@@ -130,24 +128,15 @@ export const UserProvider: React.FC<{ children: React.ReactElement }> = ({ child
 
     return (
         <Context.Provider value={{
-            Link, pswd, confirmPswd,
-            setUserFocus, userFocus,
-            setPswdFocus, validPswd,
-            setPswd, setConfirmPswd,
-            validConfirm, pswdFocus,
-            setConfirmFocus, showPswd,
-            setShowPswd, confirmFocus,
-            showConfirmPswd, handleSubmit,
-            setShowConfirmPswd, isValid,
-            success, LOGIN_URL, setSuccess,
-            setAuth, email, setEmail, auth,
-            emailFocus, vCode, setVCode,
-            setEmailFocus, vCodeFocus,
-            validEmail, emailRef, EMAIL_REGEX,
-            userRef, setVCodeFocus, verifyEmail,
-            requestOtp, userId, setUserId,
-            USER_REGEX, showToastMessage,
-            ToastContainer
+            Link, pswd, confirmPswd, setUserFocus, userFocus,
+            setPswdFocus, validPswd, setPswd, setConfirmPswd,
+            validConfirm, pswdFocus, setConfirmFocus, showPswd,
+            setShowPswd, confirmFocus, showConfirmPswd, handleSubmit,
+            setShowConfirmPswd, isValid, success, setSuccess, setAuth,
+            email, setEmail, auth, vCode, emailFocus, setVCode, userRef,
+            setEmailFocus, vCodeFocus, validEmail, emailRef, userId,
+            EMAIL_REGEX, setVCodeFocus, verifyEmail, requestOtp,
+            setUserId, USER_REGEX, showToastMessage, ToastContainer
         }}>
             {children}
         </Context.Provider>
