@@ -1,5 +1,4 @@
 import axios from '../api/create'
-import nav from '../../utils/nav'
 import { useEffect, useState } from 'react'
 import userContext from '../hooks/useContext'
 import { FaInfoCircle, FaTimes, FaCheck } from 'react-icons/fa'
@@ -14,7 +13,8 @@ const AccountSetup = ({ verifyEmail } : IAccountSetup) => {
         userFocus, setUserFocus,
         vCode, setVCode, userId,
         requestOtp, USER_REGEX,
-        showToastMessage,
+        showToastMessage, from,
+        navigate
     }: any = userContext()
 
     const [user, setUser] = useState<string>('')
@@ -48,7 +48,7 @@ const AccountSetup = ({ verifyEmail } : IAccountSetup) => {
                 setVCode("")
                 showToastMessage("success", "Account setup successfully")
                 setTimeout(() => {
-                    // nav({})
+                    navigate(from, { replace: true })
                 }, 2000)
             }
         }).catch((err: any) => {
