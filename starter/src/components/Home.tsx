@@ -1,11 +1,11 @@
 import axios from '../api/create'
-import { customNav } from '../../utils/nav'
 import userContext from '../hooks/useContext'
 
 const Home: React.FC = () => {
     const {
         showToastMessage, Link,
-        ToastContainer, setAuth
+        ToastContainer, setAuth,
+        navigate
     }: any = userContext()
 
     const handleLogout = async () => {
@@ -16,7 +16,7 @@ const Home: React.FC = () => {
         })
         localStorage.removeItem("user")
         setAuth({})
-        customNav({ from: '/linkpage' })
+        navigate({ from: '/linkpage' })
     }
 
     return(
