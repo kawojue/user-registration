@@ -2,6 +2,7 @@ import axios from '../api/create'
 import { detect } from 'detect-browser'
 import { Link } from 'react-router-dom'
 import { ToastContainer, toast } from 'react-toastify'
+import { useLocation, useNavigate, NavigateFunction, Location } from 'react-router-dom'
 import React, { createContext, useContext, useRef, useState, useEffect, FormEvent } from 'react'
 
 const Context: any | null = createContext({})
@@ -39,6 +40,10 @@ export const UserProvider: React.FC<{ children: React.ReactElement }> = ({ child
     const [success, setSuccess] = useState<boolean>(false)
     const [showPswd, setShowPswd] = useState<boolean>(false)
     const [showConfirmPswd, setShowConfirmPswd] = useState<boolean>(false)
+
+    const location: Location = useLocation()
+    const navigate: NavigateFunction = useNavigate()
+    const from: string = location.state?.from?.pathname || '/'
 
     useEffect(() => {
         // validate email
@@ -136,7 +141,8 @@ export const UserProvider: React.FC<{ children: React.ReactElement }> = ({ child
             email, setEmail, auth, vCode, emailFocus, setVCode, userRef,
             setEmailFocus, vCodeFocus, validEmail, emailRef, userId,
             EMAIL_REGEX, setVCodeFocus, verifyEmail, requestOtp,
-            setUserId, USER_REGEX, showToastMessage, ToastContainer
+            setUserId, USER_REGEX, showToastMessage, ToastContainer,
+            navigate, from
         }}>
             {children}
         </Context.Provider>
