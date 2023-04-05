@@ -10,8 +10,7 @@ const Login:React.FC = () => {
     document.title = "Login"
 
     const  {
-        LOGIN_URL, Link,
-        showPswd, setShowPswd,
+        Link, showPswd, setShowPswd,
         setAuth, ToastContainer,
         showToastMessage
     } = userContext()
@@ -37,7 +36,7 @@ const Login:React.FC = () => {
             showToastMessage("error", "Invalid Entry!")
         }
 
-        await axios.post(`${LOGIN_URL}`,
+        await axios.post("/auth/login",
         JSON.stringify({ user, pswd, deviceInfo }),
         {
             headers: {
@@ -52,7 +51,7 @@ const Login:React.FC = () => {
             if (mail.isVerified) {
                 setAuth(res?.data)
                 localStorage.setItem("user", JSON.stringify(res?.data))
-                nav({})
+                // nav({})
                 return
             }
         }).catch((err: any) => {
