@@ -1,12 +1,14 @@
 import axios from '../api/create'
 import userContext from '../hooks/useContext'
+import { useNavigate, NavigateFunction } from 'react-router-dom'
 
 const Home: React.FC = () => {
     const {
         showToastMessage, Link,
         ToastContainer, setAuth,
-        navigate
     }: any = userContext()
+
+    const navigate: NavigateFunction = useNavigate()
 
     const handleLogout = async () => {
         await axios.get('/auth/logout')
@@ -16,7 +18,7 @@ const Home: React.FC = () => {
         })
         localStorage.removeItem("user")
         setAuth({})
-        navigate({ from: '/linkpage' })
+        navigate('/linkpage')
     }
 
     return(
