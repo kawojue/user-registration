@@ -4,6 +4,7 @@ import { FormEvent } from 'react'
 import { detect } from "detect-browser"
 import userContext from "../hooks/useContext"
 import { FaInfoCircle, FaTimes, FaCheck } from 'react-icons/fa'
+import { useLocation, useNavigate, NavigateFunction, Location } from 'react-router-dom'
 
 interface IResetPswd {
     userId: string,
@@ -19,9 +20,12 @@ const ResetPswd: React.FC<IResetPswd> = ({ userId, verified }) => {
         setConfirmPswd, setConfirmFocus,
         pswdFocus, setPswdFocus, setPswd,
         validConfirm, showPswd, setShowPswd,
-        showToastMessage, navigate, from
+        showToastMessage,
     } = userContext()
 
+    const location: Location = useLocation()
+    const navigate: NavigateFunction = useNavigate()
+    const from: string = location.state?.from?.pathname || '/'
     const isValid = Boolean(validPswd) && Boolean(validConfirm)
 
     const handleSubmit = async (e: FormEvent):Promise<void> => {
