@@ -48,6 +48,7 @@ const Login:React.FC = () => {
             withCredentials: true
         }).then((res: any) => {
             const { success, mail }: any = res?.data
+            setPswd("")
             setSuccess(success)
             setVerifyEmail(mail.email)
             setVerified(mail.isVerified)
@@ -70,7 +71,7 @@ const Login:React.FC = () => {
     if (!verified && success) {
         return (
             <section className="container">
-                <AccountSetup verifyEmail={verifyEmail} />
+                <AccountSetup get={verifyEmail} set={setVerifyEmail} />
             </section>
         )
     }
