@@ -20,6 +20,8 @@ export const verify = asyncHandler(async (req: Request, res: Response) => {
     }
 
     if (expiry < Date.now()) {
+        getUser.manageOTP = {}
+        await getUser.save()
         return res.status(400).json({
             message: "OTP Expired."
         })
