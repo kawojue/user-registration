@@ -56,7 +56,7 @@ export const UserProvider: React.FC<{ children: React.ReactElement }> = ({ child
 
     const isValid:boolean = validEmail && validPswd && validConfirm
 
-    const handleSubmit = async (e: FormEvent<HTMLFormElement>):Promise<void> => {
+    const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
         e.preventDefault()
         if (!isValid) {
             showToastMessage("error", "Invalid entry!")
@@ -108,7 +108,7 @@ export const UserProvider: React.FC<{ children: React.ReactElement }> = ({ child
         })
     }
 
-    const showToastMessage = (action: string, msg: string) => {
+    const showToastMessage = (action: string, msg: string): void => {
         if (action === "success") {
             toast.success(msg, {
                 position: toast.POSITION.TOP_RIGHT
@@ -137,6 +137,7 @@ export const UserProvider: React.FC<{ children: React.ReactElement }> = ({ child
             setEmailFocus, vCodeFocus, validEmail, emailRef, userId,
             EMAIL_REGEX, setVCodeFocus, verifyEmail, requestOtp,
             setUserId, USER_REGEX, showToastMessage, ToastContainer,
+            setVerifyEmail
         }}>
             {children}
         </Context.Provider>
