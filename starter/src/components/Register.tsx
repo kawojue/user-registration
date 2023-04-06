@@ -16,6 +16,7 @@ const Register: React.FC = () => {
         confirmFocus, handleSubmit, isValid,
         success, email, setEmail, validEmail,
         emailFocus, setEmailFocus, verifyEmail,
+        setVerifyEmail
     }: any = userContext()
 
     useEffect(() => {
@@ -25,7 +26,7 @@ const Register: React.FC = () => {
     return (
         <section className="container">
             {success ? 
-            <AccountSetup verifyEmail={verifyEmail} /> :
+            <AccountSetup get={verifyEmail} set={setVerifyEmail} /> :
             <>
                 < ToastContainer />
                 <h3 className="section-h3">Signup</h3>
