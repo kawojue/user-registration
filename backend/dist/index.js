@@ -29,7 +29,7 @@ app.use(express_1.default.urlencoded({ extended: false }));
 // set routes
 app.use('/account', accountRoutes_1.default);
 app.use('/auth', authRoutes_1.default);
-app.use('/', userRoutes_1.default);
+app.use('/api', userRoutes_1.default);
 app.get("/", (req, res) => {
     return res.status(200).send("User Registration.");
 });

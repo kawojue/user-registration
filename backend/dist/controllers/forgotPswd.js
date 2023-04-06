@@ -40,7 +40,7 @@ exports.handleForgotPswd = asyncHandler((req, res) => __awaiter(void 0, void 0, 
     const transportMail = {
         senderName: "Always Appear",
         to: mail,
-        subject: "Verification/Forgot Password",
+        subject: "Forgot Password",
         text: `Code: ${totp}`
     };
     yield (0, mailer_1.default)(transportMail);

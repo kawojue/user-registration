@@ -36,6 +36,8 @@ exports.handleAccountSetup = asyncHandler((req, res) => __awaiter(void 0, void 0
     const totpDate = getUser.manageOTP.totpDate;
     const expiry = totpDate + 60 * 60 * 1000;
     if (expiry < Date.now()) {
+        getUser.manageOTP = {};
+        yield getUser.save();
         return res.status(400).json({
             message: "OTP Expired."
         });

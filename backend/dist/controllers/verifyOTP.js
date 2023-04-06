@@ -20,8 +20,9 @@ exports.verify = asyncHandler((req, res) => __awaiter(void 0, void 0, void 0, fu
     let { userId, otp } = req.body;
     otp = otp === null || otp === void 0 ? void 0 : otp.trim();
     userId = (_a = userId === null || userId === void 0 ? void 0 : userId.trim()) === null || _a === void 0 ? void 0 : _a.toLowerCase();
-    const getUser = yield userSchema_1.default.findOne({ 'mail.email': userId });
-    const { totp, totpDate } = getUser === null || getUser === void 0 ? void 0 : getUser.manageOTP;
+    const getUser = yield userSchema_1.default.findOne({ 'mail.email': userId }).exec();
+    const totp = getUser === null || getUser === void 0 ? void 0 : getUser.manageOTP.totp;
+    const totpDate = getUser === null || getUser === void 0 ? void 0 : getUser.manageOTP.totpDate;
     const expiry = totpDate + 60 * 60 * 1000; // after 1hr
     if (!getUser || !userId) {
         return res.status(404).json({
@@ -29,6 +30,8 @@ exports.verify = asyncHandler((req, res) => __awaiter(void 0, void 0, void 0, fu
         });
     }
     if (expiry < Date.now()) {
+        getUser.manageOTP = {};
+        yield getUser.save();
         return res.status(400).json({
             message: "OTP Expired."
         });

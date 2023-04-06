@@ -6,9 +6,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const limiter_1 = __importDefault(require("../middlewares/limiter"));
 const passwordRoutes_1 = __importDefault(require("./passwordRoutes"));
+const req_otp_1 = require("../controllers/req-otp");
 const accountSetup_1 = require("../controllers/accountSetup");
 const accountRoute = express_1.default.Router();
 accountRoute.use('/password', passwordRoutes_1.default);
+accountRoute.post('/req-otp', req_otp_1.handleReqOTP);
 accountRoute.post('/setup', limiter_1.default, accountSetup_1.handleAccountSetup);
 exports.default = accountRoute;
 //# sourceMappingURL=accountRoutes.js.map

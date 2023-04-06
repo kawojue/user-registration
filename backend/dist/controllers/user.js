@@ -24,14 +24,13 @@ exports.handleUser = asyncHandler((req, res) => __awaiter(void 0, void 0, void 0
         });
     }
     res.status(200).json({
-        success: true,
         user
     });
 }));
 exports.handleAllUsers = asyncHandler((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const allUsers = yield userSchema_1.default.find().select('-password');
+    const users = yield userSchema_1.default.find().select(('-password -refreshToken')).lean().exec();
     res.status(200).json({
-        allUsers
+        users
     });
 }));
 //# sourceMappingURL=user.js.map
