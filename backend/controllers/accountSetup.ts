@@ -24,9 +24,11 @@ export const handleAccountSetup = asyncHandler(async (req: Request, res: Respons
 
     const totp: string = getUser.manageOTP.totp
     const totpDate: number = getUser.manageOTP.totpDate
-    const expiry:number = totpDate + 60 * 60 * 1000
+    const expiry:number = totpDate +  60 * 60 * 1000
 
     if (expiry < Date.now()) {
+        getUser.manageOTP = {}
+        await getUser.save()
         return res.status(400).json({
             message: "OTP Expired."
         })
