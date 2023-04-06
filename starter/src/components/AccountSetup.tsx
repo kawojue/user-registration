@@ -5,10 +5,11 @@ import { FaInfoCircle, FaTimes, FaCheck } from 'react-icons/fa'
 import { useLocation, useNavigate, NavigateFunction, Location } from 'react-router-dom'
 
 interface IAccountSetup {
-    verifyEmail?: string,
+    get?: string,
+    set?: any
 }
 
-const AccountSetup = ({ verifyEmail } : IAccountSetup) => {
+const AccountSetup = ({ get, set } : IAccountSetup) => {
     const {
         userRef, ToastContainer,
         userFocus, setUserFocus,
@@ -28,7 +29,7 @@ const AccountSetup = ({ verifyEmail } : IAccountSetup) => {
         userRef.current?.focus()
         showToastMessage("success", "Successful.");
         showToastMessage("warning", "You need to verify your email.");
-        (async ():Promise<void> => await requestOtp(verifyEmail, '/account/req-otp'))()
+        (async ():Promise<void> => await requestOtp(get, '/account/req-otp'))()
     }, [])
 
     useEffect(() => {
@@ -49,6 +50,8 @@ const AccountSetup = ({ verifyEmail } : IAccountSetup) => {
             }
         ).then((res: any) => {
             if (res?.data?.success) {
+                set("")
+                setUser("")
                 setVCode("")
                 showToastMessage("success", "Account setup successfully")
                 setTimeout(() => {
@@ -108,7 +111,7 @@ const AccountSetup = ({ verifyEmail } : IAccountSetup) => {
                         <div className="reqOtp-container">
                         <button className="reqOtp-btn"
                         onClick={
-                            async () => await requestOtp(verifyEmail, '/account/req-otp')
+                            async () => await requestOtp(get, '/account/req-otp')
                         }>
                             Resend
                         </button>
