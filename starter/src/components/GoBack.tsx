@@ -5,7 +5,7 @@ const GoBack: React.FC = () => {
     const goBack = (): void => navigate(-1)
 
     return (
-        <button onClick={goBack} className="mt-5 underline">
+        <button onClick={goBack} className="go-back">
             Go Back
         </button>
     )
