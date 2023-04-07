@@ -148,3 +148,7 @@ input:focus {
 .reqOtp-btn:disabled {
     @apply text-pry-clr-0;
 }
+
+.go-back {
+    @apply mt-5 underline text-xl font-semibold tracking-wider;
+}
