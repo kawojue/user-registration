@@ -1,11 +1,11 @@
-import { Link } from "react-router-dom"
 import Users from "./Users"
+import GoBack from "./GoBack"
 
 const Admin: React.FC = () => {
     return (
         <section className="container">
             <Users />
-            <Link to="/">Go back</Link>
+            <GoBack />
         </section>
     )
 }
