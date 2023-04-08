@@ -152,3 +152,7 @@ input:focus {
 .go-back {
     @apply mt-5 underline text-xl font-semibold tracking-wider;
 }
+
+.refresh-btn {
+    @apply bg-white text-black tracking-wider font-medium px-3 py-1 mt-2 rounded-md trans;
+}
