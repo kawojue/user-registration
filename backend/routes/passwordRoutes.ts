@@ -8,6 +8,6 @@ const passwordRoute: Router = express.Router()
 
 passwordRoute.post('/verify', limiter, verify)
 passwordRoute.post('/forgotten', handleResetPswd)
-passwordRoute.post('/reset', handleForgotPswd)
+passwordRoute.post('/reset', limiter, handleForgotPswd)
 
 export default passwordRoute
