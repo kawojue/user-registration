@@ -11,14 +11,20 @@ const Home: React.FC = () => {
     const navigate: NavigateFunction = useNavigate()
 
     const handleLogout = async () => {
-        await axios.get('/auth/logout')
+        await axios.get(
+            '/auth/logout',
+            {
+                withCredentials: true
+            }
+        )
+        .then((res: any) => {
+            localStorage.removeItem("user")
+            setAuth({})
+            navigate('/linkpage')
+        })
         .catch((err: any) => {
-            console.error(err)
             showToastMessage("error", "Can't logout! Something went wrong.")
         })
-        localStorage.removeItem("user")
-        setAuth({})
-        navigate('/linkpage')
     }
 
     return(
