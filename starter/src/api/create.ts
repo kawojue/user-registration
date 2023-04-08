@@ -1,7 +1,13 @@
-import axios from 'axios'
+import axios, { AxiosInstance } from 'axios'
 
-const url: string = process.env.NODE_ENV === 'production' ? 'https://user-registration-backend-tawny.vercel.app' : 'http://localhost:2003'
+const BASE_URL: string = process.env.NODE_ENV === 'production' ? 'https://user-registration-backend-tawny.vercel.app' : 'http://localhost:2003'
 
 export default axios.create({
-    baseURL: url
+    baseURL: BASE_URL
+})
+
+export const axiosPrivate: AxiosInstance = axios.create({
+    baseURL: BASE_URL,
+    headers: { 'Content-Type': 'application/json' },
+    withCredentials: true
 })
