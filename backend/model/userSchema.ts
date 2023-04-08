@@ -1,5 +1,5 @@
 import * as mongoose from 'mongoose'
-const autoincrement = require('mongoose-sequence')(mongoose)
+const autoIncrement = require('mongoose-sequence')(mongoose)
 
 const userShema = new mongoose.Schema(
     {
@@ -30,7 +30,6 @@ const userShema = new mongoose.Schema(
             Admin: Number,
             Employee: Number,
         },
-        loginToken: String,
         refreshToken: String,
         deviceInfo: {
             name: String,
@@ -51,7 +50,7 @@ const userShema = new mongoose.Schema(
     }
 )
 
-userShema.plugin(autoincrement, {
+userShema.plugin(autoIncrement, {
     inc_field: 'user',
     id: 'userNums',
     start_req: 1
