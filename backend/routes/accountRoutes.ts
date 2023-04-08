@@ -8,7 +8,7 @@ const accountRoute: Router = express.Router()
 
 accountRoute.use('/password', passwordRoute)
 
-accountRoute.post('/req-otp', handleReqOTP)
+accountRoute.post('/req-otp', limiter, handleReqOTP)
 accountRoute.post('/setup', limiter, handleAccountSetup)
 
 export default accountRoute
