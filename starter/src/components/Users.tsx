@@ -1,8 +1,10 @@
-import axios from 'axios'
+import axios from '../api/create'
 import { useState, useEffect } from 'react'
+import useRefreshToken from '../hooks/useRefreshToken'
 
 const Users: React.FC = () => {
     const [users, setUsers] = useState<any[]>([])
+    const refresh: () => Promise<string> = useRefreshToken()
 
     useEffect(() => {
         let isMounted = true
@@ -29,7 +31,7 @@ const Users: React.FC = () => {
 
     return (
         <article>
-            <h3>Users List</h3>
+            <h3 className="section-h3">Users List</h3>
             {
                 users?.length ? (
                     <ul>
@@ -39,6 +41,11 @@ const Users: React.FC = () => {
                     </ul>
                 ) : <p>No users.</p>
             }
+            <button className="refresh-btn hover:bg-pry-clr-0"
+            onClick={() => refresh()}>
+                Refresh
+            </button>
+            <br />
         </article>
     )
 }
