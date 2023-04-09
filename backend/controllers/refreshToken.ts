@@ -8,9 +8,9 @@ dotenv.config()
 
 export const handleRefreshToken = asyncHandler(async (req: Request, res: Response) => {
     const cookies = req.cookies
-    if (!cookies?.loginCookie) return res.sendStatus(401) // unauthorized
+    if (!cookies?.auth) return res.sendStatus(401) // unauthorized
 
-    const refreshToken: string = cookies.loginCookie
+    const refreshToken: string = cookies.auth
     const existingUser: any = await User.findOne({ refreshToken }).exec()
 
     if (!existingUser) return res.sendStatus(403) // forbidden
