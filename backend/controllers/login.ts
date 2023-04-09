@@ -2,7 +2,7 @@ import dotenv from 'dotenv'
 import * as bcrypt from 'bcrypt'
 import User from '../model/userSchema'
 import jwt, { Secret } from 'jsonwebtoken'
-import { allowedUrl } from '../config/corsOptions'
+import { allowedUrls } from '../config/corsOptions'
 import mailer, { IMailer } from '../config/mailer'
 const asyncHandler = require('express-async-handler')
 import { CookieOptions, Request, Response } from 'express'
@@ -16,7 +16,8 @@ const newCookie: CookieOptions = process.env.NODE_ENV === 'production' ? {
     secure: true
 } : {
     httpOnly: true,
-    maxAge: 5 * 60 * 1000 // 5 mins
+    maxAge: 5 * 60 * 1000,
+    secure: false // 5 mins
 }
 
 export const handleLogin = asyncHandler(async (req: Request, res: Response) => {
@@ -66,7 +67,7 @@ export const handleLogin = asyncHandler(async (req: Request, res: Response) => {
         { expiresIn: '5d' }
     )
 
-    const text: string = `Hi ${username?.toUpperCase()},\n\n\nA successful login just occurred at ${devName?.toUpperCase()} ${devOs?.toUpperCase()} on ${new Date()}.\nIf you did not initiate this login, please visit ${allowedUrl}/account/password/reset to reset your password.`
+    const text: string = `Hi ${username?.toUpperCase()},\n\n\nA successful login just occurred at ${devName?.toUpperCase()} ${devOs?.toUpperCase()} on ${new Date()}.\nIf you did not initiate this login, please visit ${allowedUrls[0]}/account/password/reset to reset your password.`
 
     const transportMail: IMailer = {
         senderName: 'Kawojue Raheem',
@@ -85,7 +86,7 @@ export const handleLogin = asyncHandler(async (req: Request, res: Response) => {
     existingUser.refreshToken = refreshToken
     await existingUser.save()
 
-    res.cookie('loginCookie', refreshToken, newCookie)
+    res.cookie("auth", refreshToken, newCookie)
     res.status(200).json({
         success: true as boolean,
         username,
