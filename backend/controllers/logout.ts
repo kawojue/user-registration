@@ -8,9 +8,9 @@ const clearCookies: CookieOptions = {
 
 export const handleLogout = asyncHandler (async (req: Request, res: Response) => {
     const cookies: any = req.cookies
-    if (!cookies?.loginCookie) return res.sendStatus(204)
+    if (!cookies?.auth) return res.sendStatus(204)
 
-    const refreshToken: string = cookies.loginCookie
+    const refreshToken: string = cookies.auth
     const existingUser = await User.findOne({ refreshToken }).exec()
 
     if (!existingUser) {
@@ -22,6 +22,6 @@ export const handleLogout = asyncHandler (async (req: Request, res: Response) =>
     existingUser.lastLogout = new Date()
     await existingUser.save()
 
-    res.clearCookie('loginCookie', clearCookies)
+    res.clearCookie('auth', clearCookies)
     res.sendStatus(204)
 })
