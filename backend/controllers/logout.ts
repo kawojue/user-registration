@@ -14,7 +14,7 @@ export const handleLogout = asyncHandler (async (req: Request, res: Response) =>
     const existingUser = await User.findOne({ refreshToken }).exec()
 
     if (!existingUser) {
-        res.clearCookie('loginCookie', clearCookies)
+        res.clearCookie('auth', clearCookies)
         return res.sendStatus(204)
     }
 
