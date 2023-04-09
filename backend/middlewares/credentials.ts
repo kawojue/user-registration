@@ -1,10 +1,10 @@
-import { allowedUrl } from "../config/corsOptions"
-import { Request, Response, NextFunction } from "express"
+import { Request, NextFunction } from "express"
+import { allowedUrls } from "../config/corsOptions"
 
-const credentials = (req: Request, res: Response, next: NextFunction) => {
+const credentials = (req: Request, res: any, next: NextFunction) => {
     const origin = req.headers.origin
-    if (allowedUrl === origin) {
-        res.header('Access-Control-Allow-Credentials', origin)
+    if (allowedUrls.includes(origin)) {
+        res.header('Access-Control-Allow-Credentials', true)
     }
     next()
 }
