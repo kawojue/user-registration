@@ -3,13 +3,25 @@ import { CorsOptions } from 'cors'
 
 dotenv.config()
 
-export const allowedUrl: string = process.env.NODE_ENV === 'production' ? process.env.PROD_URL : 'http://localhost:5173'
+export const allowedUrls: string[] = ['http://localhost:5173']
+
+// const corsOptions: CorsOptions = {
+//     credentials: true,
+//     origin: allowedUrl,
+//     optionsSuccessStatus: 200,
+//     methods: ['GET', 'POST', 'DELETE', 'PATCH']
+// }
 
 const corsOptions: CorsOptions = {
-    origin: allowedUrl,
-    optionsSuccessStatus: 200,
+    origin: (origin, callback) => {
+        if (allowedUrls.indexOf(origin) !== -1 || !origin) {
+            callback(null, true)
+        } else {
+            callback(new Error('Not allowed by CORS'))
+        }
+    },
     credentials: true,
-    methods: ['GET', 'POST', 'DELETE', 'PATCH']
+    optionsSuccessStatus: 200
 }
 
 export default corsOptions
