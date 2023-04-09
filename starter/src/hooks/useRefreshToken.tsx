@@ -9,10 +9,10 @@ const useRefreshToken = () => {
         const res: AxiosResponse<any, any> = await axios.get(
             '/auth/refresh',
             {
+                withCredentials: true,
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                withCredentials: true
             }
         )
         setAuth((prevState: any) => {

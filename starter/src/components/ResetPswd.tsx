@@ -40,10 +40,10 @@ const ResetPswd: React.FC<IResetPswd> = ({ userId, verified }) => {
             '/account/password/forgotten',
             JSON.stringify({ userId, verified, pswd, deviceInfo }),
             {
+                withCredentials: true,
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                withCredentials: true
             }
         ).then((res: any) => {
             setPswd("")

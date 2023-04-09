@@ -42,10 +42,10 @@ const Login:React.FC = () => {
         await axios.post("/auth/login",
         JSON.stringify({ user, pswd, deviceInfo }),
         {
+            withCredentials: true,
             headers: {
                 'Content-Type': 'application/json'
-            },
-            withCredentials: true
+            }
         }).then((res: any) => {
             const { success, mail }: any = res?.data
             setPswd("")

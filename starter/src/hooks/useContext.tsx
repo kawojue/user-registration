@@ -65,10 +65,10 @@ export const UserProvider: React.FC<{ children: React.ReactElement }> = ({ child
 
         await axios.post("/auth/signup",
         JSON.stringify({ email, pswd, deviceInfo }), {
+            withCredentials: true,
             headers: {
                 'Content-Type': 'application/json'
             },
-            withCredentials: true
         })
         .then((res: any) => {
             const { email, success }: any = res?.data
@@ -95,10 +95,10 @@ export const UserProvider: React.FC<{ children: React.ReactElement }> = ({ child
             route,
             JSON.stringify({ email }),
             {
+                withCredentials: true,
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                withCredentials: true
             }
         ).then((res: any) => {
             setUserId(email)

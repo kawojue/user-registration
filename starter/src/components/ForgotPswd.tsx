@@ -37,10 +37,10 @@ const ForgotPswd: React.FC = () => {
             '/account/password/verify',
             JSON.stringify({ userId, otp }),
             {
+                withCredentials: true,
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                withCredentials: true
             }
         ).then(res => {
             const data = res?.data
