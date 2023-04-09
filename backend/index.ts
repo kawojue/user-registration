@@ -1,5 +1,5 @@
 import cors from 'cors'
-import morgan from 'morgan'
+import logger from 'morgan'
 import dotenv from 'dotenv'
 import mongoose from 'mongoose'
 import cookie from 'cookie-parser'
@@ -8,7 +8,6 @@ import authRoute from './routes/authRoutes'
 import corsOptions from './config/corsOptions'
 import userRoute from './routes/api/userRoutes'
 import accountRoute from './routes/accountRoutes'
-import handleCors from './middlewares/allowedCors'
 import credentials from './middlewares/credentials'
 import express, { Application, Request, Response } from 'express'
 
@@ -19,10 +18,10 @@ const PORT = process.env.PORT || 2003
 const app: Application = express()
 
 // set middlewares
-app.use(cookie())
 app.use(credentials)
 app.use(express.json())
-app.use(morgan('tiny'))
+app.use(cookie())
+app.use(logger('dev'))
 app.use(cors(corsOptions))
 app.use(express.urlencoded({ extended: false }))
 
