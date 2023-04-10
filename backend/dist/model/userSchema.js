@@ -30,7 +30,8 @@ const userShema = new mongoose.Schema({
         email: {
             type: String,
             required: true,
-            unique: true
+            unique: true,
+            sparse: true
         },
         isVerified: {
             type: Boolean,
@@ -39,7 +40,8 @@ const userShema = new mongoose.Schema({
     },
     username: {
         type: String,
-        unique: true
+        unique: true,
+        sparse: true
     },
     password: {
         type: String,
