@@ -1,5 +1,4 @@
 import axios from '../api/create'
-import { detect } from 'detect-browser'
 import { Link } from 'react-router-dom'
 import { ToastContainer, toast } from 'react-toastify'
 import React, { createContext, useContext, useRef, useState, useEffect, FormEvent } from 'react'
@@ -10,8 +9,7 @@ export const UserProvider: React.FC<{ children: React.ReactElement }> = ({ child
     const EMAIL_REGEX:RegExp = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     const USER_REGEX:RegExp = /^[a-zA-Z][a-zA-Z0-9-_]{2,23}$/
     const PSWD_REGEX:RegExp = /^(?=(.*[a-z]){1,})(?=(.*[A-Z]){1,})(?=(.*[0-9]){1,})(?=(.*[!@#$%^&*()\-__+.]){1,}).{4,89}$/
-    
-    const deviceInfo = detect()
+
     const userRef = useRef<HTMLInputElement>(null)
     const emailRef = useRef<HTMLInputElement>(null)
 
@@ -64,7 +62,7 @@ export const UserProvider: React.FC<{ children: React.ReactElement }> = ({ child
         }
 
         await axios.post("/auth/signup",
-        JSON.stringify({ email, pswd, deviceInfo }), {
+        JSON.stringify({ email, pswd }), {
             withCredentials: true,
             headers: {
                 'Content-Type': 'application/json'
