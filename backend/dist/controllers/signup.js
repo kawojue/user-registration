@@ -40,7 +40,7 @@ const bcrypt = __importStar(require("bcrypt"));
 const userSchema_1 = __importDefault(require("../model/userSchema"));
 const asyncHandler = require('express-async-handler');
 exports.handleSignup = asyncHandler((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { email, pswd, deviceInfo } = req.body;
+    const { email, pswd } = req.body;
     const mail = email === null || email === void 0 ? void 0 : email.toLowerCase().trim();
     const existingEmail = yield userSchema_1.default.findOne({ 'mail.email': mail }).exec();
     if (!pswd || !mail)
@@ -52,8 +52,7 @@ exports.handleSignup = asyncHandler((req, res) => __awaiter(void 0, void 0, void
         mail: {
             email: mail
         },
-        password: hashedPswd,
-        deviceInfo
+        password: hashedPswd
     });
     res.status(201).json({
         success: true,
