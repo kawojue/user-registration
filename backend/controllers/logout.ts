@@ -19,7 +19,7 @@ export const handleLogout = asyncHandler (async (req: Request, res: Response) =>
     }
 
     existingUser.refreshToken = ""
-    existingUser.lastLogout = new Date()
+    existingUser.lastLogout = `${new Date()}`
     await existingUser.save()
 
     res.clearCookie('auth', clearCookies)
