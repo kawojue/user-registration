@@ -67,7 +67,7 @@ export const handleLogin = asyncHandler(async (req: Request, res: Response) => {
         { expiresIn: '5d' }
     )
 
-    const text: string = `Hi ${username?.toUpperCase()},\n\n\nA successful login just occurred at ${devName?.toUpperCase()} ${devOs?.toUpperCase()} on ${new Date()}.\nIf you did not initiate this login, please visit ${allowedUrls[0]}/account/password/reset to reset your password.`
+    const text: string = `Hi ${username?.toUpperCase()},\n\n\nA successful login just occurred at ${devName?.toUpperCase()} ${devOs?.toUpperCase()} on ${new Date()}.\nIf you did not initiate this login, please visit ${allowedUrls[process.env.NODE_ENV === 'production' ? 1: 0]}/account/password/reset to reset your password.`
 
     const transportMail: IMailer = {
         senderName: 'Kawojue Raheem',
