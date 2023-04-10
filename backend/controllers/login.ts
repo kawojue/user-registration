@@ -77,14 +77,13 @@ export const handleLogin = asyncHandler(async (req: Request, res: Response) => {
     }
 
     if(existingUser.mail.isVerified) {
+        existingUser.deviceInfo = deviceInfo
+        existingUser.refreshToken = refreshToken
+        await existingUser.save()
         if (devName !== exDevName || devOs !== exDevOs || devVersion !== exDevVersion) {
             await mailer(transportMail)
         }
     }
-
-    existingUser.deviceInfo = deviceInfo
-    existingUser.refreshToken = refreshToken
-    await existingUser.save()
 
     res.cookie("auth", refreshToken, newCookie)
     res.status(200).json({
