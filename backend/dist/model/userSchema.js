@@ -24,7 +24,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose = __importStar(require("mongoose"));
-const autoincrement = require('mongoose-sequence')(mongoose);
+const autoIncrement = require('mongoose-sequence')(mongoose);
 const userShema = new mongoose.Schema({
     mail: {
         email: {
@@ -53,7 +53,6 @@ const userShema = new mongoose.Schema({
         Admin: Number,
         Employee: Number,
     },
-    loginToken: String,
     refreshToken: String,
     deviceInfo: {
         name: String,
@@ -65,13 +64,13 @@ const userShema = new mongoose.Schema({
         totpDate: Number
     },
     lastLogout: {
-        type: Date
+        type: String
     }
 }, {
     collection: 'usersDB',
     timestamps: true
 });
-userShema.plugin(autoincrement, {
+userShema.plugin(autoIncrement, {
     inc_field: 'user',
     id: 'userNums',
     start_req: 1

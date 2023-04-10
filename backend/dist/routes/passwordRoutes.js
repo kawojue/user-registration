@@ -11,6 +11,6 @@ const forgotPswd_1 = require("../controllers/forgotPswd");
 const passwordRoute = express_1.default.Router();
 passwordRoute.post('/verify', limiter_1.default, verifyOTP_1.verify);
 passwordRoute.post('/forgotten', resetPswd_1.handleResetPswd);
-passwordRoute.post('/reset', forgotPswd_1.handleForgotPswd);
+passwordRoute.post('/reset', limiter_1.default, forgotPswd_1.handleForgotPswd);
 exports.default = passwordRoute;
 //# sourceMappingURL=passwordRoutes.js.map

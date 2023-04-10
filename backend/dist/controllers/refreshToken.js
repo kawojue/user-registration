@@ -20,9 +20,9 @@ const asyncHandler = require('express-async-handler');
 dotenv_1.default.config();
 exports.handleRefreshToken = asyncHandler((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const cookies = req.cookies;
-    if (!(cookies === null || cookies === void 0 ? void 0 : cookies.loginCookie))
+    if (!(cookies === null || cookies === void 0 ? void 0 : cookies.auth))
         return res.sendStatus(401); // unauthorized
-    const refreshToken = cookies.loginCookie;
+    const refreshToken = cookies.auth;
     const existingUser = yield userSchema_1.default.findOne({ refreshToken }).exec();
     if (!existingUser)
         return res.sendStatus(403); // forbidden

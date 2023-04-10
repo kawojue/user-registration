@@ -17,7 +17,7 @@ const userSchema_1 = __importDefault(require("../model/userSchema"));
 const asyncHandler = require('express-async-handler');
 exports.handleUser = asyncHandler((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
-    const user = yield userSchema_1.default.findOne({ username: id }).select(('-password -refreshToken')).exec();
+    const user = yield userSchema_1.default.findOne({ username: id }).select(('-password -refreshToken -manageOTP -deviceInfo')).exec();
     if (!user) {
         return res.status(404).json({
             success: false
@@ -28,7 +28,7 @@ exports.handleUser = asyncHandler((req, res) => __awaiter(void 0, void 0, void 0
     });
 }));
 exports.handleAllUsers = asyncHandler((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const users = yield userSchema_1.default.find().select(('-password -refreshToken')).lean().exec();
+    const users = yield userSchema_1.default.find().select(('-password -refreshToken -manageOTP -deviceInfo')).lean().exec();
     res.status(200).json({
         users
     });

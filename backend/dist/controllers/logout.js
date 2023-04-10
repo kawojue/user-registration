@@ -20,18 +20,18 @@ const clearCookies = {
 };
 exports.handleLogout = asyncHandler((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const cookies = req.cookies;
-    if (!(cookies === null || cookies === void 0 ? void 0 : cookies.loginCookie))
+    if (!(cookies === null || cookies === void 0 ? void 0 : cookies.auth))
         return res.sendStatus(204);
-    const refreshToken = cookies.loginCookie;
+    const refreshToken = cookies.auth;
     const existingUser = yield userSchema_1.default.findOne({ refreshToken }).exec();
     if (!existingUser) {
-        res.clearCookie('loginCookie', clearCookies);
+        res.clearCookie('auth', clearCookies);
         return res.sendStatus(204);
     }
     existingUser.refreshToken = "";
-    existingUser.lastLogout = new Date();
+    existingUser.lastLogout = `${new Date()}`;
     yield existingUser.save();
-    res.clearCookie('loginCookie', clearCookies);
+    res.clearCookie('auth', clearCookies);
     res.sendStatus(204);
 }));
 //# sourceMappingURL=logout.js.map

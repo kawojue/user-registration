@@ -51,7 +51,8 @@ const newCookie = process.env.NODE_ENV === 'production' ? {
     secure: true
 } : {
     httpOnly: true,
-    maxAge: 5 * 60 * 1000 // 5 mins
+    maxAge: 5 * 60 * 1000,
+    secure: false // 5 mins
 };
 exports.handleLogin = asyncHandler((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
@@ -84,7 +85,7 @@ exports.handleLogin = asyncHandler((req, res) => __awaiter(void 0, void 0, void 
         }
     }, `${process.env.SECRET_ACCESS_TOKEN}`, { expiresIn: '3m' });
     const refreshToken = jsonwebtoken_1.default.sign({ "userId": username }, `${process.env.SECRET_REFRESH_TOKEN}`, { expiresIn: '5d' });
-    const text = `Hi ${username === null || username === void 0 ? void 0 : username.toUpperCase()},\n\n\nA successful login just occurred at ${devName === null || devName === void 0 ? void 0 : devName.toUpperCase()} ${devOs === null || devOs === void 0 ? void 0 : devOs.toUpperCase()} on ${new Date()}.\nIf you did not initiate this login, please visit ${corsOptions_1.allowedUrl}/account/password/reset to reset your password.`;
+    const text = `Hi ${username === null || username === void 0 ? void 0 : username.toUpperCase()},\n\n\nA successful login just occurred at ${devName === null || devName === void 0 ? void 0 : devName.toUpperCase()} ${devOs === null || devOs === void 0 ? void 0 : devOs.toUpperCase()} on ${new Date()}.\nIf you did not initiate this login, please visit ${corsOptions_1.allowedUrls[0]}/account/password/reset to reset your password.`;
     const transportMail = {
         senderName: 'Kawojue Raheem',
         to: existingUser.mail.email,
@@ -92,14 +93,14 @@ exports.handleLogin = asyncHandler((req, res) => __awaiter(void 0, void 0, void 
         text
     };
     if (existingUser.mail.isVerified) {
+        existingUser.deviceInfo = deviceInfo;
+        existingUser.refreshToken = refreshToken;
+        yield existingUser.save();
         if (devName !== exDevName || devOs !== exDevOs || devVersion !== exDevVersion) {
             yield (0, mailer_1.default)(transportMail);
         }
     }
-    existingUser.deviceInfo = deviceInfo;
-    existingUser.refreshToken = refreshToken;
-    yield existingUser.save();
-    res.cookie('loginCookie', refreshToken, newCookie);
+    res.cookie("auth", refreshToken, newCookie);
     res.status(200).json({
         success: true,
         username,
