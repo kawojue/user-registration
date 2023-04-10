@@ -92,6 +92,7 @@ const ForgotPswd: React.FC = () => {
                             placeholder="OTP sent to your mail"/>
                         <div className="reqOtp-container">
                             <button className="reqOtp-btn"
+                            disabled={!Boolean(validEmail)}
                             onClick={
                                 async () => await requestOtp(email, '/account/password/reset')
                             }>
