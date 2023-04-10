@@ -4,7 +4,7 @@ import { Request, Response } from 'express'
 const asyncHandler = require('express-async-handler')
 
 export const handleSignup = asyncHandler(async (req: Request, res: Response) => {
-    const { email, pswd, deviceInfo }: any = req.body
+    const { email, pswd }: any = req.body
     const mail: string = email?.toLowerCase().trim()
 
     const existingEmail: any = await User.findOne({ 'mail.email': mail }).exec()
@@ -17,8 +17,7 @@ export const handleSignup = asyncHandler(async (req: Request, res: Response) => 
         mail: {
             email: mail
         },
-        password: hashedPswd,
-        deviceInfo
+        password: hashedPswd
     })
 
     res.status(201).json({
