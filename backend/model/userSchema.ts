@@ -41,7 +41,7 @@ const userShema = new mongoose.Schema(
             totpDate: Number
         },
         lastLogout: {
-            type: Date
+            type: String
         }
     },
     {
