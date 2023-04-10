@@ -6,7 +6,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.allowedUrls = void 0;
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
-exports.allowedUrls = ['http://localhost:5173'];
+exports.allowedUrls = [
+    'http://localhost:5173',
+    'https://user-registration-kawojue.vercel.app'
+];
 // const corsOptions: CorsOptions = {
 //     credentials: true,
 //     origin: allowedUrl,

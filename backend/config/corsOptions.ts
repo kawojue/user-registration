@@ -3,7 +3,10 @@ import { CorsOptions } from 'cors'
 
 dotenv.config()
 
-export const allowedUrls: string[] = ['http://localhost:5173']
+export const allowedUrls: string[] = [
+    'http://localhost:5173',
+    'https://user-registration-kawojue.vercel.app'
+]
 
 // const corsOptions: CorsOptions = {
 //     credentials: true,
