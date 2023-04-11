@@ -114,12 +114,12 @@ export const UserProvider: React.FC<{ children: React.ReactElement }> = ({ child
         }
         if (action === "warning") {
             toast.warning(msg, {
-                position: toast.POSITION.TOP_RIGHT
+                position: toast.POSITION.BOTTOM_RIGHT
             })
         }
         if (action === "error") {
             toast.error(msg, {
-                position: toast.POSITION.TOP_LEFT
+                position: toast.POSITION.BOTTOM_LEFT
             })
         }
     }
