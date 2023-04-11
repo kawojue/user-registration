@@ -1,0 +1,1 @@
+{"version":3,"file":"checkMail.js","sourceRoot":"","sources":["../../config/checkMail.ts"],"names":[],"mappings":";;;;;;;;;;;AAAA,+DAA+C;AAE/C,MAAM,SAAS,GAAG,CAAO,KAAa,EAAgB,EAAE;IACpD,IAAI,QAAQ,GAAG,MAAM,IAAA,+BAAQ,EAAC,KAAK,CAAC,CAAA;IACpC,OAAO,QAAQ,CAAA;AACnB,CAAC,CAAA,CAAA;AAED,kBAAe,SAAS,CAAA"}

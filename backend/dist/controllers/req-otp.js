@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.handleReqOTP = void 0;
 const userSchema_1 = __importDefault(require("../model/userSchema"));
+const checkMail_1 = __importDefault(require("../config/checkMail"));
 const mailer_1 = __importDefault(require("../config/mailer"));
 const manageOTP_1 = __importDefault(require("../config/manageOTP"));
 const asyncHandler = require('express-async-handler');
@@ -34,9 +35,15 @@ exports.handleReqOTP = asyncHandler((req, res) => __awaiter(void 0, void 0, void
             message: 'Account does not exist.'
         });
     }
-    if (exists.mail.isVerified) {
-        return res.status(401).json({
-            success: false,
+    const isValidEMail = yield (0, checkMail_1.default)(mail);
+    if (isValidEMail.valid === false) {
+        yield exists.deleteOne();
+        return res.status(400).json({
+            message: `${isValidEMail.validators["smtp"].reason}\nYour Account has been deleted.`
+        });
+    }
+    if (exists.mail.isVerified && exists.username) {
+        return res.status(409).json({
             message: "Account has already been verified."
         });
     }
