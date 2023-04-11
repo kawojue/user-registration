@@ -1,9 +1,9 @@
 import User from '../model/userSchema'
 import { Request, Response } from 'express'
-import checkMail from '../config/checkMail'
 import mailer, { IMailer } from '../config/mailer'
 import genOTP, { IGenOTP } from '../config/manageOTP'
 const asyncHandler = require('express-async-handler')
+import checkMail, { ICheckMail } from '../config/checkMail'
 
 export const handleReqOTP = asyncHandler(async (req: Request, res: Response) => {
     const { email } = req.body
@@ -27,12 +27,12 @@ export const handleReqOTP = asyncHandler(async (req: Request, res: Response) => 
         })
     }
 
-    const isValidEMail: any = await checkMail(mail)
+    const { valid }: ICheckMail = await checkMail(mail)
 
-    if (isValidEMail.valid === false) {
+    if (!valid) {
         await exists.deleteOne()
         return res.status(400).json({
-            message: `${isValidEMail.validators["smtp"].reason}\nYour Account has been deleted.`
+            message: `Email is not valid. Your Account has been deleted.`
         })
     }
 
