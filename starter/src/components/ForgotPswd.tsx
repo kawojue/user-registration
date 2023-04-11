@@ -57,7 +57,7 @@ const ForgotPswd: React.FC = () => {
         { verified ?
             <ResetPswd verified={verified} userId={userId} /> :
             <>
-                <h3 className="section-h3">Forgot Password</h3>
+                <h3 className="section-h3">Reset Password</h3>
                 <form className="form" method="POST"
                 onSubmit={e => e.preventDefault()}>
                     <article className="form-center">
