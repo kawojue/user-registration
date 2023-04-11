@@ -1,8 +1,14 @@
 import { validate } from 'deep-email-validator'
 
-const checkMail = async (email: string): Promise<any> => {
-    let response = await validate(email)
-    return response
+export interface ICheckMail {
+    valid: boolean
+    validators: any
+    reason?: string
+}
+
+const checkMail = async (email: string): Promise<ICheckMail> => {
+    let { valid, validators } = await validate(email)
+    return { valid, validators }
 }
 
 export default checkMail
