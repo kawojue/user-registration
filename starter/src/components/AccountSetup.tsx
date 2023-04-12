@@ -20,6 +20,7 @@ const AccountSetup = ({ get, set } : IAccountSetup) => {
 
     const [user, setUser] = useState<string>('')
     const [validName, setValidName] = useState<boolean>(false)
+    const [isLoading, setIsLoading] = useState<boolean>(false)
 
     const location: Location = useLocation()
     const navigate: NavigateFunction = useNavigate()
@@ -41,6 +42,7 @@ const AccountSetup = ({ get, set } : IAccountSetup) => {
     const isValid: boolean = Boolean(validName) && Boolean(vCode)
 
     const handleSubmit = async (): Promise<void> => {
+        setIsLoading(true)
         await axios.post(
             '/account/setup',
             JSON.stringify({ username: user, verifyEmail: userId, vCode }),
@@ -55,10 +57,12 @@ const AccountSetup = ({ get, set } : IAccountSetup) => {
                 setVCode("")
                 showToastMessage("success", "Account setup successfully")
                 setTimeout(() => {
+                    setIsLoading(false)
                     navigate(from, { replace: true })
                 }, 2000)
             }
         }).catch((err: any) => {
+            setIsLoading(false)
             showToastMessage("error", err.response?.data?.message)
         })
     }
@@ -121,7 +125,7 @@ const AccountSetup = ({ get, set } : IAccountSetup) => {
                 <div className="btn-container">
                     <button type="submit" className='btn'
                     disabled={!isValid} onClick={async () => await handleSubmit()}>
-                        Finish
+                        {isLoading ? "Setting up.." : "Finish"}
                     </button>
                 </div>
             </form>
