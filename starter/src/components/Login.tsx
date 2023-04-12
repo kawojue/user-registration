@@ -24,8 +24,9 @@ const Login:React.FC = () => {
     const [user, setUser] = useState<string>("")
     const [pswd, setPswd] = useState<string>("")
     const [success, setSuccess] = useState<boolean>(false)
-    const [verifyEmail, setVerifyEmail] = useState<string>("")
     const [verified, setVerified] = useState<boolean>(false)
+    const [isLoading, setIsLoading] = useState<boolean>(false)
+    const [verifyEmail, setVerifyEmail] = useState<string>("")
 
     const isValid = Boolean(user) && Boolean(pswd)
 
@@ -35,6 +36,7 @@ const Login:React.FC = () => {
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>):Promise<void> => {
         e.preventDefault()
+        setIsLoading(true)
         if (!isValid) {
             showToastMessage("error", "Invalid Entry!")
         }
@@ -58,6 +60,7 @@ const Login:React.FC = () => {
                 navigate(from, { replace: true })
                 return
             }
+            setIsLoading(false)
         }).catch((err: any) => {
             const errMsg: string = err.response?.data?.message
             if (err.code === 'ERR_NETWORK') {
@@ -65,6 +68,7 @@ const Login:React.FC = () => {
             } else {
                 showToastMessage("error", errMsg)
             }
+            setIsLoading(false)
         })
     }
 
@@ -103,7 +107,7 @@ const Login:React.FC = () => {
                 </article>
                 <div className="btn-container">
                     <button type="submit" className='btn' disabled={!isValid}>
-                        Login
+                        {isLoading ? "Authenticating.." : "Login"}
                     </button>
                 </div>
             </form>
