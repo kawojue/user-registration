@@ -16,6 +16,7 @@ const ForgotPswd: React.FC = () => {
 
     const [otp, setOtp] = useState<string>("")
     const [verified, setVerified] = useState<boolean>(false)
+    const [isLoading, setIsLoading] = useState<boolean>(false)
 
     const [email, setEmail] = useState<string>("")
     const [validEmail, setValidEmail] = useState<string>("")
@@ -33,6 +34,7 @@ const ForgotPswd: React.FC = () => {
     }, [email, otp])
 
     const verifyOTP = async ():Promise<void> => {
+        setIsLoading(true)
         await axios.post(
             '/account/password/verify',
             JSON.stringify({ userId, otp }),
@@ -46,7 +48,9 @@ const ForgotPswd: React.FC = () => {
             const data = res?.data
             setUserId(data.userId)
             setVerified(data.verified)
+            setIsLoading(false)
         }).catch(err => {
+            setIsLoading(false)
             showToastMessage("error", err.response?.data?.message)
         })
     }
@@ -105,7 +109,7 @@ const ForgotPswd: React.FC = () => {
                         <button type="submit" className='btn'
                         disabled={!isValid}
                         onClick={async () => await verifyOTP()}>
-                            Verify
+                            {isLoading ? "Validating..": "Validate"}
                         </button>
                     </div>
                 </form>
