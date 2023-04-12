@@ -8,15 +8,13 @@ const Register: React.FC = () => {
     document.title = "Sign Up"
 
     const {
-        Link, pswd, ToastContainer,
-        confirmPswd, emailRef, validPswd,
-        pswdFocus, setPswdFocus, setPswd,
-        setConfirmPswd, setConfirmFocus,
-        validConfirm, showPswd, setShowPswd,
-        confirmFocus, handleSubmit, isValid,
-        success, email, setEmail, validEmail,
-        emailFocus, setEmailFocus, verifyEmail,
-        setVerifyEmail
+        Link, pswd, ToastContainer, confirmPswd, emailRef,
+        validPswd, pswdFocus, setPswdFocus, setPswd,
+        setConfirmPswd, setConfirmFocus, validConfirm,
+        showPswd, setShowPswd, confirmFocus, handleSubmit,
+        isValid, success, email, setEmail, validEmail,
+        emailFocus, setEmailFocus, verifyEmail, setVerifyEmail,
+        isLoading
     }: any = userContext()
 
     useEffect(() => {
@@ -114,7 +112,7 @@ const Register: React.FC = () => {
                     </article>
                     <div className="btn-container">
                         <button type="submit" className='btn' disabled={!isValid}>
-                            Sign Up
+                            {isLoading ? "Creating.." : "Sign Up"}
                         </button>
                     </div>
                 </form>
