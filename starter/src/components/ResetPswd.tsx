@@ -1,7 +1,7 @@
 import Button from "./Button"
 import axios from '../api/create'
-import { FormEvent } from 'react'
 import { detect } from "detect-browser"
+import { FormEvent, useState } from 'react'
 import userContext from "../hooks/useContext"
 import { FaInfoCircle, FaTimes, FaCheck } from 'react-icons/fa'
 import { useLocation, useNavigate, NavigateFunction, Location } from 'react-router-dom'
@@ -23,6 +23,8 @@ const ResetPswd: React.FC<IResetPswd> = ({ userId, verified }) => {
         showToastMessage,
     } = userContext()
 
+    const [isLoading, setIsLoading] = useState<boolean>(false)
+
     const location: Location = useLocation()
     const navigate: NavigateFunction = useNavigate()
     const from: string = location.state?.from?.pathname || '/'
@@ -30,7 +32,7 @@ const ResetPswd: React.FC<IResetPswd> = ({ userId, verified }) => {
 
     const handleSubmit = async (e: FormEvent):Promise<void> => {
         e.preventDefault()
-
+        setIsLoading(true)
         if (!isValid) {
             showToastMessage("warning", "Password does not match.")
             return
@@ -48,11 +50,13 @@ const ResetPswd: React.FC<IResetPswd> = ({ userId, verified }) => {
         ).then((res: any) => {
             setPswd("")
             setConfirmPswd("")
-            showToastMessage("success", "Password reset successfully.")
+            showToastMessage("success", "Password updated successfully..")
             setTimeout(() => {
+                setIsLoading(false)
                 navigate(from, { replace: true })
             }, 2000)
         }).catch(err => {
+            setIsLoading(false)
             showToastMessage("error", err.response?.data?.message)
         })
     }
@@ -121,7 +125,7 @@ const ResetPswd: React.FC<IResetPswd> = ({ userId, verified }) => {
                 </article>
                 <div className="btn-container">
                     <button type="submit" className='btn' disabled={!isValid}>
-                        Save
+                        {isLoading ? "Updating.." : "Update"}
                     </button>
                 </div>
             </form>
