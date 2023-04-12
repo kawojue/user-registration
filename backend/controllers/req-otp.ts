@@ -29,7 +29,7 @@ export const handleReqOTP = asyncHandler(async (req: Request, res: Response) => 
 
     const { valid }: ICheckMail = await checkMail(mail)
 
-    if (!valid) {
+    if (valid === false) {
         await exists.deleteOne()
         return res.status(400).json({
             message: `Email is not valid. Your Account has been deleted.`
