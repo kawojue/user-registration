@@ -14,9 +14,9 @@ export const UserProvider: React.FC<{ children: React.ReactElement }> = ({ child
     const emailRef = useRef<HTMLInputElement>(null)
 
     const [userId, setUserId] = useState<string>("")
+    const [userFocus, setUserFocus] = useState<boolean>(false)
     const [auth, setAuth] = useState<any>(JSON.parse(localStorage.getItem("user") as any) || {})
 
-    const [userFocus, setUserFocus] = useState<boolean>(false)
 
     const [vCode, setVCode] = useState<string>('')
     const [verifyEmail, setVerifyEmail] = useState<string>('')
@@ -36,6 +36,7 @@ export const UserProvider: React.FC<{ children: React.ReactElement }> = ({ child
 
     const [success, setSuccess] = useState<boolean>(false)
     const [showPswd, setShowPswd] = useState<boolean>(false)
+    const  [isLoading, setIsLoading] = useState<boolean>(false)
     const [showConfirmPswd, setShowConfirmPswd] = useState<boolean>(false)
 
     useEffect(() => {
@@ -55,6 +56,7 @@ export const UserProvider: React.FC<{ children: React.ReactElement }> = ({ child
     const isValid:boolean = validEmail && validPswd && validConfirm
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
+        setIsLoading(true)
         e.preventDefault()
         if (!isValid) {
             showToastMessage("error", "Invalid entry!")
@@ -74,6 +76,7 @@ export const UserProvider: React.FC<{ children: React.ReactElement }> = ({ child
             setEmail("")
             setConfirmPswd("")
             setSuccess(success)
+            setIsLoading(false)
             setVerifyEmail(email)
         })
         .catch(err => {
@@ -85,6 +88,7 @@ export const UserProvider: React.FC<{ children: React.ReactElement }> = ({ child
             } else {
                 showToastMessage("error", "Something went wrong.")
             }
+            setIsLoading(false)
         })
     }
 
@@ -135,7 +139,7 @@ export const UserProvider: React.FC<{ children: React.ReactElement }> = ({ child
             setEmailFocus, vCodeFocus, validEmail, emailRef, userId,
             EMAIL_REGEX, setVCodeFocus, verifyEmail, requestOtp,
             setUserId, USER_REGEX, showToastMessage, ToastContainer,
-            setVerifyEmail
+            setVerifyEmail, isLoading
         }}>
             {children}
         </Context.Provider>
