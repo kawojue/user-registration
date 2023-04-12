@@ -14,10 +14,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.handleReqOTP = void 0;
 const userSchema_1 = __importDefault(require("../model/userSchema"));
-const checkMail_1 = __importDefault(require("../config/checkMail"));
 const mailer_1 = __importDefault(require("../config/mailer"));
 const manageOTP_1 = __importDefault(require("../config/manageOTP"));
 const asyncHandler = require('express-async-handler');
+const checkMail_1 = __importDefault(require("../config/checkMail"));
 exports.handleReqOTP = asyncHandler((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { email } = req.body;
     const mail = email === null || email === void 0 ? void 0 : email.toLowerCase().trim();
@@ -35,11 +35,11 @@ exports.handleReqOTP = asyncHandler((req, res) => __awaiter(void 0, void 0, void
             message: 'Account does not exist.'
         });
     }
-    const isValidEMail = yield (0, checkMail_1.default)(mail);
-    if (isValidEMail.valid === false) {
+    const { valid } = yield (0, checkMail_1.default)(mail);
+    if (valid === false) {
         yield exists.deleteOne();
         return res.status(400).json({
-            message: `${isValidEMail.validators["smtp"].reason}\nYour Account has been deleted.`
+            message: `Email is not valid. Your Account has been deleted.`
         });
     }
     if (exists.mail.isVerified && exists.username) {

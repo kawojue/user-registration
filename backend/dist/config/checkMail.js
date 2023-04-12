@@ -11,8 +11,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const deep_email_validator_1 = require("deep-email-validator");
 const checkMail = (email) => __awaiter(void 0, void 0, void 0, function* () {
-    let response = yield (0, deep_email_validator_1.validate)(email);
-    return response;
+    let { valid, validators } = yield (0, deep_email_validator_1.validate)(email);
+    return { valid, validators };
 });
 exports.default = checkMail;
 //# sourceMappingURL=checkMail.js.map
