@@ -125,7 +125,7 @@ const AccountSetup = ({ get, set } : IAccountSetup) => {
                 <div className="btn-container">
                     <button type="submit" className='btn'
                     disabled={!isValid} onClick={async () => await handleSubmit()}>
-                        {isLoading ? "Setting up.." : "Finish"}
+                        {isLoading ? "Verifying..." : "Finish"}
                     </button>
                 </div>
             </form>
