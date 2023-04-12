@@ -7,7 +7,7 @@ import { handleForgotPswd } from '../controllers/forgotPswd'
 const passwordRoute: Router = express.Router()
 
 passwordRoute.post('/verify', limiter, verify)
-passwordRoute.post('/forgotten', handleResetPswd)
 passwordRoute.post('/reset', limiter, handleForgotPswd)
+passwordRoute.post('/forgotten', limiter, handleResetPswd)
 
 export default passwordRoute
