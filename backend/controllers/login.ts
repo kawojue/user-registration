@@ -59,12 +59,12 @@ export const handleLogin = asyncHandler(async (req: Request, res: Response) => {
             }
         },
         `${process.env.SECRET_ACCESS_TOKEN}`,
-        { expiresIn: '3m' }
+        { expiresIn: '10m' }
     )
     const refreshToken: Secret = jwt.sign(
         { "userId": username },
         `${process.env.SECRET_REFRESH_TOKEN}`,
-        { expiresIn: '5d' }
+        { expiresIn: '1d' }
     )
 
     const text: string = `Hi ${username?.toUpperCase()},\n\n\nA successful login just occurred at ${devName?.toUpperCase()} ${devOs?.toUpperCase()} on ${new Date()}.\nIf you did not initiate this login, please visit ${allowedUrls[process.env.NODE_ENV === 'production' ? 1 : 0]}/account/password/reset to reset your password.\n\nUser Agent: ${req.headers['user-agent']}`
