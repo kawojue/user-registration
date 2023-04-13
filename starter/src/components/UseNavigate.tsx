@@ -1,8 +1,8 @@
 import { useLocation, Navigate, Location } from 'react-router-dom'
 
-interface IUseNavgate { to?: string, replace?: boolean }
+interface IUseNavigate { to?: string, replace?: boolean }
 
-const UseNavigate: React.FC<IUseNavgate> = ({ to = "/", replace = true }) => {
+const UseNavigate: React.FC<IUseNavigate> = ({ to = "/", replace = true }) => {
     const location: Location = useLocation()
 
     return (
