@@ -1,20 +1,25 @@
-import axios from '../api/create'
 import { useState, useEffect } from 'react'
+import useAxiosPrivate from '../hooks/useAxiosPrivate'
+import { useNavigate, useLocation, NavigateFunction, Location } from 'react-router-dom'
 
 const Users: React.FC = () => {
+    const axiosPrivate = useAxiosPrivate()
+    const location: Location = useLocation()
     const [users, setUsers] = useState<any[]>([])
+    const navigate: NavigateFunction = useNavigate()
 
     useEffect(() => {
         let isMounted = true
         const controller: AbortController = new AbortController()
 
         const fetchUsers = async (): Promise<void> => {
-            await axios.get('/api/all/users', {
+            await axiosPrivate.get('/api/all/users', {
                 signal: controller.signal
             })
             .then((res: any) => {
                 isMounted && setUsers(res?.data?.users)
             }).catch((err: any) => {
+                navigate('/login', { state: { from: location }, replace: true })
                 console.error(err)
             })
         };
