@@ -35,7 +35,7 @@ exports.handleRefreshToken = asyncHandler((req, res) => __awaiter(void 0, void 0
                 "userId": userInfo.userId,
                 "roles": roles
             }
-        }, `${process.env.SECRET_ACCESS_TOKEN}`, { expiresIn: '3m' });
+        }, `${process.env.SECRET_ACCESS_TOKEN}`, { expiresIn: '10m' });
         res.status(200).json({ success: true, accessToken });
     });
 }));

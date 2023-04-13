@@ -83,8 +83,8 @@ exports.handleLogin = asyncHandler((req, res) => __awaiter(void 0, void 0, void 
             "userId": username,
             "roles": roles
         }
-    }, `${process.env.SECRET_ACCESS_TOKEN}`, { expiresIn: '3m' });
-    const refreshToken = jsonwebtoken_1.default.sign({ "userId": username }, `${process.env.SECRET_REFRESH_TOKEN}`, { expiresIn: '5d' });
+    }, `${process.env.SECRET_ACCESS_TOKEN}`, { expiresIn: '10m' });
+    const refreshToken = jsonwebtoken_1.default.sign({ "userId": username }, `${process.env.SECRET_REFRESH_TOKEN}`, { expiresIn: '1d' });
     const text = `Hi ${username === null || username === void 0 ? void 0 : username.toUpperCase()},\n\n\nA successful login just occurred at ${devName === null || devName === void 0 ? void 0 : devName.toUpperCase()} ${devOs === null || devOs === void 0 ? void 0 : devOs.toUpperCase()} on ${new Date()}.\nIf you did not initiate this login, please visit ${corsOptions_1.allowedUrls[process.env.NODE_ENV === 'production' ? 1 : 0]}/account/password/reset to reset your password.\n\nUser Agent: ${req.headers['user-agent']}`;
     const transportMail = {
         senderName: 'Kawojue Raheem',
