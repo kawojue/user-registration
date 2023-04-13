@@ -1,10 +1,8 @@
 import axios from '../api/create'
 import { useState, useEffect } from 'react'
-import useRefreshToken from '../hooks/useRefreshToken'
 
 const Users: React.FC = () => {
     const [users, setUsers] = useState<any[]>([])
-    const refresh: () => Promise<string> = useRefreshToken()
 
     useEffect(() => {
         let isMounted = true
@@ -41,10 +39,6 @@ const Users: React.FC = () => {
                     </ul>
                 ) : <p>No users.</p>
             }
-            <button className="refresh-btn hover:bg-pry-clr-0"
-            onClick={() => refresh()}>
-                Refresh
-            </button>
             <br />
         </article>
     )
